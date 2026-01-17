@@ -29,7 +29,7 @@
 
 ## Phase 3: TRACS-compliant Data Extraction and Confidence Scoring
 
-- [ ] **Task: Implement logic to extract TRACS category from report description**
+- [~] **Task: Implement logic to extract TRACS category from report description**
     - [ ] Write tests for TRACS category extraction
     - [ ] Implement TRACS category extraction logic (e.g., using a local LLM or keyword matching)
 - [ ] **Task: Implement confidence scoring**

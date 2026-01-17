@@ -1,7 +1,7 @@
 # Session Handoff: TrailWatch Conductor Setup
 
 **Date:** January 17, 2026  
-**Session Goal:** Complete Gemini CLI Conductor setup and begin Intake Agent (Project 1) implementation  
+**Session Goal:** Complete Intake Agent (Project 1) - Phases 1-3  
 **Workflow Mode:** Human-driven, AI-guided mentorship (see `MENTORSHIP_GUIDE.md`)
 
 ---
@@ -25,7 +25,7 @@
   - `spec.md`: Accept citizen reports, map to TRACS, 80%+ accuracy on 50 samples
   - `plan.md`: 3-phase TDD implementation
 
-### Phase 1: API Endpoint (COMPLETE)
+### Phase 1: API Endpoint (COMPLETE ✅)
 - ✅ Created FastAPI app structure (`src/trailwatch/main.py`)
 - ✅ Defined Pydantic models (`src/trailwatch/models.py`)
 - ✅ Implemented `POST /api/v1/reports` endpoint
@@ -36,46 +36,84 @@
   - `6c2cbfb`: Create API endpoint
   - `803283e`: Mark task complete in plan.md
 
-### Infrastructure Setup
+### Phase 2: Database Integration (COMPLETE ✅)
 - ✅ PostgreSQL 17 running in Docker (`trailwatch-postgres`)
   - Database: `trailwatch_test`
   - Credentials: `postgres` / `postgres`
   - Port: `5432`
   - Volume: `trailwatch-pgdata` (persisted)
-- ✅ Updated `.env` with `DATABASE_URL`
-- ✅ Created `src/trailwatch/database.py` (SQLAlchemy engine, session factory)
+- ✅ Created SQLAlchemy models (`src/trailwatch/models_sqlalchemy.py`)
+  - `HazardReport` table with JSONB for original submission
+  - TRACS category fields (code, name, severity, confidence)
+- ✅ Database save logic in API (`src/trailwatch/api/reports.py`)
+  - Accepts report, saves to PostgreSQL, returns DB-generated ID
+- ✅ Integration tests passing (5 tests, 100% pass rate)
+- ✅ **Checkpoint:** `4f58e0c` (empty commit marking Phase 2 completion)
+- ✅ Git commits:
+  - `ce8a717`: Create SQLAlchemy models
+  - `f43aa71`: Save submitted reports to database
+  - `4f58e0c`: Phase 2 checkpoint
+  - `037710f`: Mark Phase 2 complete in plan.md
 
 ---
 
 ## 🔄 Current State
 
-**Conductor Status:** Waiting for user confirmation after PostgreSQL setup  
-**Active Task:** Phase 2 - Database Integration  
-**Next Immediate Action:** Type `yes` in Conductor CLI prompt to continue
+**Conductor Status:** Exited after Phase 2 completion  
+**Active Task:** Phase 3 - TRACS Classification (BARELY STARTED)  
+**Next Immediate Action:** Resume Conductor to complete Phase 3
 
 **Terminal Windows:**
-1. **Conductor CLI:** Waiting for "yes" confirmation
+1. **Conductor CLI:** Exited (no active session)
 2. **Docker:** `trailwatch-postgres` container running
 
 **Git Branch:** `setup/conductor-init`  
-**Working Tree:** Clean (all changes committed)
+**Working Tree:** Uncommitted changes (Phase 3 files partially created)
 
 ---
 
-## 📋 Next Steps (Phase 2)
+## ⚠️ Phase 3: Partial Progress
 
-When you resume with Conductor:
+**What Conductor Started:**
+- ✅ Created `src/trailwatch/tracs_mapping.py`:
+  - Keyword-to-TRACS category mapping
+  - `get_tracs_category()` function (basic keyword matching)
+- ✅ Updated `tests/test_api.py`:
+  - Changed assertion to expect `CLR` code instead of `"clearing"`
+  - Added `tracs_category_name` assertion
 
-1. **Type `yes`** in Conductor prompt → She'll re-run database connection test (should pass now)
-2. **Phase 2 Tasks** (from `plan.md`):
-   - [ ] Create SQLAlchemy models for `HazardReport`
-   - [ ] Implement database save logic in API endpoint
-   - [ ] Write integration tests for database persistence
-   - [ ] Manual verification: Submit report, query database to confirm save
-3. **Phase 3 Tasks** (TRACS extraction):
-   - [ ] Integrate local LLM (Llama 3 via Ollama) for text classification
-   - [ ] Implement confidence scoring
-   - [ ] Store TRACS category + confidence in database
+**What's NOT Done Yet:**
+- [ ] Integrate `tracs_mapping.py` into API endpoint
+- [ ] Re-run tests (will fail until API uses the mapping)
+- [ ] Implement confidence scoring
+- [ ] Advanced TRACS extraction (LLM integration for Phase 4)
+- [ ] Commit Phase 3 work
+
+---
+
+## 📋 Next Steps (Resume Phase 3)
+
+When you start your next session:
+
+1. **Check Git Status:**
+   ```bash
+   git status
+   # Should show: modified tests/test_api.py, new src/trailwatch/tracs_mapping.py
+   ```
+
+2. **Resume Conductor:**
+   ```bash
+   gemini /conductor:implement
+   ```
+   OR manually complete Phase 3:
+   
+3. **Phase 3 Tasks** (from `plan.md`):
+   - [ ] Import `tracs_mapping.get_tracs_category()` in `src/trailwatch/api/reports.py`
+   - [ ] Replace placeholder TRACS logic with actual mapping call
+   - [ ] Run tests → should pass
+   - [ ] Implement basic confidence scoring (keyword match = 0.6, default = 0.3)
+   - [ ] Commit Phase 3 work
+   - [ ] Create Phase 3 checkpoint
 
 ---
 
