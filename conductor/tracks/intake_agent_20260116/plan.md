@@ -6,9 +6,9 @@
     - [x] Create `main.py`
     - [x] Create `core` directory for settings
     - [x] Create `api` directory for routes
-- [ ] **Task: Define Pydantic models for report submission**
-    - [ ] Write tests for Pydantic models
-    - [ ] Implement Pydantic models for `ReportIn` and `ReportOut`
+- [x] **Task: Define Pydantic models for report submission** 6e2d5f3
+    - [x] Write tests for Pydantic models
+    - [x] Implement Pydantic models for `ReportIn` and `ReportOut`
 - [ ] **Task: Create API endpoint for report submission**
     - [ ] Write tests for `POST /api/v1/reports` endpoint
     - [ ] Implement `POST /api/v1/reports` endpoint
