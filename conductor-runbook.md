@@ -7,6 +7,10 @@ Below is a Mac-focused, step‑by‑step script you can drop into your repo and 
 - Treat this file as a **runbook**: read one step, do exactly that step, then ask Gemini in Anti‑Gravity, “What is my next step according to the runbook?”.
 - Stay inside the project workspace in Anti‑Gravity; use the built‑in terminal at the bottom for all commands. [dev](https://dev.to/blamsa0mine/google-antigravity-public-preview-what-it-is-how-it-works-and-what-the-limits-really-mean-4pe)
 
+## Section 0.1 – Mentorship Pattern
+
+- Before starting, please review the [Mentorship Guide](file:///Users/jvalenzano/Documents/10-TrailWatch/MENTORSHIP_GUIDE.md) to understand the Driver/Mentor pattern we follow in this project.
+
 ***
 
 ## Section 1 – One‑time prerequisites (Mac)
