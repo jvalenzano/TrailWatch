@@ -1,0 +1,8 @@
+{
+  "track_id": "intake_agent_20260116",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-16T12:00:00Z",
+  "updated_at": "2026-01-16T12:00:00Z",
+  "description": "Build the core functionality for the Intake Agent (Project 1), including accepting citizen reports, extracting structured data, and mapping to TRACS categories."
+}
