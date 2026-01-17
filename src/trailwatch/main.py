@@ -1,7 +1,9 @@
 from fastapi import FastAPI
+from .api import reports
 
 app = FastAPI()
 
+app.include_router(reports.router, prefix="/api/v1")
 
 @app.get("/")
 def read_root():
