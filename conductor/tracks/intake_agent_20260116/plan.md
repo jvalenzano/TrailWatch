@@ -2,10 +2,10 @@
 
 ## Phase 1: API Endpoint and Basic Data Ingestion
 
-- [ ] **Task: Create FastAPI application structure**
-    - [ ] Create `main.py`
-    - [ ] Create `core` directory for settings
-    - [ ] Create `api` directory for routes
+- [x] **Task: Create FastAPI application structure** b37bdf9
+    - [x] Create `main.py`
+    - [x] Create `core` directory for settings
+    - [x] Create `api` directory for routes
 - [ ] **Task: Define Pydantic models for report submission**
     - [ ] Write tests for Pydantic models
     - [ ] Implement Pydantic models for `ReportIn` and `ReportOut`
