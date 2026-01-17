@@ -25,7 +25,7 @@
 - [x] **Task: Save submitted reports to the database** f43aa71
     - [x] Write tests for saving reports
     - [x] Implement logic to save reports to the database in the API endpoint
-- [ ] **Task: Conductor - User Manual Verification 'Phase 2: Database Integration' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Phase 2: Database Integration' (Protocol in workflow.md)** [checkpoint: 4f58e0c]
 
 ## Phase 3: TRACS-compliant Data Extraction and Confidence Scoring
 
