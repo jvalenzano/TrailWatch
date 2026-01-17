@@ -16,9 +16,9 @@
 
 ## Phase 2: Database Integration
 
-- [ ] **Task: Set up database connection**
-    - [ ] Write tests for database connection
-    - [ ] Implement database connection using SQLAlchemy
+- [x] **Task: Set up database connection** 5d96d4b
+    - [x] Write tests for database connection
+    - [x] Implement database connection using SQLAlchemy
 - [ ] **Task: Create SQLAlchemy models for reports**
     - [ ] Write tests for SQLAlchemy models
     - [ ] Implement SQLAlchemy models for `HazardReport`
