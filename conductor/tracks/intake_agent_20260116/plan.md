@@ -22,9 +22,9 @@
 - [x] **Task: Create SQLAlchemy models for reports** ce8a717
     - [x] Write tests for SQLAlchemy models
     - [x] Implement SQLAlchemy models for `HazardReport`
-- [ ] **Task: Save submitted reports to the database**
-    - [ ] Write tests for saving reports
-    - [ ] Implement logic to save reports to the database in the API endpoint
+- [x] **Task: Save submitted reports to the database** f43aa71
+    - [x] Write tests for saving reports
+    - [x] Implement logic to save reports to the database in the API endpoint
 - [ ] **Task: Conductor - User Manual Verification 'Phase 2: Database Integration' (Protocol in workflow.md)**
 
 ## Phase 3: TRACS-compliant Data Extraction and Confidence Scoring
