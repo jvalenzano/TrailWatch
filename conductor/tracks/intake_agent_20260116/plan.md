@@ -12,7 +12,7 @@
 - [x] **Task: Create API endpoint for report submission** 6c2cbfb
     - [x] Write tests for `POST /api/v1/reports` endpoint
     - [x] Implement `POST /api/v1/reports` endpoint
-- [ ] **Task: Conductor - User Manual Verification 'Phase 1: API Endpoint and Basic Data Ingestion' (Protocol in workflow.md)**
+- [x] **Task: Conductor - User Manual Verification 'Phase 1: API Endpoint and Basic Data Ingestion' (Protocol in workflow.md)** [checkpoint: 0719ee0]
 
 ## Phase 2: Database Integration
 
