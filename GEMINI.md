@@ -23,9 +23,9 @@ TrailWatch is a citizen crowdsourcing platform for US Forest Service trail condi
 ### Platform
 - **Cloud Provider:** Google Cloud Platform (GCP) only
 - **Compute:** Cloud Run (serverless containers)
-- **Database:** BigQuery (analytics), Cloud SQL PostgreSQL + PostGIS (operational)
-- **AI/ML:** Vertex AI (model serving), Gemini Pro/Flash (inference)
-- **Maps:** Google Maps Platform (visualization), PostGIS (spatial operations)
+- **Database:** PostgreSQL 17 (Operational + Vectors + JSONB), BigQuery (Cold Archive only)
+- **AI/ML:** Local LLMs (Llama 3, Mistral) via Ollama/vLLM; Vertex AI (Gemini) for high-compliance tasks only
+- **Maps:** MapLibre GL JS + Protomaps (Basemaps), Contour/Three.js (3D), PostGIS (Spatial Logic)
 - **Storage:** Cloud Storage (photos, exports)
 - **Auth:** Firebase Auth or Cloud Identity (citizen), IAM (internal)
 
@@ -130,12 +130,11 @@ httpx>=0.26.0
 │  │   mapping   │  │   adjustment│  │   recommend │             │
 │  └─────────────┘  └─────────────┘  └─────────────┘             │
 │                                                                 │
-│  Tools available to all agents:                                 │
-│  • ridb_lookup: Query RIDB API for trail validation             │
-│  • geo_snap: Snap GPS point to nearest trail geometry           │
-│  • weather_check: Get recent weather for context                │
-│  • duplicate_check: Find similar reports in database            │
-│  • tracs_map: Map free text to TRACS categories                 │
+│  TOOLS (Model Context Protocol - MCP)                           │
+│  • mcp_trail_lookup: Query Overpass/OSM for trailheads          │
+│  • mcp_snap_engine: PostGIS topology snapping                   │
+│  • mcp_tracs_classifier: Local Llama/Mistral classification     │
+│  • mcp_weather: NOAA weather lookups                            │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -409,7 +408,7 @@ Response 201:
 ### Forbidden Libraries
 ```python
 # Do NOT add these to requirements
-openai          # Use Vertex AI / Gemini
+openai          # Use Llama 3 / Mistral / Vertex Gemini
 langchain       # Use Google ADK
 sqlite3         # Use PostgreSQL + PostGIS
 flask           # Use FastAPI
