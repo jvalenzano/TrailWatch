@@ -9,9 +9,9 @@
 - [x] **Task: Define Pydantic models for report submission** 6e2d5f3
     - [x] Write tests for Pydantic models
     - [x] Implement Pydantic models for `ReportIn` and `ReportOut`
-- [ ] **Task: Create API endpoint for report submission**
-    - [ ] Write tests for `POST /api/v1/reports` endpoint
-    - [ ] Implement `POST /api/v1/reports` endpoint
+- [x] **Task: Create API endpoint for report submission** 6c2cbfb
+    - [x] Write tests for `POST /api/v1/reports` endpoint
+    - [x] Implement `POST /api/v1/reports` endpoint
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1: API Endpoint and Basic Data Ingestion' (Protocol in workflow.md)**
 
 ## Phase 2: Database Integration
