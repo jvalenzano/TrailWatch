@@ -1,0 +1,19 @@
+[project]
+name = "trailwatch"
+version = "0.1.0"
+description = "TrailWatch: Citizen crowdsourcing for USFS trail maintenance"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "sqlalchemy",
+    "google-cloud-aiplatform",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
