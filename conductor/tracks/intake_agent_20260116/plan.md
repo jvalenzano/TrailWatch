@@ -19,9 +19,9 @@
 - [x] **Task: Set up database connection** 5d96d4b
     - [x] Write tests for database connection
     - [x] Implement database connection using SQLAlchemy
-- [ ] **Task: Create SQLAlchemy models for reports**
-    - [ ] Write tests for SQLAlchemy models
-    - [ ] Implement SQLAlchemy models for `HazardReport`
+- [x] **Task: Create SQLAlchemy models for reports** ce8a717
+    - [x] Write tests for SQLAlchemy models
+    - [x] Implement SQLAlchemy models for `HazardReport`
 - [ ] **Task: Save submitted reports to the database**
     - [ ] Write tests for saving reports
     - [ ] Implement logic to save reports to the database in the API endpoint
