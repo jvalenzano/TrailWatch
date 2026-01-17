@@ -47,5 +47,6 @@ def test_create_report(setup_db_for_api_tests):
     db = TestingSessionLocal()
     saved_report = db.query(HazardReport).filter(HazardReport.id == data["report_id"]).first()
     assert saved_report is not None
-    assert saved_report.tracs_category == "clearing"
+    assert saved_report.tracs_category == "CLR"
+    assert saved_report.tracs_category_name == "Clearing"
     db.close()
