@@ -38,8 +38,8 @@
 - [x] **Task: Store TRACS category and confidence score in the database**
     - [x] Write tests for storing TRACS data
     - [x] Update database saving logic to include TRACS category and confidence score
-- [ ] **Task: Implement GPS boundary validation (ADR-001)**
-    - [ ] Create `src/trailwatch/validators.py` with USFS region bounding boxes  
-    - [ ] Add validation call to `reports.py` (return 400 for invalid coords)
-    - [ ] Write tests in `tests/test_validators.py` (valid/invalid cases)
-- [ ] **Task: Conductor - User Manual Verification 'Phase 3: TRACS-compliant Data Extraction and Confidence Scoring' (Protocol in workflow.md)**
+- [x] **Task: Implement GPS boundary validation (ADR-001)**
+    - [x] Create `src/trailwatch/validators.py` with USFS region bounding boxes  
+    - [x] Add validation call to `reports.py` (return 400 for invalid coords)
+    - [x] Write tests in `tests/test_validators.py` (valid/invalid cases)
+- [x] **Task: Conductor - User Manual Verification 'Phase 3: TRACS-compliant Data Extraction and Confidence Scoring' (Protocol in workflow.md)** [checkpoint: 3eb7f41dff292791b974e5e5c4a9d25e54a4fe29]
