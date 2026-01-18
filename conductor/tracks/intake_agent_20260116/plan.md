@@ -29,13 +29,17 @@
 
 ## Phase 3: TRACS-compliant Data Extraction and Confidence Scoring
 
-- [~] **Task: Implement logic to extract TRACS category from report description**
-    - [ ] Write tests for TRACS category extraction
-    - [ ] Implement TRACS category extraction logic (e.g., using a local LLM or keyword matching)
-- [ ] **Task: Implement confidence scoring**
-    - [ ] Write tests for confidence scoring
-    - [ ] Implement confidence scoring logic based on `CONFIDENCE_WEIGHTS`
-- [ ] **Task: Store TRACS category and confidence score in the database**
-    - [ ] Write tests for storing TRACS data
-    - [ ] Update database saving logic to include TRACS category and confidence score
+- [x] **Task: Implement logic to extract TRACS category from report description**
+    - [x] Write tests for TRACS category extraction
+    - [x] Implement TRACS category extraction logic (e.g., using a local LLM or keyword matching)
+- [x] **Task: Implement confidence scoring**
+    - [x] Write tests for confidence scoring
+    - [x] Implement confidence scoring logic based on `CONFIDENCE_WEIGHTS`
+- [x] **Task: Store TRACS category and confidence score in the database**
+    - [x] Write tests for storing TRACS data
+    - [x] Update database saving logic to include TRACS category and confidence score
+- [ ] **Task: Implement GPS boundary validation (ADR-001)**
+    - [ ] Create `src/trailwatch/validators.py` with USFS region bounding boxes  
+    - [ ] Add validation call to `reports.py` (return 400 for invalid coords)
+    - [ ] Write tests in `tests/test_validators.py` (valid/invalid cases)
 - [ ] **Task: Conductor - User Manual Verification 'Phase 3: TRACS-compliant Data Extraction and Confidence Scoring' (Protocol in workflow.md)**

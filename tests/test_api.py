@@ -6,8 +6,6 @@ from src.trailwatch.main import app
 from src.trailwatch.models_sqlalchemy import Base, HazardReport
 from src.trailwatch.core.config import settings
 
-client = TestClient(app)
-
 @pytest.fixture(scope="module")
 def setup_db_for_api_tests():
     engine = create_engine(settings.database_url)
@@ -19,6 +17,10 @@ def setup_db_for_api_tests():
 
 def test_create_report(setup_db_for_api_tests):
     TestingSessionLocal = setup_db_for_api_tests
+    
+    # Initialize TestClient after database setup
+    client = TestClient(app)
+    
     response = client.post(
         "/api/v1/reports",
         json={
@@ -49,4 +51,5 @@ def test_create_report(setup_db_for_api_tests):
     assert saved_report is not None
     assert saved_report.tracs_category == "CLR"
     assert saved_report.tracs_category_name == "Clearing"
+    assert saved_report.confidence_score == 0.50
     db.close()

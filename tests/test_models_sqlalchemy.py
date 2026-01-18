@@ -24,7 +24,7 @@ def test_create_hazard_report(setup_db):
         tracs_category_name="Clearing",
         severity="SEV2",
         severity_name="MAINTENANCE_NEEDED",
-        confidence_score=87,
+        confidence_score=0.87,
         confidence_factors={"has_photo": True},
         recommended_action="Schedule clearing crew",
         assigned_to="coordinator",

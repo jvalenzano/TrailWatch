@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import declarative_base
 from datetime import datetime
@@ -14,7 +14,7 @@ class HazardReport(Base):
     tracs_category_name = Column(String, nullable=False)
     severity = Column(String, nullable=False)
     severity_name = Column(String, nullable=False)
-    confidence_score = Column(Integer, nullable=False)
+    confidence_score = Column(Float, nullable=False)
     confidence_factors = Column(JSONB)
     recommended_action = Column(String)
     similar_reports = Column(JSONB)
