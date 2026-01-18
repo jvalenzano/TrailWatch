@@ -1,5 +1,27 @@
 # TrailWatch
 
+## TL;DR — Critical Context (Read First)
+
+**Project:** Citizen crowdsourcing platform for USFS trail condition reporting with AI-powered triage.
+
+**Current Phase:** Project 1 (Intake Agent) complete. Next: Trail Validation Service per ADR-001.
+
+**Tech Stack Essentials:**
+- Backend: Python 3.11+ / FastAPI / PostgreSQL 17 + PostGIS
+- AI: Google ADK (NOT LangChain), Local LLMs (Llama/Mistral), Vertex AI Gemini
+- Frontend: React 18+ / TypeScript / MapLibre GL JS
+
+**Critical ADRs:**
+- **ADR-001:** Trail Validation Architecture — Use USFS Geodata + PostGIS for GPS validation (blocks Project 2)
+
+**Constraints:**
+- Never use: OpenAI, LangChain, SQLite, Flask, requests
+- Always: Type hints, Google-style docstrings, pytest, 80% coverage, async for external APIs
+
+**Priority Queue:** See `conductor/NEXT.md` for current track decisions.
+
+---
+
 ## Overview
 
 TrailWatch is a citizen crowdsourcing platform for US Forest Service trail condition reporting with AI-powered triage. It transforms unstructured citizen reports into actionable intelligence for USFS rangers and volunteer coordinators.

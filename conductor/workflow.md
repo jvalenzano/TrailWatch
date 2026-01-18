@@ -9,35 +9,30 @@
 5. **User Experience First:** Every decision should prioritize user experience
 6. **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
 
-## Track Creation Protocol
+## Track Initiation (Human-Driven)
 
-Before creating a new track, the following checks must be performed in order:
+> **Note:** Track selection is a strategic decision made by the developer, not Conductor.
+> Conductor excels at tactical execution once given a clear assignment.
 
-1. **Review Project Status:**
-   - Read `GEMINI.md` to understand overall project phases and goals
-   - Check `conductor/tracks.md` to see which tracks are complete or in-progress
+### Before Starting a New Track
 
-2. **Check Architecture Decision Records (ADRs):**
-   - **REQUIRED:** Review `docs/adr/` directory for architectural decisions
-   - Read any ADRs that may affect project implementation order
-   - Example: ADR-001 specifies Trail Validation Service is required before Status Dashboard
+The developer (not Conductor) performs strategic planning:
 
-3. **Review User Journeys:**
-   - Read `docs/USER_JOURNEYS.md` to understand user workflow dependencies
-   - Identify which user stories are blocked by missing infrastructure
+1. Review `conductor/NEXT.md` for the current priority queue
+2. Consult `docs/adr/` for architectural dependencies  
+3. Update `NEXT.md` with the selected track and rationale
 
-4. **Propose Track with Justification:**
-   - Present the proposed track name and scope
-   - Explain why this track should be implemented next
-   - Reference any ADRs or dependencies that influenced the decision
-   - Ask for user confirmation before proceeding
+### Starting a Track
 
-**Example:**
+Command Conductor with an explicit assignment:
+
 ```
-Based on ADR-001, the Trail Validation Service track is needed before Project 2 
-(Status Dashboard) because it provides GPS trail snapping infrastructure required 
-for accurate map displays. Shall I create trail_validation_service_20260117?
+/conductor:new Track: Trail Validation Service — Implement PostGIS-based 
+GPS-to-trail snapping per ADR-001. Load USFS Geodata, create spatial queries,
+enhance confidence scoring.
 ```
+
+Conductor then generates `spec.md` and `plan.md` based on this assignment.
 
 ## Task Workflow
 
