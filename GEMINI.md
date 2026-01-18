@@ -425,6 +425,8 @@ requests        # Use httpx (async support)
 
 ## Project Phases
 
+**NOTE:** Before implementing any project, check `docs/adr/` for architectural decisions that may affect implementation order or dependencies.
+
 ### Project 1: Intake Agent
 - **Goal:** Accept citizen reports, extract structured data, map to TRACS
 - **Input:** Raw citizen submission (text, photo, GPS)
@@ -455,14 +457,26 @@ requests        # Use httpx (async support)
 - **Output:** Prioritized maintenance queue with reasoning
 - **Success:** Rangers agree with top 10 priorities 80%+ of the time
 
+## Architecture Decision Records (ADRs)
+
+**IMPORTANT:** Before creating new tracks or making architectural decisions, always check `docs/adr/` for existing decisions.
+
+Current ADRs:
+- **ADR-001:** Trail Validation Architecture (RIDB vs USFS Geodata + PostGIS)
+  - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
+  - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
+  - Status: Intake Agent has boundary validation only; full trail snapping pending
+
+Template: `docs/adr/ADR-000-template.md`
+
 ## References
 
+- **Architecture Decisions:** `docs/adr/` directory (check before planning)
+- **User Journeys:** `docs/USER_JOURNEYS.md` (user workflow requirements)
 - TRACS User Guide: USFS Trail Assessment methodology
-- RIDB API Documentation: https://ridb.recreation.gov/docs
 - USFS Geodata Clearinghouse: https://data.fs.usda.gov/geodata/
 - Google ADK Documentation: https://google.github.io/adk-docs/
-- Research Findings: /Research/Research-Findings.md
-- Product Insights: /Research/Product-Insights.md
+- PostGIS Documentation: https://postgis.net/
 
 ---
 
