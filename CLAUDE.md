@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 TrailWatch is a citizen crowdsourcing platform for USFS trail maintenance. It combines a React/TypeScript frontend with a FastAPI/PostgreSQL backend, featuring AI-powered trail validation using PostGIS geospatial data.
 
-**Current Status:** Phase 3 (Moderate Mode UI) complete on branch `feature/dashboard-phase-3-moderate`. The frontend has three progressive UI modes: Traditional (list-based), Moderate (AI transparency), and Agentic (map-first with spatial insights).
+**Current Status:** Phase 6 (Streaming Extraction) complete on branch `develop`. The frontend has three progressive UI modes: Traditional (list-based), Moderate (AI transparency), and Agentic (map-first with spatial insights and streaming extraction).
 
 ## Build & Development Commands
 
