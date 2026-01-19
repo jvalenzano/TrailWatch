@@ -42,7 +42,18 @@ Build a React-based ranger dashboard that consumes the Intake Agent API and supp
 | Moderate | List primary (60%), Map secondary (40%) | Visible (confidence, reasoning, badges) | AI transparency layer |
 | Agentic | Map primary (50%), Sidebar (25%), List (25%) | Full | Spatial insights, batch operations |
 
-## 7. Reference Documents
+## 7. Style Guidelines
+
+Reference: `conductor/code_styleguides/ui-skills.md`
+
+Key Constraints:
+- **Tailwind Defaults:** Use default configuration unless custom values are explicitly requested.
+- **Accessibility:** Use Radix/Base UI/React Aria for accessible interactive primitives.
+- **Layout:** Use `h-dvh` instead of `h-screen`.
+- **Animations:** No animations unless explicitly requested. If requested, use `motion/react` (compositor props only) or `tw-animate-css`.
+- **Performance:** No layout animations.
+
+## 8. Reference Documents
 
 - `docs/UI/TrailWatch_UI_Strategy.md` — Strategic rationale
 - `docs/UI/trailwatch-component-architecture.md` — Component structure
