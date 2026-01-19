@@ -25,9 +25,9 @@
 
 - [x] **Task: Create API utilities** [e60e5b6]
     - [x] Implement `src/utils/api.ts` with fetch wrapper and error handling
-- [ ] **Task: Create mock data**
-    - [ ] Create `src/mocks/reports.json` (15-20 sample reports)
-    - [ ] Create `src/mocks/crews.json` (5 sample crews)
+- [x] **Task: Create mock data** [e9617b6]
+    - [x] Create `src/mocks/reports.json` (15-20 sample reports)
+    - [x] Create `src/mocks/crews.json` (5 sample crews)
 - [ ] **Task: Implement data hooks**
     - [ ] Implement `src/hooks/useReports.ts` (fetch, filter, sort)
     - [ ] Implement `src/hooks/useExtraction.ts` (trigger extraction)
