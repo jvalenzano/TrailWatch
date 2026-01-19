@@ -32,7 +32,7 @@
     - [x] Implement `src/hooks/useReports.ts` (fetch, filter, sort)
     - [x] Implement `src/hooks/useExtraction.ts` (trigger extraction)
     - [x] Implement `src/hooks/useCrews.ts` (fetch crews)
-- [x] **Task: Verify hooks work with mock data**
+- [x] **Task: Verify hooks work with mock data** [f381eda]
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1: Core Data Layer'**
 
 ## Phase 2: Traditional Mode UI
