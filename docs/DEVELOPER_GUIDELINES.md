@@ -36,7 +36,7 @@ We strive for a **"Local-First"** environment (Docker, local LLMs) that mirrors 
 *   **Known Bug**: Avoid using YOLO mode (`--yolo` or `Ctrl+Y`) for long-running Conductor implementation tracks (e.g., `/conductor:implement`). There is a known scheduler bug (Jan 2026) that causes stalls in this mode.
 *   **Recovery**: If the CLI freezes, use `kill -9` to terminate the process and restart without YOLO mode.
 *   **Authentication Errors**: If you encounter a `invalid_rapt` error, run `gcloud auth login` followed by `gcloud auth application-default login` to refresh credentials.
-*   **Autonomous Workflow Example**: When starting an implementation track, use a prompt that mandates autonomy to prevent unnecessary pauses:
+*   **Autonomous Workflow Example**: When starting an implementation track, use a prompt that mandates autonomy to prevent unnecessary pauses (see [ADR-003](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/adr/ADR-003-autonomous-execution-patterns.md)):
     ```text
     /conductor:implement <track_id>
     Operate with FULL AUTONOMY and programmatically drive this track to completion. 

@@ -45,6 +45,8 @@ Conductor then generates `spec.md` and `plan.md` based on this assignment.
 > 1. Run in **Interactive Mode** (approval required for each step).
 > 2. Enable the sandbox: Start the CLI with `gemini --sandbox` or set `export GEMINI_SANDBOX=true`.
 > 3. If the CLI freezes, kill the process with `kill -9` and restart without YOLO mode.
+>
+> For details on autonomous/programmatic execution patterns, see [ADR-003](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/adr/ADR-003-autonomous-execution-patterns.md).
 
 ## Task Workflow
 

@@ -488,6 +488,10 @@ Current ADRs:
   - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
   - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
   - Status: Intake Agent has boundary validation only; full trail snapping pending
+- **ADR-003:** Autonomous Execution Patterns (Gemini CLI YOLO + Sandbox)
+  - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
+  - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
+  - Status: Implemented; guidelines updated for YOLO/Sandbox stability
 
 Template: `docs/adr/ADR-000-template.md`
 
@@ -512,6 +516,19 @@ Template: `docs/adr/ADR-000-template.md`
 1.  **Disable YOLO Mode:** Run commands in standard interactive mode.
 2.  **Enable Sandbox:** Start the CLI with `gemini --sandbox` or set `export GEMINI_SANDBOX=true` before running to ensure file operations are not blocked.
 3.  **Process Recovery:** If a freeze occurs, kill the process using `kill -9` and restart without the `--yolo` flag.
+
+For a strategic overview of autonomous execution, see [ADR-003](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/adr/ADR-003-autonomous-execution-patterns.md).
+
+### GCP Authentication Errors (`invalid_rapt`)
+
+**Symptom:** API Error: `{"error":"invalid_grant","error_description":"reauth related error (invalid_rapt)"}`.
+
+**Cause:** Google Cloud security policies require a fresh login (Reauthentication Prompt), often due to session expiry or MFA requirements.
+
+**Solution:**
+1.  Run `gcloud auth login` and follow the browser prompts.
+2.  Run `gcloud auth application-default login` to refresh the credentials used by the Gemini CLI.
+3.  Restart the Gemini CLI.
 
 ---
 
