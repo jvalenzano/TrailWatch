@@ -70,8 +70,12 @@
 - [x] **Task: Debug and document silent React crash**
     - [x] Identify SyntaxError in `report.ts` and fix broken string literal
     - [x] Document "Silent Module Failure" in troubleshooting guide
-- [ ] **Task: Verify mode switching preserves state**
-- [ ] **Task: Conductor - User Manual Verification 'Phase 3: Moderate Mode UI'**
+- [x] **Task: Verify mode switching preserves state** [docs/uat/phase3-mode-switching-test.md]
+    - Mode switching works correctly (moderate → traditional → agentic → moderate)
+    - AI features show/hide correctly per mode
+    - Zero console errors during all transitions
+    - All 34 unit tests pass
+- [~] **Task: Conductor - User Manual Verification 'Phase 3: Moderate Mode UI'** — Pending Human Sign-Off
 
 ## Phase 4: Agentic Mode UI
 
