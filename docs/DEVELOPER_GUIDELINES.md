@@ -35,6 +35,12 @@ We strive for a **"Local-First"** environment (Docker, local LLMs) that mirrors 
 *   **Stability**: Always enable the sandbox via CLI flag (`--sandbox`) or environment variable (`GEMINI_SANDBOX=true`) to isolate file operations and prevent environment-related stalls.
 *   **Known Bug**: Avoid using YOLO mode (`--yolo` or `Ctrl+Y`) for long-running Conductor implementation tracks (e.g., `/conductor:implement`). There is a known scheduler bug (Jan 2026) that causes stalls in this mode.
 *   **Recovery**: If the CLI freezes, use `kill -9` to terminate the process and restart without YOLO mode.
+*   **Autonomous Workflow Example**: When starting an implementation track, use a prompt that mandates autonomy to prevent unnecessary pauses:
+    ```text
+    /conductor:implement <track_id>
+    Operate with FULL AUTONOMY and programmatically drive this track to completion. 
+    Review ADRs and specs before writing code. Go.
+    ```
 
 ---
 
