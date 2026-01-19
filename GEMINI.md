@@ -56,7 +56,7 @@ TrailWatch is a citizen crowdsourcing platform for US Forest Service trail condi
 - **API Framework:** FastAPI
 - **Agent Framework:** Google ADK (Agent Development Kit)
 - **Frontend:** React 18+ with TypeScript
-- **Mapping:** Google Maps JavaScript API, deck.gl for data layers
+- **Mapping:** MapLibre GL JS + Protomaps (see ADR-002)
 - **Mobile:** React Native or PWA (TBD in Phase 2)
 
 ### Key Dependencies
@@ -488,6 +488,10 @@ Current ADRs:
   - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
   - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
   - Status: Intake Agent has boundary validation only; full trail snapping pending
+- **ADR-002:** Map Library Selection (Google Maps vs MapLibre)
+  - Decision: Use MapLibre GL JS + Protomaps/PMTiles for web mapping
+  - Impact: Enables offline capability; requires tile source configuration
+  - Status: Accepted; frontend workflow updated
 - **ADR-003:** Autonomous Execution Patterns (Gemini CLI YOLO + Sandbox)
   - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
   - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
@@ -499,10 +503,15 @@ Template: `docs/adr/ADR-000-template.md`
 
 - **Architecture Decisions:** `docs/adr/` directory (check before planning)
 - **User Journeys:** `docs/USER_JOURNEYS.md` (user workflow requirements)
+- **Frontend Specifications:**
+  - `docs/UI/TrailWatch_UI_Strategy.md` — Strategic rationale for agentic UI
+  - `docs/UI/trailwatch-component-architecture.md` — Component structure and interfaces
+  - `docs/UI/trailwatch-frontend-track.md` — Phase definitions and checkpoint criteria
 - TRACS User Guide: USFS Trail Assessment methodology
 - USFS Geodata Clearinghouse: https://data.fs.usda.gov/geodata/
 - Google ADK Documentation: https://google.github.io/adk-docs/
 - PostGIS Documentation: https://postgis.net/
+- MapLibre GL JS Documentation: https://maplibre.org/maplibre-gl-js/docs/
 
 ## Troubleshooting
 

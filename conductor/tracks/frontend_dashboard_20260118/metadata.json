@@ -1,0 +1,11 @@
+{
+    "track_id": "frontend_dashboard_20260118",
+    "type": "feature",
+    "status": "new",
+    "created_at": "2026-01-18T20:00:00Z",
+    "updated_at": "2026-01-18T20:51:00Z",
+    "description": "Build a React-based ranger dashboard with three UI modes (Traditional, Moderate, Agentic) that consumes the Intake Agent API and enables progressive disclosure of AI capabilities.",
+    "dependencies": [
+        "intake_agent_20260116"
+    ]
+}
