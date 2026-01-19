@@ -9,6 +9,7 @@
 5.  **User Experience First:** Every decision should prioritize user experience
 6.  **Sandboxing Preferred:** Enable the sandbox via CLI flag (`--sandbox`) or environment variable (`GEMINI_SANDBOX=true`) to isolate file operations and prevent environment-related stalls.
 7.  **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
+8.  **Agent Protocol:** All agents MUST follow `docs/onboarding/AGENT_PROTOCOL.md`.
 
 ## Track Initiation (Human-Driven)
 
@@ -77,7 +78,12 @@ All tasks follow a strict lifecycle:
    ```
    Target: >80% coverage for new code. The specific tools and commands will vary by language and framework.
 
-7. **Document Deviations:** If implementation differs from tech stack:
+7. **Git Flow Adherence:**
+   - Ensure you are working on a `feature/*` branch.
+   - **NEVER** commit to `main` or `develop` directly.
+   - Refer to [docs/onboarding/GIT_FLOW.md](../docs/onboarding/GIT_FLOW.md) for details.
+
+8. **Document Deviations:** If implementation differs from tech stack:
    - **STOP** implementation
    - Update `tech-stack.md` with new design
    - Add dated note explaining the change

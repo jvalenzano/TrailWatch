@@ -14,9 +14,9 @@ TrailWatch is a citizen crowdsourcing platform for US Forest Service trail condi
 |------|------|--------------|
 | **Volunteer Coordinator** | Manages adopt-a-trail crews (PCTA, local clubs) | Dashboard showing reports on their adopted trails, crew coordination |
 | **USFS Ranger/Trail Manager** | Oversees 100-400 trail miles per district | Triaged reports with severity + recommended action, closure notice drafts |
-| **Citizen Hiker** | Reports trail conditions from the field | Simple mobile form: photo + location + description, under 30 seconds |
+| **Citizen Hiker** | Reports trail conditions via public platforms | Hikers post on AllTrails, Reddit, or partner org sites — no TrailWatch app required |
 
-**Primary users are Coordinators and Rangers, not hikers.** Hikers are data sources; Coordinators and Rangers are decision-makers.
+**Primary users are Coordinators and Rangers, not hikers.** Hikers are data sources (via existing platforms); Coordinators and Rangers are decision-makers.
 
 ## Tech Stack
 
@@ -34,8 +34,8 @@ TrailWatch is a citizen crowdsourcing platform for US Forest Service trail condi
 - **API Framework:** FastAPI
 - **Agent Framework:** Google ADK (Agent Development Kit)
 - **Frontend:** React 18+ with TypeScript
-- **Mapping:** Google Maps JavaScript API, deck.gl for data layers
-- **Mobile:** React Native or PWA (TBD in Phase 2)
+- **Mapping:** MapLibre GL JS + Protomaps (see ADR-004)
+- **Ingestion:** Crawlers for AllTrails/Reddit, Partner APIs (PCTA, ATC), PWA web form (see ADR-005)
 
 ### Key Dependencies
 ```
@@ -60,12 +60,18 @@ httpx>=0.26.0
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  CITIZEN INPUT                                                  │
-│  Mobile app / Web form                                          │
-│  • Photo (optional)                                             │
-│  • GPS coordinates (auto-captured)                              │
-│  • Hazard description (free text)                               │
-│  • Hazard type (dropdown selection)                             │
+│  INGESTION LAYER (ADR-005)                                      │
+├─────────────────┬─────────────────┬─────────────────────────────┤
+│  Public Sources │  Partner APIs   │  Direct Submission          │
+│  • AllTrails    │  • PCTA API     │  • PWA web form             │
+│  • Reddit API   │  • ATC API      │  • Email intake             │
+│  • Strava Metro │  • CDTC API     │  • SMS gateway              │
+└────────┬────────┴────────┬────────┴────────┬────────────────────┘
+         │                 │                 │
+         └─────────────────┴─────────────────┘
+                           │
+┌──────────────────────────┴──────────────────────────────────────┐
+│  (Normalized report: text, photo URL, GPS, source metadata)     │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼

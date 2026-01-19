@@ -32,8 +32,8 @@
 - **API Framework:** FastAPI
 - **Agent Framework:** Google ADK (Agent Development Kit)
 - **Frontend Framework:** React 18+ with TypeScript
-- **Frontend Mapping Library:** Google Maps JavaScript API, deck.gl
-- **Mobile (TBD Phase 2):** React Native or PWA
+- **Frontend Mapping Library:** MapLibre GL JS + Protomaps (see ADR-004)
+- **Ingestion:** Crawlers for AllTrails/Reddit, Partner APIs (PCTA, ATC), PWA web form (see ADR-005)
 
 ## Key Dependencies (Python)
 - `fastapi`

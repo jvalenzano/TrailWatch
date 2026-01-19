@@ -2,24 +2,30 @@
 
 This document outlines the interaction pattern used during the TrailWatch project development. It serves as a reference for the current developers and a handoff guide for future contributors.
 
-## The Core Philosophy: "The Human Drives, the AI Navigates"
-
-The primary goal of this workspace is to facilitate a **teachable exercise**. The Human Developer is learning the platform, the Google CLI, and the Conductor framework.
+## The Core Philosophy: "Antigravity Conducts, Human Supervises"
+ 
+The primary goal of this workspace is to facilitate **accelerated development** while maintaining high standards. The Human Developer supervises the AI Agent (Antigravity), who acts as the primary coder and process conductor.
 
 ### 1. Mentorship Roles
-- **Human (The Driver):** Owns the terminal and the editor. Manages the execution of commands, commits code, and makes final design decisions.
-- **AI (The Mentor):** An expert in the **Gemini CLI** and **Conductor Framework**. Researches documentation, explains Conductor concepts (Tracks, Plans, Context), provides step-by-step guidance, and performs "pre-flight" research to ensure the Driver has the right context.
+- **Human (The Supervisor/Architect):** Reviews artifacts (plans, code), validates verification results (browser, tests), and provides high-level strategic direction (ADRs, Product Goals).
+- **AI (Antigravity - The Conductor & Coder):**  Acts as the "Conductor" agent. Autonomously updates `plan.md`, implements code, runs tests, performs browser verification, and manages the project lifecycle. Provides mentorship on best practices and architecture.
 
 ### 2. Interaction Loop
-1.  **Context Preparation:** AI researches existing specs, codebases, and runbooks.
-2.  **Guidance:** AI provides the specific commands or logic required for the next step.
-3.  **Manual Execution:** The Human runs the command in their own terminal to build muscle memory and understanding.
-4.  **Reflection & Mentorship:** If errors occur or concepts are unclear, the Human asks "Why?" or shares a screenshot, and the AI explains the underlying mechanics.
+1.  **Context & Planning:** Antigravity analyzes context and proposes a plan update or task execution.
+2.  **Execution:** Antigravity writes code, runs commands, and fixes errors autonomously.
+3.  **Verification:** Antigravity uses tools (browser, terminals) to self-verify work.
+4.  **Review:** The Human reviews the work (via "notify_user" or inspecting the app) and provides feedback or approval to proceed.
 
 ### 3. Workflow Principles
-- **No Invisible Magic:** The AI avoides running complex commands automatically unless requested for automation.
-- **Muscle Memory:** Commands are typed/pasted by the human to ensure they understand the toolchain (e.g., `gemini /conductor:...`).
-- **Audit Trail:** Every major logical step is committed by the Human to maintain a clear Git history of the learning journey.
+- **Autonomous Execution:** Antigravity is empowered to write code and run verification tools without constant micromanagement, stopping only for critical design decisions or phase completion.
+- **Traceability:** Antigravity maintains `plan.md` and `task.md` scrupulously to ensure the Human can always see the state of the project.
+- **Muscle Memory (Optional):** The Human may choose to run commands manually for learning, but Antigravity defaults to execution for speed.
 
 ---
-*Created: January 16, 2026*
+
+### 4. Frontend Ownership & Orchestration
+- **Architect (The Supervisor):** Jason. Defines the User Journey and Visual Aesthetic goals.
+- **Conductor (The Builder):** Antigravity. Implements the React/Vite/MapLibre code, manages state, and ensures the build passes.
+- **Shared Responsibility:** Both parties verify the final UI UX.
+
+*Updated: January 18, 2026 (Antigravity Handmax)*

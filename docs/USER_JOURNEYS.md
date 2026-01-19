@@ -8,9 +8,9 @@
 
 ### 1. Citizen Hiker (Sarah)
 - **Role:** Weekend hiker, occasional backpacker
-- **Tech comfort:** Mobile-first, expects app to "just work"
-- **Primary need:** Quick, low-friction way to report trail hazards
-- **Constraints:** Often has limited cell service; wants offline capability
+- **Tech comfort:** Uses AllTrails, posts on Reddit hiking communities
+- **Primary contribution:** Trail condition reports via existing platforms (AllTrails reviews, Reddit posts, partner org reports)
+- **Note:** Sarah does NOT use a TrailWatch app — TrailWatch ingests her public posts (see ADR-005)
 
 ### 2. Volunteer Coordinator (Mike)
 - **Role:** Manages adopt-a-trail crews for PCTA
@@ -33,23 +33,25 @@
 
 **Scenario:** Sarah is 5 miles into a day hike on the Pacific Crest Trail when she encounters a large tree blocking the trail.
 
-**Steps:**
-1. Sarah opens the TrailWatch mobile app
-2. Taps "Report Hazard"
-3. App auto-captures her GPS location (37.123456, -120.654321)
-4. She selects hazard type: "Clearing" (from simple icon-based menu)
-5. Adds a photo of the tree
-6. Types brief description: "Big tree down, can't get around it"
-7. Taps "Submit"
-8. App shows: "Report received! ID: abc-123. Rangers will be notified."
+**Steps (Crowdsource Ingestion Path):**
+1. Sarah finishes her hike and opens AllTrails to log her activity
+2. In her trail review, she writes: "Great hike but BIG TREE DOWN at mile 3.2, had to bushwhack around it. See photo."
+3. She uploads a photo of the tree
+4. AllTrails publishes her review publicly
 
-**Backend touchpoint:** `POST /api/v1/reports` (Phase 1 - COMPLETE)
+**TrailWatch Backend (Automated):**
+5. TrailWatch's AllTrails crawler detects the new review
+6. Intake Agent extracts: GPS (from trail name + mile marker), hazard type ("Clearing"), severity estimate
+7. Report enters triage pipeline
 
-**UI Requirements:**
-- One-tap GPS capture
-- Visual hazard type picker (icons, not text)
-- Camera integration
-- Works offline (queues report for later sync)
+**Alternate Path (Direct Submission via PWA):**
+1. Sarah visits trailwatch.org/report on her phone
+2. Fills out simple form: GPS (auto-captured), hazard type, photo, description
+3. Submits → receives confirmation
+
+**Backend touchpoint:** `POST /api/v1/reports` (Phase 1 - COMPLETE) or Ingestion Service (FUTURE)
+
+**Note:** TrailWatch does NOT have a native mobile app. See ADR-005.
 
 ---
 

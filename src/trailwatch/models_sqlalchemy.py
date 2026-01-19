@@ -14,6 +14,7 @@ class HazardReport(Base):
     tracs_category_name = Column(String, nullable=False)
     severity = Column(String, nullable=False)
     severity_name = Column(String, nullable=False)
+    status = Column(String, nullable=False, default='new')
     confidence_score = Column(Float, nullable=False)
     confidence_factors = Column(JSONB)
     recommended_action = Column(String)

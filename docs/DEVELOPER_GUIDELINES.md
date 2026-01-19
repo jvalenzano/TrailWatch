@@ -43,6 +43,23 @@ We strive for a **"Local-First"** environment (Docker, local LLMs) that mirrors 
     Review ADRs and specs before writing code. Go.
     ```
 
+    ```
+
+    ```
+
+### 7. Git Standard
+*   **Protocol**: We follow a strict 3-branch model (`main`, `develop`, `feature/*`).
+*   **Reference**: Read the full guide at [docs/onboarding/GIT_FLOW.md](onboarding/GIT_FLOW.md).
+*   **Rule**: Always create a `feature/` branch for your work. Never commit to `main`.
+
+---
+
+## Troubleshooting & Common Issues
+
+For guidance on complex failure modes unique to our stack (Vite + ESM + React), refer to the following guides:
+
+*   **[Silent Module Evaluation Failures](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/troubleshooting/silent-module-failures.md)**: What to do when the screen goes blank with zero console errors.
+
 ---
 
 ## Getting Started: The "Pre-Flight" Check

@@ -1,0 +1,12 @@
+{
+    "track_id": "frontend_dashboard_20260118",
+    "type": "feature",
+    "status": "in_progress",
+    "created_at": "2026-01-18T20:00:00Z",
+    "updated_at": "2026-01-18T21:36:00Z",
+    "description": "React-based Ranger Dashboard frontend with three UI modes (Traditional, Moderate, Agentic) for progressive disclosure of AI capabilities. Consumes backend APIs from status_dashboard track.",
+    "dependencies": [
+        "intake_agent_20260116",
+        "status_dashboard_20260118"
+    ]
+}
