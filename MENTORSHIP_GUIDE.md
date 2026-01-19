@@ -22,4 +22,9 @@ The primary goal of this workspace is to facilitate a **teachable exercise**. Th
 - **Audit Trail:** Every major logical step is committed by the Human to maintain a clear Git history of the learning journey.
 
 ---
-*Created: January 16, 2026*
+
+### 4. Frontend Ownership & Orchestration
+- **Owner (The Driver):** Jason. All frontend orchestration and execution for Phase 2-5 will be handled by Jason.
+- **Mentor (The Navigator):** Anti-Gravity. Provides technical guidance, code research, and architectural advice for React, Vite, and MapLibre GL JS implementations.
+
+*Updated: January 18, 2026*
