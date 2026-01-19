@@ -1,18 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1768801211629" clover="3.2.0">
-  <project timestamp="1768801211629" name="All files">
-    <metrics statements="13" coveredstatements="13" conditionals="5" coveredconditionals="4" methods="5" coveredmethods="4" elements="23" coveredelements="21" complexity="0" loc="13" ncloc="13" packages="2" files="3" classes="3"/>
-    <package name="mocks">
-      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="handlers.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/mocks/handlers.ts">
+<coverage generated="1768801426994" clover="3.2.0">
+  <project timestamp="1768801426994" name="All files">
+    <metrics statements="32" coveredstatements="32" conditionals="11" coveredconditionals="10" methods="15" coveredmethods="14" elements="58" coveredelements="56" complexity="0" loc="32" ncloc="32" packages="4" files="10" classes="10"/>
+    <package name="hooks">
+      <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="6" methods="8" coveredmethods="8"/>
+      <file name="useCrews.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/hooks/useCrews.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+      </file>
+      <file name="useExtraction.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/hooks/useExtraction.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="5" count="1" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+      </file>
+      <file name="useReports.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/hooks/useReports.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="15" type="cond" truecount="4" falsecount="0"/>
+        <line num="19" count="13" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="mocks">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <file name="crews.json" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/mocks/crews.json">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="handlers.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/mocks/handlers.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+      <file name="reports.json" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/mocks/reports.json">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
       <file name="server.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/mocks/server.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="4" count="1" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="types">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="crew.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/types/crew.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="report.ts" path="/Users/jvalenzano/Documents/10-TrailWatch/frontend/src/types/report.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
     <package name="utils">
@@ -22,12 +68,12 @@
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
-        <line num="9" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="11" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="7" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="2" type="stmt"/>
         <line num="13" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="15" count="1" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
       </file>
     </package>
   </project>
