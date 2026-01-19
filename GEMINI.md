@@ -56,7 +56,7 @@ TrailWatch is a citizen crowdsourcing platform for US Forest Service trail condi
 - **API Framework:** FastAPI
 - **Agent Framework:** Google ADK (Agent Development Kit)
 - **Frontend:** React 18+ with TypeScript
-- **Mapping:** MapLibre GL JS + Protomaps (see ADR-002)
+- **Mapping:** MapLibre GL JS + Protomaps (see ADR-004)
 - **Mobile:** React Native or PWA (TBD in Phase 2)
 
 ### Key Dependencies
@@ -488,7 +488,11 @@ Current ADRs:
   - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
   - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
   - Status: Intake Agent has boundary validation only; full trail snapping pending
-- **ADR-002:** Map Library Selection (Google Maps vs MapLibre)
+- **ADR-002:** Conductor Workflow Pattern (Human-Driven Orchestration)
+  - Decision: Use Human-in-the-loop driven Conductor workflow
+  - Impact: Enables safe autonomous execution with human approval gates
+  - Status: Accepted
+- **ADR-004:** Map Library Selection (Google Maps vs MapLibre)
   - Decision: Use MapLibre GL JS + Protomaps/PMTiles for web mapping
   - Impact: Enables offline capability; requires tile source configuration
   - Status: Accepted; frontend workflow updated

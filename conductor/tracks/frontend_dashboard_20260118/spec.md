@@ -31,7 +31,7 @@ Build a React-based ranger dashboard that consumes the Intake Agent API and supp
 - **Build:** Vite
 - **Styling:** Tailwind CSS
 - **Data Fetching:** TanStack Query (React Query v5)
-- **Maps:** MapLibre GL JS + Protomaps (per ADR-002)
+- **Maps:** MapLibre GL JS + Protomaps (per ADR-004)
 - **Testing:** Vitest + React Testing Library
 
 ## 6. UI Modes

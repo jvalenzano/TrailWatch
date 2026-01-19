@@ -2,24 +2,24 @@
 
 ## Phase 0: Project Scaffolding
 
-- [ ] **Task: Initialize React project with Vite**
-    - [ ] Run `npm create vite@latest . -- --template react-ts`
-    - [ ] Install core dependencies (tailwindcss, @tanstack/react-query, maplibre-gl)
-    - [ ] Configure Tailwind CSS
-- [ ] **Task: Create directory structure per component architecture**
-    - [ ] Create `src/config/`, `src/types/`, `src/hooks/`, `src/components/`, `src/pages/`, `src/utils/`
-    - [ ] Create placeholder files with TODO comments
-- [ ] **Task: Implement UI mode configuration**
-    - [ ] Create `src/config/ui-modes.ts` with feature flags
-    - [ ] Create `src/hooks/useUIMode.ts` to read mode from URL
-    - [ ] Create `src/components/common/FeatureGate.tsx`
-- [ ] **Task: Implement type definitions**
-    - [ ] Create `src/types/report.ts`, `src/types/crew.ts`, `src/types/spatial.ts`, `src/types/ui.ts`
-- [ ] **Task: Create test page**
-    - [ ] Implement `src/pages/Dashboard.tsx` showing current mode and enabled features
-- [ ] **Task: Verify build and lint**
-    - [ ] Run `npm run build` and `npm run lint`
-- [ ] **Task: Conductor - User Manual Verification 'Phase 0: Project Scaffolding'**
+- [x] **Task: Initialize React project with Vite**
+    - [x] Run `npm create vite@latest . -- --template react-ts`
+    - [x] Install core dependencies (tailwindcss, @tanstack/react-query, maplibre-gl)
+    - [x] Configure Tailwind CSS
+- [x] **Task: Create directory structure per component architecture**
+    - [x] Create `src/config/`, `src/types/`, `src/hooks/`, `src/components/`, `src/pages/`, `src/utils/`
+    - [x] Create placeholder files with TODO comments
+- [x] **Task: Implement UI mode configuration**
+    - [x] Create `src/config/ui-modes.ts` with feature flags
+    - [x] Create `src/hooks/useUIMode.ts` to read mode from URL
+    - [x] Create `src/components/common/FeatureGate.tsx`
+- [x] **Task: Implement type definitions**
+    - [x] Create `src/types/report.ts`, `src/types/crew.ts`, `src/types/spatial.ts`, `src/types/ui.ts`
+- [x] **Task: Create test page**
+    - [x] Implement `src/pages/Dashboard.tsx` showing current mode and enabled features
+- [x] **Task: Verify build and lint**
+    - [x] Run `npm run build` and `npm run lint`
+- [x] **Task: Conductor - User Manual Verification 'Phase 0: Project Scaffolding'**
 
 ## Phase 1: Core Data Layer
 
