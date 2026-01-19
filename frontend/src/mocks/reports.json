@@ -1,4 +1,3 @@
-
 [
   {
     "id": "c1b2a3d4-e5f6-7890-1234-567890abcdef",
@@ -13,7 +12,25 @@
     "photos": [],
     "reporter_type": "volunteer",
     "reporter_organization": "PCTA",
-    "submitted_at": "2026-01-15T10:30:00Z"
+    "submitted_at": "2026-01-15T10:30:00Z",
+    "triage_result": {
+      "tracs_category": "CLR",
+      "tracs_category_name": "Clearing",
+      "severity": "SEV2",
+      "severity_name": "MAINTENANCE_NEEDED",
+      "confidence_score": 0.95,
+      "reasoning": "Large tree (approx 3ft diameter) clearly visible blocking the trail in the provided photo. GPS coordinates align perfectly with Pacific Crest Trail geometry. Description allows for precise volume estimation.",
+      "confidence_factors": {
+        "has_photo": true,
+        "photo_matches_hazard": true,
+        "gps_accurate": true,
+        "description_specific": true,
+        "reporter_trusted": true,
+        "corroborating_reports": 0
+      },
+      "recommended_action": "Dispatch clearing crew with chainsaw.",
+      "similar_reports": []
+    }
   },
   {
     "id": "d2c3b4e5-f6a7-8901-2345-67890abcdef1",
@@ -27,7 +44,26 @@
     "description": "Trail is muddy and flooded in several sections due to recent rain. Passable with care.",
     "photos": [],
     "reporter_type": "anonymous",
-    "submitted_at": "2026-01-16T14:00:00Z"
+    "submitted_at": "2026-01-16T14:00:00Z",
+    "triage_result": {
+      "tracs_category": "DRN",
+      "tracs_category_name": "Drainage",
+      "severity": "SEV1",
+      "severity_name": "INFO_ONLY",
+      "confidence_score": 0.82,
+      "reasoning": "Description describes 'muddy and flooded' conditions consistent with recent heavy rainfall in the region (2.5\" in last 48h). No photo provided, but hazard type matches terrain analysis (low-lying area).",
+      "confidence_factors": {
+        "has_photo": false,
+        "photo_matches_hazard": false,
+        "gps_accurate": true,
+        "description_specific": true,
+        "reporter_trusted": false,
+        "corroborating_reports": 1,
+        "weather_context": "Heavy rain (2.5\")"
+      },
+      "recommended_action": "Monitor; no immediate action required.",
+      "similar_reports": []
+    }
   },
   {
     "id": "e3d4c5f6-a7b8-9012-3456-7890abcdef12",
@@ -42,7 +78,25 @@
     "photos": [],
     "reporter_type": "coordinator",
     "reporter_organization": "ATC",
-    "submitted_at": "2026-01-17T09:00:00Z"
+    "submitted_at": "2026-01-17T09:00:00Z",
+    "triage_result": {
+      "tracs_category": "STR",
+      "tracs_category_name": "Structures",
+      "severity": "SEV3",
+      "severity_name": "CLOSURE_RECOMMENDED",
+      "confidence_score": 0.65,
+      "reasoning": "Report claims 'bridge washout', which is a critical severity event. However, reporter is anonymous and location is 40m off-trail. Satellite imagery shows a bridge nearby, but current water levels are normal.",
+      "confidence_factors": {
+        "has_photo": false,
+        "photo_matches_hazard": false,
+        "gps_accurate": false,
+        "description_specific": true,
+        "reporter_trusted": true,
+        "corroborating_reports": 0
+      },
+      "recommended_action": "Send ranger to inspect immediately.",
+      "similar_reports": []
+    }
   },
   {
     "id": "f4e5d6a7-b8c9-0123-4567-890abcdef123",
@@ -57,7 +111,25 @@
     "photos": [],
     "reporter_type": "volunteer",
     "reporter_organization": "CDTC",
-    "submitted_at": "2026-01-18T11:45:00Z"
+    "submitted_at": "2026-01-18T11:45:00Z",
+    "triage_result": {
+      "tracs_category": "SGN",
+      "tracs_category_name": "Signing",
+      "severity": "SEV1",
+      "severity_name": "INFO_ONLY",
+      "confidence_score": 0.42,
+      "reasoning": "Vague description 'trail marker missing' without specifying which junction or direction. GPS accuracy is low (>50m). Cannot verify against sign inventory without more specific location.",
+      "confidence_factors": {
+        "has_photo": false,
+        "photo_matches_hazard": false,
+        "gps_accurate": false,
+        "description_specific": false,
+        "reporter_trusted": true,
+        "corroborating_reports": 0
+      },
+      "recommended_action": "Request more information from reporter if possible.",
+      "similar_reports": []
+    }
   },
   {
     "id": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",

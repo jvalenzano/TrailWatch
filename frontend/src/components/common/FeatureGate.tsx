@@ -16,14 +16,20 @@ interface FeatureGateProps {
  *
  * Usage:
  * ```tsx
- * <FeatureGate feature="showConfidence">
+ * <FeatureGate feature="enable_confidence_indicators">
  *   <ConfidenceIndicator score={0.87} />
  * </FeatureGate>
  * ```
  */
 export function FeatureGate({ feature, children, fallback = null }: FeatureGateProps) {
-    const { mode } = useUIMode();
-    const isEnabled = mode.features[feature];
+    try {
+        const { mode } = useUIMode();
+        const isEnabled = mode.features[feature] ?? false; // Fail closed if undefined
 
-    return <>{isEnabled ? children : fallback}</>;
+        return <>{isEnabled ? children : fallback}</>;
+    } catch (error) {
+        // Fail-safe: Log error and render fallback (graceful degradation)
+        console.error('[FeatureGate] Failed to resolve mode:', error);
+        return <>{fallback}</>;
+    }
 }

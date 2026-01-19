@@ -41,6 +41,7 @@ export interface TriageResult {
     severity: SeverityCode;
     severity_name: string;
     confidence_score: number;
+    reasoning: string;
     confidence_factors: ConfidenceFactors;
     recommended_action: string;
     similar_reports: string[];

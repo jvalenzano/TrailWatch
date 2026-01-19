@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { ReportList } from './ReportList';
 import type { HazardReport } from '../types/report';
+import { MemoryRouter } from 'react-router-dom';
 
 const mockReports: HazardReport[] = [
   {
@@ -27,13 +28,21 @@ const mockReports: HazardReport[] = [
 
 describe('ReportList', () => {
   it('should render a list of reports', () => {
-    render(<ReportList reports={mockReports} onSelectReport={() => { }} />);
+    render(
+      <MemoryRouter>
+        <ReportList reports={mockReports} onSelectReport={() => { }} />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Report 1')).toBeInTheDocument();
     expect(screen.getByText('Report 2')).toBeInTheDocument();
   });
 
   it('should display a message when no reports are available', () => {
-    render(<ReportList reports={[]} onSelectReport={() => { }} />);
+    render(
+      <MemoryRouter>
+        <ReportList reports={[]} onSelectReport={() => { }} />
+      </MemoryRouter>
+    );
     expect(screen.getByText('No reports found.')).toBeInTheDocument();
   });
 });

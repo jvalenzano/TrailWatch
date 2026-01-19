@@ -2,6 +2,7 @@
 import { render, screen } from '@testing-library/react';
 import { ReportListItem } from './ReportListItem';
 import type { HazardReport } from '../types/report';
+import { MemoryRouter } from 'react-router-dom';
 
 const mockReport: HazardReport = {
   id: '1',
@@ -16,9 +17,13 @@ const mockReport: HazardReport = {
 
 describe('ReportListItem', () => {
   it('should render report details', () => {
-    render(<ReportListItem report={mockReport} />);
+    render(
+      <MemoryRouter>
+        <ReportListItem report={mockReport} />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Tree down across trail')).toBeInTheDocument();
-    expect(screen.getByText('Hazard Type: clearing')).toBeInTheDocument();
-    expect(screen.getByText('Severity: difficult')).toBeInTheDocument();
+    expect(screen.getByText(/Hazard Type: clearing/)).toBeInTheDocument();
+    expect(screen.getByText(/Severity: difficult/)).toBeInTheDocument();
   });
 });

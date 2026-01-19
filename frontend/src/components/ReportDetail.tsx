@@ -2,6 +2,9 @@
 import type { HazardReport } from '../types/report';
 import { ReportActions } from './ReportActions';
 import { CrewSelector } from './CrewSelector';
+import { ExtractionDisplay } from './extraction/ExtractionDisplay';
+import { AIAttributionBadge } from './extraction/AIAttributionBadge';
+import { FeatureGate } from './common/FeatureGate';
 
 interface ReportDetailProps {
   report: HazardReport;
@@ -26,8 +29,18 @@ export function ReportDetail({ report, onAssignCrew, onExtract, onMarkResolved }
         <p className="text-gray-300"><span className="font-semibold text-gray-400">Trail:</span> {report.trail_name || 'Unknown Trail'}</p>
 
         <div className="grid grid-cols-2 gap-4">
-          <p className="text-gray-300"><span className="font-semibold text-gray-400">Hazard:</span> {report.hazard_type}</p>
-          <p className="text-gray-300"><span className="font-semibold text-gray-400">Reporter:</span> {report.reporter_type}</p>
+          <p className="text-gray-300">
+            <span className="font-semibold text-gray-400">Hazard:</span> {report.hazard_type}
+            <FeatureGate feature="enable_ai_attribution_badges">
+              <AIAttributionBadge field="hazard_type" />
+            </FeatureGate>
+          </p>
+          <p className="text-gray-300">
+            <span className="font-semibold text-gray-400">Reporter:</span> {report.reporter_type}
+            <FeatureGate feature="enable_ai_attribution_badges">
+              <AIAttributionBadge field="reporter_type" />
+            </FeatureGate>
+          </p>
         </div>
 
         <div className="bg-gray-900 p-3 rounded border border-gray-700 mt-2">
@@ -37,6 +50,8 @@ export function ReportDetail({ report, onAssignCrew, onExtract, onMarkResolved }
         <p className="text-gray-400 text-sm">
           Submitted: {new Date(report.submitted_at).toLocaleString()}
         </p>
+
+        <ExtractionDisplay report={report} />
       </div>
 
       {report.photos && report.photos.length > 0 && (
@@ -61,9 +76,7 @@ export function ReportDetail({ report, onAssignCrew, onExtract, onMarkResolved }
 
         <div className="mt-4">
           <CrewSelector
-            onSelect={(crewId) => onAssignCrew(report.id, crewId)} // Simplified: Actions button just focuses, CrewSelector assigns?
-          // Actually ReportActions usually has distinct buttons. Let's keep them separate or integrated.
-          // For now, let's just show CrewSelector below actions as "Assignment"
+            onSelect={(crewId) => onAssignCrew(report.id, crewId)}
           />
         </div>
       </div>

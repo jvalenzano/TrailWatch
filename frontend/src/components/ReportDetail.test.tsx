@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { ReportDetail } from './ReportDetail';
 import type { HazardReport } from '../types/report';
 import { vi } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('./CrewSelector', () => ({
   CrewSelector: () => <div data-testid="crew-selector">Crew Selector</div>
@@ -26,14 +27,16 @@ describe('ReportDetail', () => {
   it('should render report details', () => {
     const noop = () => { };
     render(
-      <ReportDetail
-        report={mockReport}
-        onAssignCrew={noop}
-        onExtract={noop}
-        onMarkResolved={noop}
-      />
+      <MemoryRouter>
+        <ReportDetail
+          report={mockReport}
+          onAssignCrew={noop}
+          onExtract={noop}
+          onMarkResolved={noop}
+        />
+      </MemoryRouter>
     );
-    expect(screen.getByText('A large tree has fallen across the trail making it impassable.')).toBeInTheDocument();
+    expect(screen.getByText(/A large tree has fallen across/)).toBeInTheDocument();
     expect(screen.getByTestId('crew-selector')).toBeInTheDocument();
     expect(screen.getByTestId('report-actions')).toBeInTheDocument();
   });

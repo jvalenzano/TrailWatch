@@ -58,15 +58,18 @@
 
 ## Phase 3: Moderate Mode UI
 
-- [ ] **Task: Implement AI transparency components**
-    - [ ] Create `ConfidenceIndicator.tsx` (4-level color system)
-    - [ ] Create `ReasoningPanel.tsx` (expandable "Why?")
-    - [ ] Create `AIBadge.tsx` ("AI Extracted" label)
-    - [ ] Create `ExtractionDisplay.tsx` (wrapper with FeatureGates)
-- [ ] **Task: Update ReportDetail for Moderate mode**
-    - [ ] Add ExtractionDisplay with FeatureGates
-- [ ] **Task: Update ReportListItem for Moderate mode**
-    - [ ] Add inline confidence badge
+- [x] **Task: Implement AI transparency components**
+    - [x] Create `ConfidenceIndicator.tsx` (4-level color system)
+    - [x] Create `ReasoningPanel.tsx` (expandable "Why?")
+    - [x] Create `AIBadge.tsx` ("AI Extracted" label)
+    - [x] Create `ExtractionDisplay.tsx` (wrapper with FeatureGates)
+- [x] **Task: Update ReportDetail for Moderate mode**
+    - [x] Add ExtractionDisplay with FeatureGates
+- [x] **Task: Update ReportListItem for Moderate mode**
+    - [x] Add inline confidence badge
+- [x] **Task: Debug and document silent React crash**
+    - [x] Identify SyntaxError in `report.ts` and fix broken string literal
+    - [x] Document "Silent Module Failure" in troubleshooting guide
 - [ ] **Task: Verify mode switching preserves state**
 - [ ] **Task: Conductor - User Manual Verification 'Phase 3: Moderate Mode UI'**
 

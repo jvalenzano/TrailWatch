@@ -11,11 +11,11 @@ export type UIModeName = 'traditional' | 'moderate' | 'agentic';
 
 export interface UIFeatures {
     /** Show AI confidence indicators on reports */
-    showConfidence: boolean;
+    enable_confidence_indicators: boolean;
     /** Show reasoning panel explaining AI decisions */
-    showReasoning: boolean;
-    /** Show "AI Extracted" badges on data */
-    showAIBadges: boolean;
+    enable_reasoning_panel: boolean;
+    /** Show AI attribution badges on data */
+    enable_ai_attribution_badges: boolean;
     /** Use map as primary UI element (vs list-first) */
     mapPrimary: boolean;
     /** Enable spatial insights sidebar */
@@ -31,7 +31,20 @@ export interface UIMode {
     label: string;
     description: string;
     features: UIFeatures;
+    _metadata?: {
+        created: string;
+        owner: string;
+        sunsetDate: string;
+        purpose: string;
+    };
 }
+
+const PHASE_3_METADATA = {
+    created: '2026-01-18',
+    owner: 'jvalenzano',
+    sunsetDate: '2026-04-18',
+    purpose: 'Phase 3 AI transparency rollout',
+};
 
 export const UI_MODES: Record<UIModeName, UIMode> = {
     traditional: {
@@ -39,9 +52,9 @@ export const UI_MODES: Record<UIModeName, UIMode> = {
         label: 'Traditional',
         description: 'Basic triage workflow without AI visibility',
         features: {
-            showConfidence: false,
-            showReasoning: false,
-            showAIBadges: false,
+            enable_confidence_indicators: false,
+            enable_reasoning_panel: false,
+            enable_ai_attribution_badges: false,
             mapPrimary: false,
             spatialInsights: false,
             batchOperations: false,
@@ -53,28 +66,30 @@ export const UI_MODES: Record<UIModeName, UIMode> = {
         label: 'Moderate',
         description: 'AI transparency layer visible',
         features: {
-            showConfidence: true,
-            showReasoning: true,
-            showAIBadges: true,
+            enable_confidence_indicators: true,
+            enable_reasoning_panel: true,
+            enable_ai_attribution_badges: true,
             mapPrimary: false,
             spatialInsights: false,
             batchOperations: false,
             streamingExtraction: false,
         },
+        _metadata: PHASE_3_METADATA,
     },
     agentic: {
         name: 'agentic',
         label: 'Agentic',
         description: 'Full AI capabilities with map-first layout',
         features: {
-            showConfidence: true,
-            showReasoning: true,
-            showAIBadges: true,
+            enable_confidence_indicators: true,
+            enable_reasoning_panel: true,
+            enable_ai_attribution_badges: true,
             mapPrimary: true,
             spatialInsights: true,
             batchOperations: true,
             streamingExtraction: true,
         },
+        _metadata: PHASE_3_METADATA,
     },
 };
 

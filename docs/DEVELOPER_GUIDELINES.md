@@ -43,6 +43,16 @@ We strive for a **"Local-First"** environment (Docker, local LLMs) that mirrors 
     Review ADRs and specs before writing code. Go.
     ```
 
+    ```
+
+---
+
+## Troubleshooting & Common Issues
+
+For guidance on complex failure modes unique to our stack (Vite + ESM + React), refer to the following guides:
+
+*   **[Silent Module Evaluation Failures](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/troubleshooting/silent-module-failures.md)**: What to do when the screen goes blank with zero console errors.
+
 ---
 
 ## Getting Started: The "Pre-Flight" Check
