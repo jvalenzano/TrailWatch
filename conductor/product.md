@@ -75,8 +75,14 @@ httpx>=0.26.0
 │  • Extracts structured data from free text                      │
 │  • Maps to TRACS categories                                     │
 │  • Assigns initial confidence score                             │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
+│                                                                 │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │ TRAIL VALIDATION SERVICE (Project 2)                       │ │
+│  │  • Validates GPS against USFS Geodata (PostGIS)            │ │
+│  │  • Snaps points to nearest trail linestring                │ │
+│  │  • Provides distance-based confidence score              │ │
+│  └────────────────────────────────────────────────────────────┘ │
+ └────────────────────────┬────────────────────────────────────────┘                         │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │  HAZARD CLASSIFIER (Project 3)                                  │

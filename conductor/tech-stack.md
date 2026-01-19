@@ -42,4 +42,8 @@
 - `sqlalchemy`
 - `geoalchemy2`
 - `pydantic`
+- `asyncpg`
+- `psycopg2-binary`
+- `geopandas`
+- `fiona`
 - `httpx`
