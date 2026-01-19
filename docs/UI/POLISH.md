@@ -4,7 +4,7 @@
 
 The Agentic mode shows strong progress toward a map-first spatial analytics dashboard, but reveals several polish opportunities that undermine the premium feel TrailWatch deserves for government/enterprise forest service use. Here's the prioritized critique with actionable fixes.
 
-### Critical Layout Issues (Fix Today)
+### Critical Layout Issues
 
 **1. Dual Scrollbars + Red Divider Line (P0)**
 ```
@@ -48,7 +48,7 @@ const handleExtract = () => {
 };
 ```
 
-### High Priority Polish (Fix This Week)
+### High Priority Polish
 
 **3. Map Dark Mode Toggle Missing (P1)**
 ```
@@ -127,7 +127,7 @@ Week 3 (P2):
 
 **Positioning:** Agentic mode should feel like "ArcGIS Enterprise + Figma." Spatial analytics for serious forest service pros.
 
-**Benchmark:** Study [Esri Dashboard templates] – clean panels, purposeful whitespace, data hierarchy by severity. [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/images/21316841/8fcd3461-be8b-423d-9bf4-bcae21a978fe/image.jpg?AWSAccessKeyId=ASIA2F3EMEYEYN7ZU63Q&Signature=DWQ%2FoYlxx%2Bf4xPK%2B60WGwhnXo7o%3D&x-amz-security-token=IQoJb3JpZ2luX2VjENL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIEAQWMyDk7jZpCMkSnP4PqQw7N%2FHKh4IN7mFdNKhnuVsAiBTDehAOYwP3NAwNQVf97Xanqtyw7QxaAa2851OI%2Bq8Pir8BAia%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDY5OTc1MzMwOTcwNSIMeHvRbs6wp7rHlr%2BJKtAEoEgdA6xDVxr0q2iLlLo51OuxP8xqPE6bJXWmsSU0Ng84KhraakDLy%2BlgkrPcX5dY038SHbTICZHUt9%2FDWohNkO2uHVBbY2%2F3fumE09NpiyoG2nFAN%2Fe%2FNuUBL0pdYcCSN4K8vZj3YXgyUQN7qCex68zrqdZJJUPrLeoXv4mWllhbx3DZfzWHP1jHFVX66iM88kpNuuYin%2BZ%2FBjJhvEpNBTiL8l%2BvYviBJUXwXnQ57I48gLsmIO6GgofpcvBq5l1RFZlbJZqaCb%2FJrR6M168%2BI8ZTsevXEfydkpUWxN%2BNcPAFaiz82bsBQTXAaCZye67FXb9Lh1rJ2DL2DjD6PSI5PhCKwIUZviYfHtvVbs%2FqRW0D53Qcq6caQuql0Lwp9dzXfUt8ZKhWZJ1xPJNHtORu67NWfdqVQIDzxNlM7BWX5H5HCFgKcXKKlrWaiNSGpm1f%2Fh%2Fh0yoG%2BtBkjogVwv0fNg9DmW%2BFVwn%2BbCk8wDVxuDp9ll5AHRCojJNDj6TG6VMnL3PLgZRnhU1HUDDVHvk9ntqo8tlooSWqpvRXPaPNChyUWCl%2BLU6L1ey8xrm5is6LqsXHz4ZfnkceVaISvhZo1ciBf4eLF7ahxCwGLduM6QvdcGBrw2u56WLS8GUZ4eXzt7sG5mQhDXvysEyb%2BrmGsIOWQ%2FkluV1g4OjERixb8ogxrE%2FDeAl9gP3ovvmI6SEwUhYtD6H95u2DleMTtjs%2BV%2FsRzIHzk1IhyfhLeA2A%2BXvlhgAiOii3aosnQx3T9IUSd%2FJ0vkebCJDg%2FMylqwybHTDtzbnLBjqZAbB5E0WjfuqEpjPuMFkkpWTJq2jvOgYoD%2FK8PEwA4lKH66eivJw3xhBqdGZGle7o305uLMf2QMPMEVtFELg53z7gZXXcbENOpzjm59V2HaBTf7waHoHL0IytO9eBpT0mvlWkCZlvNagKX%2FZjXzUw0Lm1j1k84Xl1mq%2FfVRXRpmelWzat%2Fow%2FmQVs2apcXjRrnIY%2BysI%2FHx8CuQ%3D%3D&Expires=1768845153)
+**Benchmark:** Study [Esri Dashboard templates] – clean panels, purposeful whitespace, data hierarchy by severity. 
 
 **Dark Mode:** Maplibre `osm-bright-dark-gl-style` + consistent app sync = instant polish win.
 

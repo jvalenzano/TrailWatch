@@ -207,20 +207,24 @@ export function MarkerCluster({
 
         // Cleanup on unmount
         return () => {
-            if (map.getLayer(HIGHLIGHTED_LAYER_ID)) {
-                map.removeLayer(HIGHLIGHTED_LAYER_ID);
-            }
-            if (map.getLayer(UNCLUSTERED_LAYER_ID)) {
-                map.removeLayer(UNCLUSTERED_LAYER_ID);
-            }
-            if (map.getLayer(CLUSTER_COUNT_LAYER_ID)) {
-                map.removeLayer(CLUSTER_COUNT_LAYER_ID);
-            }
-            if (map.getLayer(CLUSTER_LAYER_ID)) {
-                map.removeLayer(CLUSTER_LAYER_ID);
-            }
-            if (map.getSource(SOURCE_ID)) {
-                map.removeSource(SOURCE_ID);
+            try {
+                if (map.getLayer(HIGHLIGHTED_LAYER_ID)) {
+                    map.removeLayer(HIGHLIGHTED_LAYER_ID);
+                }
+                if (map.getLayer(UNCLUSTERED_LAYER_ID)) {
+                    map.removeLayer(UNCLUSTERED_LAYER_ID);
+                }
+                if (map.getLayer(CLUSTER_COUNT_LAYER_ID)) {
+                    map.removeLayer(CLUSTER_COUNT_LAYER_ID);
+                }
+                if (map.getLayer(CLUSTER_LAYER_ID)) {
+                    map.removeLayer(CLUSTER_LAYER_ID);
+                }
+                if (map.getSource(SOURCE_ID)) {
+                    map.removeSource(SOURCE_ID);
+                }
+            } catch (error) {
+                console.warn('Error cleaning up MarkerCluster:', error);
             }
         };
     }, [map, reportsToGeoJSON, onReportClick]);
