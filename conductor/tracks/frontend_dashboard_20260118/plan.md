@@ -37,8 +37,8 @@
 
 ## Phase 2: Traditional Mode UI
 
-- [~] **Task: Implement layout components**
-    - [ ] Create `AppShell.tsx`, `Header.tsx`, `ListFirstLayout.tsx`
+- [x] **Task: Implement layout components** [d85dd36]
+    - [x] Create `AppShell.tsx`, `Header.tsx`, `ListFirstLayout.tsx`
 - [ ] **Task: Implement report list**
     - [ ] Create `ReportList.tsx`, `ReportListItem.tsx`, `ReportFilters.tsx`
 - [ ] **Task: Implement report detail**
