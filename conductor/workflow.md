@@ -370,3 +370,11 @@ A task is complete when:
 - Document lessons learned
 - Optimize for user happiness
 - Keep things simple and maintainable
+
+## Non-Interactive Development
+
+To prevent YOLO mode stalls, all development commands must be non-interactive:
+
+1.  **No Manual Passwords:** Never run commands that prompt for passwords (e.g., `psql`). Use environment variables (like `PGPASSWORD`) or configuration files.
+2.  **Tool Flags:** Use non-interactive flags for package managers and setup scripts (e.g., `npx -y ...`).
+3.  **Environment Files:** Ensure `.env` files contain all necessary credentials for automated tools to bypass prompts.

@@ -517,7 +517,37 @@ Template: `docs/adr/ADR-000-template.md`
 2.  **Enable Sandbox:** Start the CLI with `gemini --sandbox` or set `export GEMINI_SANDBOX=true` before running to ensure file operations are not blocked.
 3.  **Process Recovery:** If a freeze occurs, kill the process using `kill -9` and restart without the `--yolo` flag.
 
+### Interactive terminal prompts (YOLO Mode)
+
+**Symptom:** Conductor stalls on a command that requires user input (e.g., `Password for user:`).
+
+**Cause:** Commands that trigger interactive prompts (like `psql` without credentials) block the CLI execution loop.
+
+**Immediate Recovery:**
+1.  **Focus Shell:** Press `Ctrl+f` to focus the CLI terminal, type the input, and press `Enter`.
+2.  **Force Kill:** If stuck, `Ctrl+c` or `kill -9` the process.
+
+**Prevention:**
+1.  **Database:** Use `PGPASSWORD` or a `.pgpass` file.
+2.  **Scripts:** Ensure all scripts run in non-interactive mode (e.g., `npm install --no-interactive`, `psql -w`).
+
 For a strategic overview of autonomous execution, see [ADR-003](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/adr/ADR-003-autonomous-execution-patterns.md).
+
+### PostGIS Extension Not Available
+
+**Symptom:** `psycopg.errors.FeatureNotSupported: extension "postgis" is not available` or `Could not open extension control file ".../postgis.control"`.
+
+**Cause:** 
+1. The PostGIS extension is not installed on the system (Mac/Homebrew).
+2. **Port Hijacking (Docker)**: A Docker container (likely a standard Linux `postgres` image) is running on port 5432, intercepting connections meant for the Homebrew service. The Linux image looks for control files in `/usr/share/postgresql/`, which explains the unexpected path in the error message.
+
+**Solution (Mac/Homebrew):**
+1. Check for running Docker containers: `docker ps`.
+2. Stop any container using port 5432: `docker stop <container_name>`.
+3. If PostGIS still isn't found, install it: `brew install postgis`.
+4. Restart the Homebrew service: `brew services restart postgresql@17`.
+
+**Prevention:** Ensure no background Docker Postgres instances are active when developing with the local PostGIS stack.
 
 ### GCP Authentication Errors (`invalid_rapt`)
 
