@@ -10,10 +10,10 @@ vi.mock('../../hooks/useUIMode', () => ({
 }));
 
 // Helper to create a partial mock mode
-function createMockMode(features: Partial<UIMode['features']>): { mode: UIMode } {
+function createMockMode(features: Partial<UIMode['features']>) {
     return {
         mode: {
-            name: 'moderate',
+            name: 'moderate' as const,
             label: 'Moderate',
             description: 'Test mode',
             features: {
@@ -27,6 +27,8 @@ function createMockMode(features: Partial<UIMode['features']>): { mode: UIMode }
                 ...features,
             },
         },
+        modeName: 'moderate' as const,
+        setMode: vi.fn(),
     };
 }
 

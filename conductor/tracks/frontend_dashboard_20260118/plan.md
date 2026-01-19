@@ -80,22 +80,39 @@
     - AI features show/hide correctly per mode
     - Zero console errors during all transitions
     - All 34 unit tests pass
-- [~] **Task: Conductor - User Manual Verification 'Phase 3: Moderate Mode UI'** — Pending Human Sign-Off
+- [x] **Task: Conductor - User Manual Verification 'Phase 3: Moderate Mode UI'** — Pending Human Sign-Off
+
+## Phase 3.5: Visual Polish (Quick Wins) ✅ MERGED TO MAIN
+
+**Status:** Complete and tagged `v0.3.0` (2026-01-19)
+
+- [x] **Task: Dark Mode Map (P0)**
+    - [x] Implement dynamic MapLibre style switching
+    - [x] Configure dark matter basemap
+- [x] **Task: Confidence Badge Hierarchy (P0)**
+    - [x] Update styling for visual weight
+    - [x] Ensure 4-level color spread
 
 ## Phase 4: Agentic Mode UI
 
-- [ ] **Task: Implement map-first layout**
-    - [ ] Create `MapFirstLayout.tsx` (25% sidebar, 50% map, 25% list)
-- [ ] **Task: Implement spatial insights**
-    - [ ] Create `SpatialInsightsSidebar.tsx`
-    - [ ] Create `src/hooks/useSpatialInsights.ts` (mock data for now)
-    - [ ] Create `src/mocks/insights.json`
-- [ ] **Task: Implement marker clustering**
-    - [ ] Create `MarkerCluster.tsx`
-- [ ] **Task: Implement insight interaction**
-    - [ ] Click insight → zoom map → highlight reports
-- [ ] **Task: Update Dashboard for Agentic mode**
-    - [ ] Render MapFirstLayout when `mode.features.mapPrimary`
+**Status:** Implementation complete (2026-01-19)
+**Awaiting:** Human review and verification
+
+- [x] **Task: Implement map-first layout**
+    - [x] Create `MapFirstLayout.tsx` (25% sidebar, 50% map, 25% list)
+- [x] **Task: Implement spatial insights**
+    - [x] Create `SpatialInsightsSidebar.tsx`
+    - [x] Create `src/hooks/useSpatialInsights.ts` (mock data for now)
+    - [x] Create `src/mocks/insights.json` (8 sample insights)
+- [x] **Task: Implement marker clustering**
+    - [x] Create `MarkerCluster.tsx` (MapLibre GL native clustering)
+- [x] **Task: Implement insight interaction**
+    - [x] Click insight → zoom map → highlight reports
+    - [x] Enhanced MapView with `flyToViewport` prop
+    - [x] Enhanced ReportList with `highlightedReportIds` prop
+- [x] **Task: Update Dashboard for Agentic mode**
+    - [x] Render MapFirstLayout when `mode.features.mapPrimary`
+    - [x] Integrated MarkerCluster for both Traditional and Agentic modes
 - [ ] **Task: Conductor - User Manual Verification 'Phase 4: Agentic Mode UI'** (human review required)
 
 ## Phase 5: Polish and Demo Prep

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "ins-001",
+    "type": "cluster",
+    "title": "Sierra Nevada Clearing Cluster",
+    "description": "3 tree clearing reports within 5 miles. Consider dispatching a single crew for efficiency.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-120.5, 37.2]
+    },
+    "severity": "high",
+    "report_ids": ["c1b2a3d4-e5f6-7890-1234-567890abcdef", "c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8", "i9j0k1l2-m3n4-o5p6-q7r8-s9t0u1v2w3x4"]
+  },
+  {
+    "id": "ins-002",
+    "type": "hotspot",
+    "title": "Drainage Issues - Wonderland Trail",
+    "description": "Recurring drainage problems in this area. 2 reports this month, 5 in past year.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-121.904, 46.786]
+    },
+    "severity": "high",
+    "report_ids": ["d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9"]
+  },
+  {
+    "id": "ins-003",
+    "type": "trend",
+    "title": "Increasing Structure Reports",
+    "description": "Structure-related reports up 40% this quarter. May indicate aging infrastructure.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-112.1435, 36.0584]
+    },
+    "severity": "medium",
+    "report_ids": ["e3d4c5f6-a7b8-9012-3456-7890abcdef12", "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0", "k1l2m3n4-o5p6-q7r8-s9t0-u1v2w3x4y5z6"]
+  },
+  {
+    "id": "ins-004",
+    "type": "anomaly",
+    "title": "Unusual Flood Report - PNW Trail",
+    "description": "Beaver dam flooding reported in area with no prior water issues. Needs verification.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-118.9, 48.9]
+    },
+    "severity": "medium",
+    "report_ids": ["j0k1l2m3-n4o5-p6q7-r8s9-t0u1v2w3x4y5"]
+  },
+  {
+    "id": "ins-005",
+    "type": "cluster",
+    "title": "Signage Issues - CDT Area",
+    "description": "Multiple sign-related reports in Continental Divide Trail region.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-113.4354, 47.563]
+    },
+    "severity": "low",
+    "report_ids": ["f4e5d6a7-b8c9-0123-4567-890abcdef123", "f6g7h8i9-j0k1-l2m3-n4o5-p6q7r8s9t0u1"]
+  },
+  {
+    "id": "ins-006",
+    "type": "hotspot",
+    "title": "Erosion Zone - Grand Canyon",
+    "description": "Persistent erosion on Bright Angel Trail switchbacks. 4th report this season.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-112.1435, 36.0584]
+    },
+    "severity": "medium",
+    "report_ids": ["a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6"]
+  },
+  {
+    "id": "ins-007",
+    "type": "trend",
+    "title": "Tread Degradation Pattern",
+    "description": "Rising tread surface reports across Northeast trails. Seasonal freeze-thaw damage.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-72.784, 44.259]
+    },
+    "severity": "low",
+    "report_ids": ["b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q7", "h8i9j0k1-l2m3-n4o5-p6q7-r8s9t0u1v2w3"]
+  },
+  {
+    "id": "ins-008",
+    "type": "anomaly",
+    "title": "Off-Trail GPS Report",
+    "description": "Report location 40m from nearest trail. May need GPS correction or new trail survey.",
+    "location": {
+      "type": "Point",
+      "coordinates": [-84.1943, 34.6259]
+    },
+    "severity": "low",
+    "report_ids": ["e3d4c5f6-a7b8-9012-3456-7890abcdef12"]
+  }
+]
