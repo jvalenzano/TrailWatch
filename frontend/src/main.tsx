@@ -40,5 +40,6 @@ try {
 
 } catch (syncError) {
   console.error('[MAIN.TSX] Synchronous error:', syncError)
-  document.body.innerHTML = '<h1>Sync Error: ' + syncError.message + '</h1>'
+  const errorMessage = syncError instanceof Error ? syncError.message : String(syncError);
+  document.body.innerHTML = '<h1>Sync Error: ' + errorMessage + '</h1>'
 }
