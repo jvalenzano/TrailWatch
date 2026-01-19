@@ -43,9 +43,9 @@
     - [x] Create `ReportList.tsx`, `ReportListItem.tsx`, `ReportFilters.tsx`
 - [x] **Task: Implement report detail** [3004e76]
     - [x] Create `ReportDetail.tsx`, `ReportActions.tsx`
-- [ ] **Task: Implement crew assignment**
-    - [ ] Create `CrewSelector.tsx`
-- [ ] **Task: Implement map**
+- [x] **Task: Implement crew assignment**
+    - [x] Create `CrewSelector.tsx`
+- [~] **Task: Implement map**
     - [ ] Create `MapView.tsx` (MapLibre wrapper)
     - [ ] Create `ReportMarker.tsx`
 - [ ] **Task: Assemble Dashboard page**

@@ -17,4 +17,13 @@ describe('ReportFilters', () => {
 
     expect(mockOnFilterChange).toHaveBeenCalledWith({ severity: 'difficult' });
   });
+
+  it('should call onFilterChange with undefined when \'All\' is selected', () => {
+    const mockOnFilterChange = vi.fn();
+    render(<ReportFilters onFilterChange={mockOnFilterChange} />);
+
+    fireEvent.change(screen.getByLabelText(/Severity/i), { target: { value: 'all' } });
+
+    expect(mockOnFilterChange).toHaveBeenCalledWith({ severity: undefined });
+  });
 });
