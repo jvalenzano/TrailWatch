@@ -35,7 +35,7 @@
 - [x] **Task: Verify hooks work with mock data** [f381eda]
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1: Core Data Layer'**
 
-## Phase 2: Traditional Mode UI
+## Phase 2: Traditional Mode UI [checkpoint: c93e60a]
 
 - [x] **Task: Implement layout components** [d85dd36]
     - [x] Create `AppShell.tsx`, `Header.tsx`, `ListFirstLayout.tsx`
