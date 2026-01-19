@@ -23,8 +23,8 @@
 
 ## Phase 1: Core Data Layer
 
-- [~] **Task: Create API utilities**
-    - [ ] Implement `src/utils/api.ts` with fetch wrapper and error handling
+- [x] **Task: Create API utilities** [e60e5b6]
+    - [x] Implement `src/utils/api.ts` with fetch wrapper and error handling
 - [ ] **Task: Create mock data**
     - [ ] Create `src/mocks/reports.json` (15-20 sample reports)
     - [ ] Create `src/mocks/crews.json` (5 sample crews)
