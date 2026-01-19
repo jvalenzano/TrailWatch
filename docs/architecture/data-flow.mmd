@@ -1,0 +1,53 @@
+flowchart TD
+    subgraph Ingestion["Ingestion Layer (ADR-005)"]
+        direction TB
+        Public[Public Sources<br/>• AllTrails<br/>• Reddit API<br/>• Strava Metro]
+        Partner[Partner APIs<br/>• PCTA API<br/>• ATC API<br/>• CDTC API]
+        Direct[Direct Submission<br/>• PWA web form<br/>• Email intake<br/>• SMS gateway]
+    end
+
+    NormalizedReport(Normalized report:<br/>text, photo URL, GPS, source metadata)
+
+    subgraph Intake["Intake Agent (Project 1)"]
+        I1[Validates GPS against RIDB trail registry]
+        I2[Extracts structured data from free text]
+        I3[Maps to TRACS categories]
+        I4[Assigns initial confidence score]
+    end
+
+    subgraph Hazard["Hazard Classifier (Project 3)"]
+        H1[Analyzes photo using Gemini Vision]
+        H2[Validates hazard type against image content]
+        H3[Adjusts confidence score based on visual evidence]
+    end
+
+    subgraph Triage["Triage Engine"]
+        T1[Checks for duplicate/similar reports]
+        T2[Weighs by trail popularity]
+        T3[Weighs by hazard severity]
+        T4[Assigns priority:<br/>CLOSURE / MAINTENANCE / INFO_ONLY]
+    end
+
+    subgraph Storage["Storage (BigQuery + PostGIS)"]
+        S1[Raw reports (immutable audit trail)]
+        S2[Triaged reports (enriched, actionable)]
+        S3[Trail registry (synced from RIDB quarterly)]
+        S4[Closure history (for trend analysis)]
+    end
+
+    Coordinator[Coordinator Dashboard<br/>(Project 2)]
+    Ranger[Ranger Dashboard<br/>(Project 2)]
+    Hiker[Hiker Alerts<br/>(Project 4)]
+
+    Public --> NormalizedReport
+    Partner --> NormalizedReport
+    Direct --> NormalizedReport
+
+    NormalizedReport --> Intake
+    Intake --> Hazard
+    Hazard --> Triage
+    Triage --> Storage
+
+    Storage --> Coordinator
+    Storage --> Ranger
+    Storage --> Hiker
