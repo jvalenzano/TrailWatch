@@ -78,7 +78,12 @@ All tasks follow a strict lifecycle:
    ```
    Target: >80% coverage for new code. The specific tools and commands will vary by language and framework.
 
-7. **Document Deviations:** If implementation differs from tech stack:
+7. **Git Flow Adherence:**
+   - Ensure you are working on a `feature/*` branch.
+   - **NEVER** commit to `main` or `develop` directly.
+   - Refer to [docs/onboarding/GIT_FLOW.md](../docs/onboarding/GIT_FLOW.md) for details.
+
+8. **Document Deviations:** If implementation differs from tech stack:
    - **STOP** implementation
    - Update `tech-stack.md` with new design
    - Add dated note explaining the change

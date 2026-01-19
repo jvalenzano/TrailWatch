@@ -45,6 +45,13 @@ We strive for a **"Local-First"** environment (Docker, local LLMs) that mirrors 
 
     ```
 
+    ```
+
+### 7. Git Standard
+*   **Protocol**: We follow a strict 3-branch model (`main`, `develop`, `feature/*`).
+*   **Reference**: Read the full guide at [docs/onboarding/GIT_FLOW.md](onboarding/GIT_FLOW.md).
+*   **Rule**: Always create a `feature/` branch for your work. Never commit to `main`.
+
 ---
 
 ## Troubleshooting & Common Issues

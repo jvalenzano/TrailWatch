@@ -17,6 +17,14 @@ This document outlines the operational protocols, coding standards, and workflow
 - **Direct:** Lists over paragraphs.
 - **Code-First:** Show the diff/code first, explain only if complex/requested.
 
+### Git Workflow (CRITICAL)
+- **Protocol:** Follow [docs/onboarding/GIT_FLOW.md](docs/onboarding/GIT_FLOW.md) strictly.
+- **Branches:**
+  - `main`: Production/Demo only. NO DIRECT COMMITS.
+  - `develop`: Integration testing.
+  - `feature/*`: All active work happens here.
+- **Merge Strategy:** Use `--no-ff` when merging to `develop` to preserve history.
+
 ### Workflow Efficiency
 - **Proactive Fixes:** If you see a syntax error or bug in a file you are touching, fix it.
 - **Clean Workspace:** No `tmp_` files or debug prints (`print()`, `console.log`) in final commits.
