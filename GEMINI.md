@@ -3,6 +3,10 @@
 The documentation has been refactored into modular files to improve discoverability.
 
 ## Quickstart
+> **AGENTS (Claude/Gemini): START HERE**
+> **Current Protocol:** [docs/onboarding/AGENT_PROTOCOL.md](docs/onboarding/AGENT_PROTOCOL.md)
+> You MUST read and follow the protocol before executing any work.
+
 For a 2-minute overview and setup instructions, see:
 [docs/onboarding/quickstart.md](docs/onboarding/quickstart.md)
 

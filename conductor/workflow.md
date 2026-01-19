@@ -9,6 +9,7 @@
 5.  **User Experience First:** Every decision should prioritize user experience
 6.  **Sandboxing Preferred:** Enable the sandbox via CLI flag (`--sandbox`) or environment variable (`GEMINI_SANDBOX=true`) to isolate file operations and prevent environment-related stalls.
 7.  **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
+8.  **Agent Protocol:** All agents MUST follow `docs/onboarding/AGENT_PROTOCOL.md`.
 
 ## Track Initiation (Human-Driven)
 

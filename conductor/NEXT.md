@@ -4,6 +4,8 @@
 > 
 > This file is the handoff artifact between strategic planning and Conductor execution.
 > Keep under 50 lines. Update after each track completes.
+>
+> 🛑 **STOP & READ:** Before picking up any task, you MUST read the [Agent Protocol](../docs/onboarding/AGENT_PROTOCOL.md).
 
 ## Current Status
 

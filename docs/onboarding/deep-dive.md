@@ -19,6 +19,7 @@
 - Always: Type hints, Google-style docstrings, pytest, 80% coverage, async for external APIs
 
 **Priority Queue:** See `conductor/NEXT.md` for current track decisions.
+**Agent Protocol:** See `docs/onboarding/AGENT_PROTOCOL.md` for strict operating rules.
 
 ---
 

@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> 🛑 **CRITICAL:** Before executing any work, you MUST read the [Agent Protocol](docs/onboarding/AGENT_PROTOCOL.md).
+
 ## Project Overview
 
 TrailWatch is a citizen crowdsourcing platform for USFS trail maintenance. It combines a React/TypeScript frontend with a FastAPI/PostgreSQL backend, featuring AI-powered trail validation using PostGIS geospatial data.
