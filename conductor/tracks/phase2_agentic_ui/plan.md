@@ -3,9 +3,9 @@
 **Objective:** Build the functional "Agentic Mode" shell driven by high-fidelity synthetic data.
 
 ## Phase 2.1: The Data Foundation (Crucial First Step)
-- [ ] **Implement Synthetic Types:** Update `src/types/` to support "Clusters", "Insights", and "Reasoning Chains" as defined in `SYNTHETIC_DATA_PLAN.md`.
-- [ ] **Build the Mock Database:** Create `src/data/synthetic_day_in_life.json` with the full 25-report dataset (Pattern A, B, C scenarios included).
-- [ ] **Create Simulation Hook:** Build `useMockAgent()` that serves this data to the UI, allowing us to toggle "scenarios" (e.g., "Trigger Cluster Event").
+- [x] **Implement Synthetic Types:** Update `src/types/` to support "Clusters", "Insights", and "Reasoning Chains" as defined in `SYNTHETIC_DATA_PLAN.md`.
+- [x] **Build the Mock Database:** Create `src/data/synthetic_day_in_life.json` with the full 25-report dataset (Pattern A, B, C scenarios included).
+- [x] **Create Simulation Hook:** Build `useMockAgent()` that serves this data to the UI, allowing us to toggle "scenarios" (e.g., "Trigger Cluster Event").
 
 ## Phase 2.2: The Agentic Shell (Layout)
 - [ ] **Create `AgenticLayout.tsx`:** Implement the 20/60/20 CSS grid.
