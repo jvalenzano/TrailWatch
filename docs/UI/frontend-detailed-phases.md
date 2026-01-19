@@ -948,7 +948,7 @@ not_authorized:
   - Redux, MobX, Zustand (use React Query + useState)
   - styled-components, emotion (use Tailwind)
   - Moment.js (use date-fns)
-  - Google Maps JavaScript API (use MapLibre per ADR-002)
+  - Google Maps JavaScript API (use MapLibre per ADR-004)
   - Mapbox GL JS (use MapLibre, it's the FOSS fork)
   - Any component library (MUI, Chakra, Ant) without approval
 ```
