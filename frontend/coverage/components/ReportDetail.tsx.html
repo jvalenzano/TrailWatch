@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/ReportFilters.tsx</title>
+    <title>Code coverage report for components/ReportDetail.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">components</a> ReportFilters.tsx</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">components</a> ReportDetail.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/3</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
+                <span class="quiet">Branches</span>
                 <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -91,8 +91,7 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,11 +99,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -123,30 +121,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
 import React from 'react';
+import { HazardReport } from '../types/report';
 &nbsp;
-interface ReportFiltersProps {
-  onFilterChange: (filters: { severity?: string }) =&gt; void;
+interface ReportDetailProps {
+  report: HazardReport;
 }
 &nbsp;
-export function ReportFilters({ onFilterChange }: ReportFiltersProps) {
-  const handleSeverityChange = (event: React.ChangeEvent&lt;HTMLSelectElement&gt;) =&gt; {
-    onFilterChange({ severity: event.target.value === 'all' ? <span class="branch-0 cbranch-no" title="branch not covered" >undefined : e</span>vent.target.value });
-  };
-&nbsp;
+export function ReportDetail({ report }: ReportDetailProps) {
   return (
-    &lt;div className="flex items-center space-x-2"&gt;
-      &lt;label htmlFor="severity-filter" className="text-white"&gt;Severity:&lt;/label&gt;
-      &lt;select
-        id="severity-filter"
-        onChange={handleSeverityChange}
-        className="bg-gray-700 text-white border-gray-600 rounded p-1"
-      &gt;
-        &lt;option value="all"&gt;All&lt;/option&gt;
-        &lt;option value="passable"&gt;Passable&lt;/option&gt;
-        &lt;option value="difficult"&gt;Difficult&lt;/option&gt;
-        &lt;option value="impassable"&gt;Impassable&lt;/option&gt;
-        &lt;option value="dangerous"&gt;Dangerous&lt;/option&gt;
-      &lt;/select&gt;
+    &lt;div className="bg-gray-800 p-6 rounded-lg shadow-md space-y-4"&gt;
+      &lt;h3 className="text-2xl font-bold text-emerald-400"&gt;Report Details&lt;/h3&gt;
+      &lt;div&gt;
+        &lt;p className="text-gray-300"&gt;&lt;span className="font-semibold"&gt;ID:&lt;/span&gt; {report.id}&lt;/p&gt;
+        &lt;p className="text-gray-300"&gt;&lt;span className="font-semibold"&gt;Trail Name:&lt;/span&gt; {report.trail_name || 'N/A'}&lt;/p&gt;
+        &lt;p className="text-gray-300"&gt;&lt;span className="font-semibold"&gt;Hazard Type:&lt;/span&gt; {report.hazard_type}&lt;/p&gt;
+        &lt;p className="text-gray-300"&gt;&lt;span className="font-semibold"&gt;Severity:&lt;/span&gt; {report.severity_estimate}&lt;/p&gt;
+        &lt;p className="text-gray-300"&gt;&lt;span className="font-semibold"&gt;Description:&lt;/span&gt; {report.description}&lt;/p&gt;
+        &lt;p className="text-gray-300"&gt;&lt;span className="font-semibold"&gt;Submitted At:&lt;/span&gt; {new Date(report.submitted_at).toLocaleString()}&lt;/p&gt;
+      &lt;/div&gt;
+      {/* Placeholder for actions */}
+      &lt;div className="mt-4"&gt;
+        &lt;h4 className="text-xl font-semibold"&gt;Actions&lt;/h4&gt;
+        {/* ReportActions component will go here */}
+      &lt;/div&gt;
     &lt;/div&gt;
   );
 }

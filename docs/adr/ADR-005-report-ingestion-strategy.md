@@ -121,10 +121,11 @@ Report ingestion will use three tiers of data sources:
 
 ## Documentation Updates Required
 
-- [ ] Remove "Mobile: React Native or PWA" from GEMINI.md tech stack
-- [ ] Update GEMINI.md data flow diagram
-- [ ] Add Ingestion Service to project phases
-- [ ] Update PRD if mobile app was mentioned
+- [x] Remove "Mobile: React Native or PWA" from GEMINI.md tech stack
+- [x] Update GEMINI.md data flow diagram
+- [x] Update conductor/product.md (tech stack, data flow, user description)
+- [x] Update conductor/tech-stack.md
+- [x] Update docs/USER_JOURNEYS.md (persona, journey)
 
 ---
 

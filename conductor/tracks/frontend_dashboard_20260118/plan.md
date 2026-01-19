@@ -41,7 +41,7 @@
     - [x] Create `AppShell.tsx`, `Header.tsx`, `ListFirstLayout.tsx`
 - [x] **Task: Implement report list** [3c09bf5]
     - [x] Create `ReportList.tsx`, `ReportListItem.tsx`, `ReportFilters.tsx`
-- [ ] **Task: Implement report detail**
+- [~] **Task: Implement report detail**
     - [ ] Create `ReportDetail.tsx`, `ReportActions.tsx`
 - [ ] **Task: Implement crew assignment**
     - [ ] Create `CrewSelector.tsx`

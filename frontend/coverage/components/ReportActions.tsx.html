@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/ReportFilters.tsx</title>
+    <title>Code coverage report for components/ReportActions.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">components</a> ReportFilters.tsx</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">components</a> ReportActions.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -92,7 +92,17 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,20 +110,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -124,29 +144,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
 import React from 'react';
 &nbsp;
-interface ReportFiltersProps {
-  onFilterChange: (filters: { severity?: string }) =&gt; void;
+interface ReportActionsProps {
+  reportId: string;
+  onAssignCrew: (reportId: string) =&gt; void;
+  onExtract: (reportId: string) =&gt; void;
+  onMarkResolved: (reportId: string) =&gt; void;
 }
 &nbsp;
-export function ReportFilters({ onFilterChange }: ReportFiltersProps) {
-  const handleSeverityChange = (event: React.ChangeEvent&lt;HTMLSelectElement&gt;) =&gt; {
-    onFilterChange({ severity: event.target.value === 'all' ? <span class="branch-0 cbranch-no" title="branch not covered" >undefined : e</span>vent.target.value });
-  };
-&nbsp;
+export function ReportActions({
+  reportId,
+  onAssignCrew,
+  onExtract,
+  onMarkResolved,
+}: ReportActionsProps) {
   return (
-    &lt;div className="flex items-center space-x-2"&gt;
-      &lt;label htmlFor="severity-filter" className="text-white"&gt;Severity:&lt;/label&gt;
-      &lt;select
-        id="severity-filter"
-        onChange={handleSeverityChange}
-        className="bg-gray-700 text-white border-gray-600 rounded p-1"
+    &lt;div className="flex space-x-2"&gt;
+      &lt;button
+        onClick={() =&gt; onAssignCrew(reportId)}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       &gt;
-        &lt;option value="all"&gt;All&lt;/option&gt;
-        &lt;option value="passable"&gt;Passable&lt;/option&gt;
-        &lt;option value="difficult"&gt;Difficult&lt;/option&gt;
-        &lt;option value="impassable"&gt;Impassable&lt;/option&gt;
-        &lt;option value="dangerous"&gt;Dangerous&lt;/option&gt;
-      &lt;/select&gt;
+        Assign Crew
+      &lt;/button&gt;
+      &lt;button
+        onClick={() =&gt; onExtract(reportId)}
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      &gt;
+        Extract Info
+      &lt;/button&gt;
+      &lt;button
+        onClick={() =&gt; onMarkResolved(reportId)}
+        className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+      &gt;
+        Mark Resolved
+      &lt;/button&gt;
     &lt;/div&gt;
   );
 }
