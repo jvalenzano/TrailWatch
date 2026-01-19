@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { HazardReport } from '../types/report';
+
+import type { HazardReport } from '../types/report';
 
 interface ReportListItemProps {
   report: HazardReport;

@@ -1,8 +1,7 @@
 
 import { renderHook, waitFor } from '@testing-library/react';
 import { useReports } from './useReports';
-import { server } from '../mocks/server';
-import { http, HttpResponse } from 'msw';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 
@@ -29,7 +28,7 @@ describe('useReports', () => {
   });
 
   it('should filter reports by severity', async () => {
-    const { result, rerender } = renderHook(({ filters }) => useReports(filters), {
+    const { result } = renderHook(({ filters }) => useReports(filters), {
       wrapper: createWrapper(),
       initialProps: { filters: { severity: 'impassable' } },
     });

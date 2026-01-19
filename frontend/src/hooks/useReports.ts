@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchApi } from '../utils/api';
-import { HazardReport } from '../types/report';
+import type { HazardReport } from '../types/report';
 
 interface ReportFilters {
   severity?: string;

@@ -1,8 +1,8 @@
 
-import React, { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import { MapContext } from './MapView';
-import { HazardReport } from '../types/report';
+import type { HazardReport } from '../types/report';
 
 interface ReportMarkerProps {
     report: HazardReport;

@@ -2,7 +2,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CrewSelector } from './CrewSelector';
-import { Crew } from '../types/crew';
+import type { Crew } from '../types/crew';
 import { vi } from 'vitest';
 
 // Mock useCrews hook since we don't want to actually hit the API or rely on QueryClient implementation details ideally,

@@ -1,7 +1,7 @@
 
-import React from 'react';
+
 import { useCrews } from '../hooks/useCrews';
-import { Crew } from '../types/crew';
+import type { Crew } from '../types/crew';
 
 interface CrewSelectorProps {
   selectedCrewId?: string;

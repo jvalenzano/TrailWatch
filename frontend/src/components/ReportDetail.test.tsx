@@ -1,7 +1,15 @@
-
 import { render, screen } from '@testing-library/react';
 import { ReportDetail } from './ReportDetail';
-import { HazardReport } from '../types/report';
+import type { HazardReport } from '../types/report';
+import { vi } from 'vitest';
+
+vi.mock('./CrewSelector', () => ({
+  CrewSelector: () => <div data-testid="crew-selector">Crew Selector</div>
+}));
+
+vi.mock('./ReportActions', () => ({
+  ReportActions: () => <div data-testid="report-actions">Report Actions</div>
+}));
 
 const mockReport: HazardReport = {
   id: '1',
@@ -16,8 +24,17 @@ const mockReport: HazardReport = {
 
 describe('ReportDetail', () => {
   it('should render report details', () => {
-    render(<ReportDetail report={mockReport} />);
+    const noop = () => { };
+    render(
+      <ReportDetail
+        report={mockReport}
+        onAssignCrew={noop}
+        onExtract={noop}
+        onMarkResolved={noop}
+      />
+    );
     expect(screen.getByText('A large tree has fallen across the trail making it impassable.')).toBeInTheDocument();
-    expect(screen.getByText('A large tree has fallen across the trail making it impassable.')).toBeInTheDocument();
+    expect(screen.getByTestId('crew-selector')).toBeInTheDocument();
+    expect(screen.getByTestId('report-actions')).toBeInTheDocument();
   });
 });

@@ -1,139 +1,106 @@
-import { useUIMode } from '../hooks/useUIMode';
-import { UI_MODES, type UIModeName } from '../config/ui-modes';
+
+import { useState } from 'react';
 import { useReports } from '../hooks/useReports';
-import { useCrews } from '../hooks/useCrews';
+import { ReportList } from '../components/ReportList';
+import { ReportDetail } from '../components/ReportDetail';
+import { MapView } from '../components/MapView';
+import { ReportMarker } from '../components/ReportMarker';
 
-/**
- * Dashboard page showing current UI mode and enabled features.
- * This is a test page for Phase 1 verification.
- */
 export function Dashboard() {
-    const { mode, modeName, setMode } = useUIMode();
-    const { data: reports, isLoading: isLoadingReports, isError: isErrorReports } = useReports();
-    const { data: crews, isLoading: isLoadingCrews, isError: isErrorCrews } = useCrews();
+    const { data: reports, isLoading, error } = useReports();
+    const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
 
-    const enabledFeatures = Object.entries(mode.features)
-        .filter(([, enabled]) => enabled)
-        .map(([name]) => name);
+    const selectedReport = reports?.find(r => r.id === selectedReportId) || null;
 
-    const disabledFeatures = Object.entries(mode.features)
-        .filter(([, enabled]) => !enabled)
-        .map(([name]) => name);
+    const handleSelectReport = (id: string) => {
+        setSelectedReportId(id);
+    };
+
+    const handleAssignCrew = (reportId: string, crewId?: string) => {
+        if (crewId) {
+            console.log(`Assigning crew ${crewId} to report ${reportId}`);
+            alert(`Technically assigned crew ${crewId} to report ${reportId}`);
+        } else {
+            console.log('Please select a crew');
+        }
+    };
+
+    const handleExtract = (reportId: string) => {
+        console.log('Extracting info for', reportId);
+    };
+
+    const handleResolve = (reportId: string) => {
+        console.log('Resolving report', reportId);
+    };
+
+    if (isLoading) return <div className="flex items-center justify-center h-screen bg-gray-900 text-white">Loading reports...</div>;
+    if (error) return <div className="flex items-center justify-center h-screen bg-gray-900 text-red-500">Error loading reports</div>;
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white p-8">
-            <div className="max-w-4xl mx-auto">
-                <header className="mb-8">
-                    <h1 className="text-3xl font-bold text-emerald-400 mb-2">
-                        TrailWatch Ranger Dashboard
-                    </h1>
-                    <p className="text-gray-400">
-                        Phase 1 Verification — Data Hooks
-                    </p>
-                </header>
+        <div className="flex flex-col h-screen bg-gray-900 text-gray-100">
+            {/* Header Placeholder - In Phase 3 we'll integrate AppShell properly */}
+            <header className="bg-gray-800 border-b border-gray-700 px-6 py-4 flex justify-between items-center shadow-md z-10">
+                <div className="flex items-center space-x-3">
+                    <span className="text-2xl">🌲</span>
+                    <h1 className="text-xl font-bold tracking-tight text-white">TrailWatch <span className="text-emerald-500">Dash</span></h1>
+                </div>
+                <div className="text-sm text-gray-400">
+                    {reports?.length || 0} Open Reports
+                </div>
+            </header>
 
-                {/* Data Loading Status */}
-                <section className="mb-8 p-6 bg-gray-800 rounded-lg">
-                    <h2 className="text-xl font-semibold mb-4">Data Loading Status</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <h3 className="text-emerald-400 font-medium mb-2">Reports</h3>
-                            {isLoadingReports && <p className="text-gray-400">Loading...</p>}
-                            {isErrorReports && <p className="text-red-500">Error loading reports</p>}
-                            {reports && <p className="text-gray-300">Loaded {reports.length} reports</p>}
-                        </div>
-                        <div>
-                            <h3 className="text-emerald-400 font-medium mb-2">Crews</h3>
-                            {isLoadingCrews && <p className="text-gray-400">Loading...</p>}
-                            {isErrorCrews && <p className="text-red-500">Error loading crews</p>}
-                            {crews && <p className="text-gray-300">Loaded {crews.length} crews</p>}
-                        </div>
+            <div className="flex-1 flex overflow-hidden">
+                {/* Left Panel: Report List */}
+                <div className="w-80 sm:w-96 flex flex-col border-r border-gray-800 bg-gray-900">
+                    <div className="p-4 border-b border-gray-800 bg-gray-900 sticky top-0 z-10">
+                        <h2 className="text-lg font-semibold text-gray-200">Incoming Reports</h2>
                     </div>
-                </section>
+                    <div className="flex-1 overflow-y-auto custom-scrollbar">
+                        <ReportList
+                            reports={reports || []}
+                            selectedReportId={selectedReportId}
+                            onSelectReport={handleSelectReport}
+                        />
+                    </div>
+                </div>
 
-                {/* Mode Selector */}
-                <section className="mb-8 p-6 bg-gray-800 rounded-lg">
-                    <h2 className="text-xl font-semibold mb-4">Current Mode</h2>
-                    <div className="flex gap-4 mb-4">
-                        {(Object.keys(UI_MODES) as UIModeName[]).map((name) => (
-                            <button
-                                key={name}
-                                onClick={() => setMode(name)}
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${modeName === name
-                                        ? 'bg-emerald-600 text-white'
-                                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                                    }`}
-                            >
-                                {UI_MODES[name].label}
-                            </button>
+                {/* Center Panel: Map */}
+                <div className="flex-1 relative bg-gray-800">
+                    <MapView>
+                        {reports?.map(report => (
+                            <ReportMarker
+                                key={report.id}
+                                report={report}
+                                onClick={(r) => handleSelectReport(r.id)}
+                            />
                         ))}
-                    </div>
-                    <p className="text-gray-400">
-                        <span className="font-medium text-white">{mode.label}:</span>{' '}
-                        {mode.description}
-                    </p>
-                </section>
+                    </MapView>
 
-                {/* Feature Flags */}
-                <section className="mb-8 p-6 bg-gray-800 rounded-lg">
-                    <h2 className="text-xl font-semibold mb-4">Feature Flags</h2>
-                    <div className="grid grid-cols-2 gap-8">
-                        <div>
-                            <h3 className="text-emerald-400 font-medium mb-2">
-                                ✓ Enabled ({enabledFeatures.length})
-                            </h3>
-                            <ul className="space-y-1">
-                                {enabledFeatures.length > 0 ? (
-                                    enabledFeatures.map((name) => (
-                                        <li key={name} className="text-gray-300 font-mono text-sm">
-                                            {name}
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li className="text-gray-500 italic">None</li>
-                                )}
-                            </ul>
+                    {/* Absolute overlay for "No selection" if we want, or just empty space */}
+                    {!selectedReport && (
+                        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-gray-900/80 backdrop-blur px-4 py-2 rounded-full text-sm text-gray-300 pointer-events-none">
+                            Select a marker or list item to view details
                         </div>
-                        <div>
-                            <h3 className="text-gray-500 font-medium mb-2">
-                                ✗ Disabled ({disabledFeatures.length})
-                            </h3>
-                            <ul className="space-y-1">
-                                {disabledFeatures.map((name) => (
-                                    <li key={name} className="text-gray-500 font-mono text-sm">
-                                        {name}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                    )}
+                </div>
+
+                {/* Right Panel: Detail View */}
+                {selectedReport ? (
+                    <div className="w-96 border-l border-gray-800 bg-gray-900 overflow-y-auto shadow-xl z-20">
+                        <ReportDetail
+                            report={selectedReport}
+                            onAssignCrew={handleAssignCrew}
+                            onExtract={handleExtract}
+                            onMarkResolved={handleResolve}
+                        />
                     </div>
-                </section>
-
-                {/* Stack Info */}
-                <section className="p-6 bg-gray-800 rounded-lg">
-                    <h2 className="text-xl font-semibold mb-4">Tech Stack</h2>
-                    <ul className="space-y-2 text-gray-300">
-                        <li>
-                            <span className="text-gray-500">Framework:</span> React 18 + TypeScript
-                        </li>
-                        <li>
-                            <span className="text-gray-500">Build:</span> Vite 7
-                        </li>
-                        <li>
-                            <span className="text-gray-500">Styling:</span> Tailwind CSS 4
-                        </li>
-                        <li>
-                            <span className="text-gray-500">Maps:</span> MapLibre GL JS (pending)
-                        </li>
-                        <li>
-                            <span className="text-gray-500">Data:</span> TanStack Query (pending)
-                        </li>
-                    </ul>
-                </section>
-
-                <footer className="mt-8 text-center text-gray-500 text-sm">
-                    TrailWatch Phase 1 • Ranger Dashboard Track • January 2026
-                </footer>
+                ) : (
+                    // Collapsed or Empty State on Right?
+                    // Let's just keep it empty or hidden. Hidden gives more map space?
+                    // With 3-column flex, hiding it expands the map (flex-1).
+                    // Let's conditionally render instructions.
+                    <div className="hidden lg:block w-0 border-l border-gray-800 transition-all duration-300"></div>
+                )}
             </div>
         </div>
     );

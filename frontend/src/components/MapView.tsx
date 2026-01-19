@@ -23,22 +23,45 @@ export function MapView({
         if (map) return; // Initialize only once
         if (!mapContainer.current) return;
 
-        const mapInstance = new maplibregl.Map({
-            container: mapContainer.current,
-            style: 'https://demotiles.maplibre.org/style.json', // Free demo style for dev/verification
-            center: initialCenter,
-            zoom: initialZoom,
-        });
+        try {
+            const mapInstance = new maplibregl.Map({
+                container: mapContainer.current,
+                style: {
+                    version: 8,
+                    sources: {
+                        'osm': {
+                            type: 'raster',
+                            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+                            tileSize: 256,
+                            attribution: '&copy; OpenStreetMap Contributors',
+                            maxzoom: 19
+                        }
+                    },
+                    layers: [
+                        {
+                            id: 'osm',
+                            type: 'raster',
+                            source: 'osm'
+                        }
+                    ]
+                },
+                center: initialCenter,
+                zoom: initialZoom,
+            });
 
-        mapInstance.on('load', () => {
-            setMap(mapInstance);
-            mapInstance.resize(); // Fix for flexbox resizing issues
-        });
+            mapInstance.on('load', () => {
+                setMap(mapInstance);
+                mapInstance.resize();
+            });
 
-        return () => {
-            mapInstance.remove();
-        };
-    }, [initialCenter, initialZoom]);
+            return () => {
+                mapInstance.remove();
+            };
+        } catch (e) {
+            console.error("Failed to initialize map:", e);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Run once on mount. Ignore prop changes for init to prevent destruction loop.
 
     return (
         <div className="relative w-full h-full min-h-[400px] rounded-lg overflow-hidden border border-gray-700 shadow-lg">

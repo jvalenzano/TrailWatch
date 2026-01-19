@@ -1,7 +1,7 @@
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ReportActions } from './ReportActions';
-import { HazardReport } from '../types/report';
+import type { HazardReport } from '../types/report';
 
 const mockReport: HazardReport = {
   id: '1',
@@ -19,9 +19,9 @@ describe('ReportActions', () => {
     render(
       <ReportActions
         reportId={mockReport.id}
-        onAssignCrew={() => {}}
-        onExtract={() => {}}
-        onMarkResolved={() => {}}
+        onAssignCrew={() => { }}
+        onExtract={() => { }}
+        onMarkResolved={() => { }}
       />
     );
     expect(screen.getByRole('button', { name: /Assign Crew/i })).toBeInTheDocument();
@@ -35,8 +35,8 @@ describe('ReportActions', () => {
       <ReportActions
         reportId={mockReport.id}
         onAssignCrew={mockOnAssignCrew}
-        onExtract={() => {}}
-        onMarkResolved={() => {}}
+        onExtract={() => { }}
+        onMarkResolved={() => { }}
       />
     );
     fireEvent.click(screen.getByRole('button', { name: /Assign Crew/i }));
@@ -48,9 +48,9 @@ describe('ReportActions', () => {
     render(
       <ReportActions
         reportId={mockReport.id}
-        onAssignCrew={() => {}}
+        onAssignCrew={() => { }}
         onExtract={mockOnExtract}
-        onMarkResolved={() => {}}
+        onMarkResolved={() => { }}
       />
     );
     fireEvent.click(screen.getByRole('button', { name: /Extract Info/i }));
@@ -62,8 +62,8 @@ describe('ReportActions', () => {
     render(
       <ReportActions
         reportId={mockReport.id}
-        onAssignCrew={() => {}}
-        onExtract={() => {}}
+        onAssignCrew={() => { }}
+        onExtract={() => { }}
         onMarkResolved={mockOnMarkResolved}
       />
     );

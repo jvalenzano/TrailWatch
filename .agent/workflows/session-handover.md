@@ -29,7 +29,7 @@ To provide a smooth session resumption, follow these steps to gather state and g
 - **TDD:** Red -> Green -> Refactor.
 - **Git:** Use verified syntax (e.g., `* /conductor:checkpoint "[Message]"`).
 - **Tooling:** [Vite/TypeScript/etc.]
-- **Guardrails:** AI Navigates, Human Drives. No autonomous execution without Driver approval.
+- **Guardrails:** Antigravity Conducts, Human Supervises. Autonomous execution enabled.
 
 **Immediate Objective:** 
 [Precisely what tool call or command should be run next.]

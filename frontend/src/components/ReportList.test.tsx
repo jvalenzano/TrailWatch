@@ -1,7 +1,6 @@
-
 import { render, screen } from '@testing-library/react';
 import { ReportList } from './ReportList';
-import { HazardReport } from '../types/report';
+import type { HazardReport } from '../types/report';
 
 const mockReports: HazardReport[] = [
   {
@@ -28,13 +27,13 @@ const mockReports: HazardReport[] = [
 
 describe('ReportList', () => {
   it('should render a list of reports', () => {
-    render(<ReportList reports={mockReports} />);
+    render(<ReportList reports={mockReports} onSelectReport={() => { }} />);
     expect(screen.getByText('Report 1')).toBeInTheDocument();
     expect(screen.getByText('Report 2')).toBeInTheDocument();
   });
 
   it('should display a message when no reports are available', () => {
-    render(<ReportList reports={[]} />);
+    render(<ReportList reports={[]} onSelectReport={() => { }} />);
     expect(screen.getByText('No reports found.')).toBeInTheDocument();
   });
 });

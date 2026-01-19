@@ -1,7 +1,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { ReportListItem } from './ReportListItem';
-import { HazardReport } from '../types/report';
+import type { HazardReport } from '../types/report';
 
 const mockReport: HazardReport = {
   id: '1',
