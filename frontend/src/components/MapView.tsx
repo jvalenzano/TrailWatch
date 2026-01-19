@@ -9,6 +9,7 @@ interface MapViewProps {
     children?: React.ReactNode;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const MapContext = React.createContext<{ map: maplibregl.Map | null }>({ map: null });
 
 export function MapView({

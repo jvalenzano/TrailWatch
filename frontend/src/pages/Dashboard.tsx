@@ -7,7 +7,7 @@ import { ReportDetail } from '../components/ReportDetail';
 
 export function Dashboard() {
     const { mode } = useUIMode();
-    const { data: reports, isLoading } = useReports();
+    const { data: reports } = useReports();
     const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
 
     const selectedReport = reports?.find(r => r.id === selectedReportId);

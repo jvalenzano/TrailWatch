@@ -21,7 +21,7 @@ export type AnalyticsEvent = typeof ANALYTICS_EVENTS[keyof typeof ANALYTICS_EVEN
  */
 export const trackEvent = (
     event: AnalyticsEvent,
-    properties: Record<string, any> = {}
+    properties: Record<string, string | number | boolean | null | undefined> = {}
 ) => {
     const payload = {
         event,

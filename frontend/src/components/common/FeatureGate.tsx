@@ -22,14 +22,10 @@ interface FeatureGateProps {
  * ```
  */
 export function FeatureGate({ feature, children, fallback = null }: FeatureGateProps) {
-    try {
-        const { mode } = useUIMode();
-        const isEnabled = mode.features[feature] ?? false; // Fail closed if undefined
+    const { mode } = useUIMode();
 
-        return <>{isEnabled ? children : fallback}</>;
-    } catch (error) {
-        // Fail-safe: Log error and render fallback (graceful degradation)
-        console.error('[FeatureGate] Failed to resolve mode:', error);
-        return <>{fallback}</>;
-    }
+    // Fail closed if feature is undefined
+    const isEnabled = mode.features[feature] ?? false;
+
+    return <>{isEnabled ? children : fallback}</>;
 }

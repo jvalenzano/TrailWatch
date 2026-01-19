@@ -5,6 +5,7 @@ import { useUIMode } from '../../hooks/useUIMode';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import { trackEvent } from '../../utils/analytics';
 import type { HazardReport } from '../../types/report';
+import type { UIMode } from '../../config/ui-modes';
 
 expect.extend(toHaveNoViolations);
 
@@ -19,6 +20,27 @@ vi.mock('../../utils/analytics', () => ({
         REASONING_PANEL_EXPANDED: 'reasoning_panel_expanded',
     },
 }));
+
+// Helper to create a partial mock mode
+function createMockMode(features: Partial<UIMode['features']>): { mode: UIMode } {
+    return {
+        mode: {
+            name: 'moderate',
+            label: 'Moderate',
+            description: 'Test mode',
+            features: {
+                enable_confidence_indicators: false,
+                enable_reasoning_panel: false,
+                enable_ai_attribution_badges: false,
+                mapPrimary: false,
+                spatialInsights: false,
+                batchOperations: false,
+                streamingExtraction: false,
+                ...features,
+            },
+        },
+    };
+}
 
 const mockReport: HazardReport = {
     id: '123',
@@ -54,14 +76,10 @@ describe('ExtractionDisplay', () => {
     });
 
     it('renders confidence and reasoning in moderate mode', () => {
-        vi.mocked(useUIMode).mockReturnValue({
-            mode: {
-                features: {
-                    enable_confidence_indicators: true,
-                    enable_reasoning_panel: true,
-                }
-            }
-        } as any);
+        vi.mocked(useUIMode).mockReturnValue(createMockMode({
+            enable_confidence_indicators: true,
+            enable_reasoning_panel: true,
+        }));
 
         render(<ExtractionDisplay report={mockReport} />);
 
@@ -71,30 +89,22 @@ describe('ExtractionDisplay', () => {
     });
 
     it('hides confidence and reasoning in traditional mode', () => {
-        vi.mocked(useUIMode).mockReturnValue({
-            mode: {
-                features: {
-                    enable_confidence_indicators: false,
-                    enable_reasoning_panel: false,
-                }
-            }
-        } as any);
+        vi.mocked(useUIMode).mockReturnValue(createMockMode({
+            enable_confidence_indicators: false,
+            enable_reasoning_panel: false,
+        }));
 
-        const { container } = render(<ExtractionDisplay report={mockReport} />);
+        render(<ExtractionDisplay report={mockReport} />);
 
         expect(screen.queryByText(/High Confidence/i)).not.toBeInTheDocument();
         expect(screen.queryByText(/Why did AI classify this/i)).not.toBeInTheDocument();
     });
 
     it('triggers telemetry on panel expansion (hover)', () => {
-        vi.mocked(useUIMode).mockReturnValue({
-            mode: {
-                features: {
-                    enable_confidence_indicators: true,
-                    enable_reasoning_panel: true,
-                }
-            }
-        } as any);
+        vi.mocked(useUIMode).mockReturnValue(createMockMode({
+            enable_confidence_indicators: true,
+            enable_reasoning_panel: true,
+        }));
 
         render(<ExtractionDisplay report={mockReport} />);
 
@@ -108,14 +118,10 @@ describe('ExtractionDisplay', () => {
     });
 
     it('passes accessibility audit', async () => {
-        vi.mocked(useUIMode).mockReturnValue({
-            mode: {
-                features: {
-                    enable_confidence_indicators: true,
-                    enable_reasoning_panel: true,
-                }
-            }
-        } as any);
+        vi.mocked(useUIMode).mockReturnValue(createMockMode({
+            enable_confidence_indicators: true,
+            enable_reasoning_panel: true,
+        }));
 
         const { container } = render(<ExtractionDisplay report={mockReport} />);
 
