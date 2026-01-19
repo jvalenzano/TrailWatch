@@ -28,10 +28,10 @@
 - [x] **Task: Create mock data** [e9617b6]
     - [x] Create `src/mocks/reports.json` (15-20 sample reports)
     - [x] Create `src/mocks/crews.json` (5 sample crews)
-- [~] **Task: Implement data hooks**
-    - [ ] Implement `src/hooks/useReports.ts` (fetch, filter, sort)
-    - [ ] Implement `src/hooks/useExtraction.ts` (trigger extraction)
-    - [ ] Implement `src/hooks/useCrews.ts` (fetch crews)
+- [x] **Task: Implement data hooks** [1618557]
+    - [x] Implement `src/hooks/useReports.ts` (fetch, filter, sort)
+    - [x] Implement `src/hooks/useExtraction.ts` (trigger extraction)
+    - [x] Implement `src/hooks/useCrews.ts` (fetch crews)
 - [ ] **Task: Verify hooks work with mock data**
 - [ ] **Task: Conductor - User Manual Verification 'Phase 1: Core Data Layer'**
 
