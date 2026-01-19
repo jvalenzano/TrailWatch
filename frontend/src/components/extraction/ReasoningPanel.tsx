@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TriageResult } from '../../types/report';
+import type { TriageResult } from '../../types/report';
 
 interface ReasoningPanelProps {
     triageResult: TriageResult;

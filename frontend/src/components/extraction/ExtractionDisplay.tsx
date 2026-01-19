@@ -2,6 +2,7 @@ import { FeatureGate } from '../common/FeatureGate';
 import { ConfidenceIndicator } from './ConfidenceIndicator';
 import { ReasoningPanel } from './ReasoningPanel';
 import { trackEvent, ANALYTICS_EVENTS } from '../../utils/analytics';
+import type { HazardReport } from '../../types/report';
 
 interface ExtractionDisplayProps {
     report: HazardReport;
