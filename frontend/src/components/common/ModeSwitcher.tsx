@@ -43,6 +43,7 @@ export function ModeSwitcher() {
             type="button"
             onClick={cycleMode}
             aria-label="Switch UI mode (Ctrl+M)"
+            data-testid="mode-switcher"
             className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-300 bg-gray-800 border border-gray-600 rounded-lg shadow-lg hover:bg-gray-700 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all"
         >
             <svg

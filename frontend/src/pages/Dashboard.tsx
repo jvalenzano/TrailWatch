@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useUIMode } from '../hooks/useUIMode';
 import { useReports } from '../hooks/useReports';
 import { useSpatialInsights } from '../hooks/useSpatialInsights';
+import { useStreamingExtraction } from '../hooks/useStreamingExtraction';
 import { MapView } from '../components/MapView';
 import { ReportList } from '../components/ReportList';
 import { ReportDetail } from '../components/ReportDetail';
@@ -14,6 +15,14 @@ export function Dashboard() {
     const { mode } = useUIMode();
     const { data: reports } = useReports();
     const { data: insights, isLoading: insightsLoading } = useSpatialInsights();
+
+    // Streaming extraction state
+    const {
+        state: extractionState,
+        startExtraction,
+        cancelExtraction,
+        reset: resetExtraction
+    } = useStreamingExtraction();
 
     // Selection state
     const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
@@ -111,6 +120,10 @@ export function Dashboard() {
                                             onAssignCrew={handleAssignCrew}
                                             onExtract={handleExtract}
                                             onMarkResolved={handleMarkResolved}
+                                            extractionState={extractionState}
+                                            onStartStreamingExtraction={startExtraction}
+                                            onCancelStreamingExtraction={cancelExtraction}
+                                            onResetStreamingExtraction={resetExtraction}
                                         />
                                     </div>
                                 )}
@@ -124,7 +137,7 @@ export function Dashboard() {
 
     // Traditional/Moderate mode: List-first layout
     return (
-        <div className="h-screen flex flex-col bg-gray-900 text-white">
+        <div className="h-screen flex flex-col bg-gray-900 text-white" data-testid="list-first-layout">
             <header className="p-4 border-b border-gray-800">
                 <h1 className="text-xl font-bold">Dashboard</h1>
                 <p className="text-sm text-gray-400">Mode: {mode.name} | Reports: {reports?.length}</p>
@@ -156,6 +169,10 @@ export function Dashboard() {
                             onAssignCrew={handleAssignCrew}
                             onExtract={handleExtract}
                             onMarkResolved={handleMarkResolved}
+                            extractionState={extractionState}
+                            onStartStreamingExtraction={startExtraction}
+                            onCancelStreamingExtraction={cancelExtraction}
+                            onResetStreamingExtraction={resetExtraction}
                         />
                     </div>
                 )}
