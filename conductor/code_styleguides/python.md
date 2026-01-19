@@ -1,6 +1,6 @@
 # Google Python Style Guide Summary
 
-This document summarizes key rules and best practices from the Google Python Style Guide.
+This document summarizes key rules and best practices from the Google Python Style Guide, with TrailWatch-specific additions.
 
 ## 1. Python Language Rules
 - **Linting:** Run `pylint` on your code to catch bugs and style issues.
@@ -23,13 +23,50 @@ This document summarizes key rules and best practices from the Google Python Sty
 - **`TODO` Comments:** Use `TODO(username): Fix this.` format.
 - **Imports Formatting:** Imports should be on separate lines and grouped: standard library, third-party, and your own application's imports.
 
-## 3. Naming
+## 3. Inline Comments (TrailWatch Addition)
+
+Beyond docstrings, use inline comments to explain **why**, not **what**. Junior developers and AI assistants benefit from context that isn't obvious from the code itself.
+
+### When to Comment
+- Non-obvious business logic (`# Penalize anonymous reporters per ADR-001`)
+- Workarounds for known issues (`# PostGIS requires explicit SRID cast`)
+- Configuration choices (`# 100m threshold matches USFS trail width standards`)
+- Dependencies in requirements.txt (`package>=1.0.0  # What it does, why we need it`)
+
+### When NOT to Comment
+- Code that's self-explanatory from naming
+- Language syntax (`# This is a for loop`)
+- Restating what the code does (`# Multiply by 0.8`)
+
+### Style
+```python
+# Good: explains WHY
+confidence *= 0.8  # Penalize anonymous reporters per ADR-001
+
+# Good: references project context
+from geoalchemy2 import Geometry  # PostGIS types for trail geometry
+
+# Bad: restates the code
+confidence *= 0.8  # Multiply confidence by 0.8
+
+# Bad: obvious from naming
+user_count = len(users)  # Count of users
+```
+
+### Dependencies (requirements.txt)
+Every non-obvious dependency should have an inline comment. Align comments for readability:
+```
+fastapi>=0.109.0              # Web framework for the API layer
+geoalchemy2>=0.14.0           # SQLAlchemy extension for PostGIS geometry types
+```
+
+## 4. Naming
 - **General:** `snake_case` for modules, functions, methods, and variables.
 - **Classes:** `PascalCase`.
 - **Constants:** `ALL_CAPS_WITH_UNDERSCORES`.
 - **Internal Use:** Use a single leading underscore (`_internal_variable`) for internal module/class members.
 
-## 4. Main
+## 5. Main
 - All executable files should have a `main()` function that contains the main logic, called from a `if __name__ == '__main__':` block.
 
 **BE CONSISTENT.** When editing code, match the existing style.
