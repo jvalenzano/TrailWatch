@@ -26,15 +26,63 @@ export interface MapViewport {
     pitch?: number;
 }
 
+/**
+ * Types of spatial insights that can be detected.
+ */
+export type SpatialInsightType =
+    | 'cluster'
+    | 'hotspot'
+    | 'trend'
+    | 'anomaly'
+    | 'duplicate'
+    | 'consistency_check';
+
+/**
+ * Metadata for cluster-type insights.
+ */
+export interface ClusterMetadata {
+    radius_miles: number;
+    time_span_hours: number;
+    weather_correlation?: string;
+    report_count: number;
+}
+
+/**
+ * Metadata for duplicate-type insights.
+ */
+export interface DuplicateMetadata {
+    similarity_score: number;
+    distance_meters: number;
+    original_report_id: string;
+    duplicate_report_id: string;
+    shared_features: string[];
+}
+
+/**
+ * Metadata for consistency check insights (bias detection).
+ */
+export interface ConsistencyCheckMetadata {
+    check_type: 'district_bias' | 'temporal_anomaly' | 'geographic_gap';
+    affected_districts?: string[];
+    expected_distribution?: Record<string, number>;
+    actual_distribution?: Record<string, number>;
+    deviation_percentage?: number;
+}
+
+/**
+ * Union type for typed insight metadata.
+ */
+export type InsightMetadata = ClusterMetadata | DuplicateMetadata | ConsistencyCheckMetadata;
+
 export interface SpatialInsight {
     id: string;
-    type: 'cluster' | 'hotspot' | 'trend' | 'anomaly';
+    type: SpatialInsightType;
     title: string;
     description: string;
     location: GeoJSONPoint;
     severity: 'low' | 'medium' | 'high';
     report_ids: string[];
-    metadata?: Record<string, unknown>;
+    metadata?: InsightMetadata | Record<string, unknown>;
 }
 
 export interface MarkerCluster {

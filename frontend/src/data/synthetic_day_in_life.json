@@ -1,0 +1,1069 @@
+{
+  "reports": [
+    {
+      "id": "RV-001",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.852, "longitude": -121.760, "accuracy_meters": 5 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "difficult",
+      "description": "Large Douglas fir down across trail, approximately 30 inches diameter. Trail completely blocked, hikers having to scramble around through brush.",
+      "photos": ["/assets/photos/rv001_tree_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T08:15:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.89,
+        "reasoning": "Vision analysis identified mature Douglas fir with significant trunk diameter. GPS coordinates align with River Valley Trail segment 4. Photo shows complete trail blockage requiring chainsaw crew.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Dispatch clearing crew with chainsaw equipment.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "medium",
+        "suggested_reason": "Standard obstruction clearance"
+      }
+    },
+    {
+      "id": "RV-002",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.855, "longitude": -121.755, "accuracy_meters": 8 },
+      "hazard_type": "drainage",
+      "severity_estimate": "passable",
+      "description": "Water flowing over trail for about 20 feet. Runoff from recent rain, maybe 2 inches deep.",
+      "photos": [],
+      "reporter_type": "anonymous",
+      "submitted_at": "2026-01-19T09:30:00Z",
+      "triage_result": {
+        "tracs_category": "DRN",
+        "tracs_category_name": "Drainage",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.72,
+        "reasoning": "Description consistent with seasonal drainage overflow. No photo provided. Location matches known drainage issue area from 2025 reports.",
+        "confidence_factors": {
+          "has_photo": false,
+          "photo_matches_hazard": false,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": false,
+          "corroborating_reports": 2,
+          "weather_context": "2.3 inches rain in past 48h"
+        },
+        "recommended_action": "Monitor; seasonal condition likely to resolve.",
+        "similar_reports": ["RV-2025-089"]
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "low"
+      },
+      "weather_context": {
+        "timestamp": "2026-01-19T06:00:00Z",
+        "conditions": "Rain, clearing",
+        "precipitation_inches": 2.3,
+        "relevant_to_hazard": true
+      }
+    },
+    {
+      "id": "RV-003",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.848, "longitude": -121.762, "accuracy_meters": 3 },
+      "hazard_type": "tread",
+      "severity_estimate": "passable",
+      "description": "Section of trail with significant root exposure and erosion. About 50 feet long. Trekking poles helpful.",
+      "photos": ["/assets/photos/rv003_tread_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T10:00:00Z",
+      "triage_result": {
+        "tracs_category": "TRD",
+        "tracs_category_name": "Tread",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.85,
+        "reasoning": "Photo confirms exposed roots and minor erosion. Condition is stable and passable. Schedule for routine maintenance during next work party.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Add to routine maintenance queue.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "RV-004",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.860, "longitude": -121.758, "accuracy_meters": 6 },
+      "hazard_type": "signing",
+      "severity_estimate": "passable",
+      "description": "Junction sign is faded and hard to read. Trail to viewpoint not clearly marked.",
+      "photos": ["/assets/photos/rv004_sign_01.jpg"],
+      "reporter_type": "anonymous",
+      "submitted_at": "2026-01-19T11:15:00Z",
+      "triage_result": {
+        "tracs_category": "SGN",
+        "tracs_category_name": "Signing",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.78,
+        "reasoning": "Photo shows weathered sign with UV damage. Text partially legible. Sign inventory confirms installation date 2018.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": false,
+          "corroborating_reports": 1
+        },
+        "recommended_action": "Schedule sign replacement.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "RV-005",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.845, "longitude": -121.768, "accuracy_meters": 4 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "passable",
+      "description": "Several small branches down on trail, can be stepped over or easily moved.",
+      "photos": [],
+      "reporter_type": "anonymous",
+      "submitted_at": "2026-01-19T12:00:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV0",
+        "severity_name": "NO_ACTION_NEEDED",
+        "confidence_score": 0.68,
+        "reasoning": "Minor debris consistent with normal forest conditions. No photo but description indicates minimal impact. Can be cleared by trail users.",
+        "confidence_factors": {
+          "has_photo": false,
+          "photo_matches_hazard": false,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": false,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "No action needed. Minor debris.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "resolved"
+      }
+    },
+    {
+      "id": "RV-006",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.858, "longitude": -121.752, "accuracy_meters": 5 },
+      "hazard_type": "grading",
+      "severity_estimate": "difficult",
+      "description": "Trail has significant side slope and feels unsafe. Maybe 6 inches wide tread in spots with steep drop on right side.",
+      "photos": ["/assets/photos/rv006_grade_01.jpg", "/assets/photos/rv006_grade_02.jpg"],
+      "reporter_type": "coordinator",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T13:30:00Z",
+      "triage_result": {
+        "tracs_category": "GRD",
+        "tracs_category_name": "Grading",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.91,
+        "reasoning": "Coordinator report with multiple photos confirms significant tread deterioration. Estimated 30% grade with exposure. Matches known problem area from 2024 assessment.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 1
+        },
+        "recommended_action": "Schedule trail crew for bench cut reconstruction.",
+        "similar_reports": ["RV-2024-156"]
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "assigned",
+        "crew_id": "crew-alpha",
+        "priority": "medium",
+        "suggested_reason": "Previously identified problem area"
+      }
+    },
+    {
+      "id": "RV-007",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.842, "longitude": -121.775, "accuracy_meters": 3 },
+      "hazard_type": "structures",
+      "severity_estimate": "dangerous",
+      "description": "URGENT: Footbridge over Eagle Creek has collapsed! Northern support beam failed. Creek is running very high and fast. DO NOT attempt to cross!",
+      "photos": ["/assets/photos/rv007_bridge_01.jpg", "/assets/photos/rv007_bridge_02.jpg", "/assets/photos/rv007_bridge_03.jpg"],
+      "reporter_type": "coordinator",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T07:45:00Z",
+      "triage_result": {
+        "tracs_category": "STR",
+        "tracs_category_name": "Structures",
+        "severity": "SEV3",
+        "severity_name": "CLOSURE_RECOMMENDED",
+        "confidence_score": 0.97,
+        "reasoning": "Multiple high-resolution photos confirm structural failure of Eagle Creek footbridge. Northern support beam shows complete fracture. Creek flow estimated at 800 CFS (normal: 150 CFS). Immediate closure and reroute required.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 2,
+          "weather_context": "Heavy rain event, elevated streamflow"
+        },
+        "recommended_action": "IMMEDIATE: Close trail segment. Post closure signs. Contact engineering for assessment.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "in_progress",
+        "crew_id": "crew-emergency",
+        "priority": "urgent",
+        "suggested_reason": "Critical infrastructure failure"
+      },
+      "weather_context": {
+        "timestamp": "2026-01-19T06:00:00Z",
+        "conditions": "Heavy rain overnight",
+        "precipitation_inches": 3.5,
+        "wind_speed_mph": 25,
+        "relevant_to_hazard": true
+      },
+      "safety_alert": true
+    },
+    {
+      "id": "RV-008",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.863, "longitude": -121.748, "accuracy_meters": 12 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "difficult",
+      "description": "Rockslide has deposited debris on trail. Maybe 15-20 rocks ranging from basketball to car-tire size.",
+      "photos": ["/assets/photos/rv008_rock_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T14:00:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.82,
+        "reasoning": "Photo confirms rockfall debris on trail. Location is below known unstable slope. Geologist review recommended before clearing to assess ongoing hazard.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": false,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Request geologist assessment. Clear after slope evaluation.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "RV-009",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.850, "longitude": -121.765, "accuracy_meters": 7 },
+      "hazard_type": "drainage",
+      "severity_estimate": "difficult",
+      "description": "Culvert appears blocked. Water pooling on uphill side and flowing over trail creating mud and erosion.",
+      "photos": ["/assets/photos/rv009_culvert_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T15:30:00Z",
+      "triage_result": {
+        "tracs_category": "DRN",
+        "tracs_category_name": "Drainage",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.88,
+        "reasoning": "Photo shows water pooling and debris accumulation at culvert inlet. Classic blockage pattern. Priority clearing before next rain event to prevent further damage.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Clear culvert debris. Inspect for structural damage.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "assigned",
+        "crew_id": "crew-beta",
+        "priority": "high",
+        "suggested_reason": "Preventing progressive damage"
+      }
+    },
+    {
+      "id": "RV-010",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.856, "longitude": -121.770, "accuracy_meters": 4 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "passable",
+      "description": "Dead standing tree leaning over trail. Not blocking yet but looks like it could fall.",
+      "photos": ["/assets/photos/rv010_snag_01.jpg"],
+      "reporter_type": "anonymous",
+      "submitted_at": "2026-01-19T16:00:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.76,
+        "reasoning": "Photo shows dead conifer with visible lean toward trail. Hazard tree assessment needed. Not currently blocking but poses future risk.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": false,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Hazard tree assessment. Consider preemptive felling.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "RV-011",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.847, "longitude": -121.758, "accuracy_meters": 6 },
+      "hazard_type": "other",
+      "severity_estimate": "passable",
+      "description": "Lots of trash and toilet paper near the creek crossing. Someone camped illegally and left a mess.",
+      "photos": ["/assets/photos/rv011_trash_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T17:00:00Z",
+      "triage_result": {
+        "tracs_category": "OTH",
+        "tracs_category_name": "Other",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.85,
+        "reasoning": "Photo confirms illegal campsite debris. Not a trail maintenance issue but impacts user experience and watershed. Coordinate with law enforcement/sanitation.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Notify ranger district. Schedule cleanup.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "RV-012",
+      "trail_id": "trail-river-valley",
+      "trail_name": "River Valley Trail",
+      "location": { "latitude": 46.865, "longitude": -121.745, "accuracy_meters": 5 },
+      "hazard_type": "structures",
+      "severity_estimate": "passable",
+      "description": "The log steps on the steep section are getting worn and slippery. One step has a crack.",
+      "photos": ["/assets/photos/rv012_steps_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T17:30:00Z",
+      "triage_result": {
+        "tracs_category": "STR",
+        "tracs_category_name": "Structures",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.81,
+        "reasoning": "Photo shows normal wear on log steps. Crack is surface checking, not structural. Monitor and plan replacement in 2027 maintenance cycle.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Add to 2027 maintenance plan. Monitor.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "NR-001",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.890, "longitude": -121.720, "accuracy_meters": 4 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "impassable",
+      "description": "Multiple trees down from last night's storm! At least 5 large trees across trail in first mile. Wind damage everywhere.",
+      "photos": ["/assets/photos/nr001_storm_01.jpg", "/assets/photos/nr001_storm_02.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T06:30:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV3",
+        "severity_name": "CLOSURE_RECOMMENDED",
+        "confidence_score": 0.94,
+        "reasoning": "Photos confirm extensive wind damage. Multiple blowdowns creating impassable conditions. Weather data shows 45 mph gusts overnight. CLUSTER: Part of storm damage event affecting north sector.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 3,
+          "weather_context": "Storm event, 45 mph gusts"
+        },
+        "recommended_action": "Coordinate multi-crew response. Assess full extent of storm damage.",
+        "similar_reports": ["NR-002", "NR-003", "NR-004"]
+      },
+      "pattern_detection": {
+        "is_cluster_member": true,
+        "cluster_id": "CLU-2026-01-19-STORM",
+        "cluster_reason": "Storm damage cluster: 4 reports within 1 mile, 4-hour window, correlated with 45 mph wind event"
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "in_progress",
+        "crew_id": "crew-alpha",
+        "priority": "high",
+        "suggested_reason": "Storm damage cluster response"
+      },
+      "weather_context": {
+        "timestamp": "2026-01-19T02:00:00Z",
+        "conditions": "Strong winds, rain",
+        "wind_speed_mph": 45,
+        "precipitation_inches": 1.8,
+        "relevant_to_hazard": true
+      }
+    },
+    {
+      "id": "NR-002",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.895, "longitude": -121.718, "accuracy_meters": 5 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "impassable",
+      "description": "Huge cedar down! Must be 4 feet diameter at the base. Took out some smaller trees when it fell. Complete blockage.",
+      "photos": ["/assets/photos/nr002_cedar_01.jpg"],
+      "reporter_type": "coordinator",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T07:15:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV3",
+        "severity_name": "CLOSURE_RECOMMENDED",
+        "confidence_score": 0.95,
+        "reasoning": "Photo shows massive western red cedar blowdown. Estimated 4ft DBH. Will require heavy equipment or extensive crosscut work. CLUSTER: Part of storm damage event.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 3,
+          "weather_context": "Storm event"
+        },
+        "recommended_action": "Heavy equipment assessment. May need helicopter support.",
+        "similar_reports": ["NR-001", "NR-003", "NR-004"]
+      },
+      "pattern_detection": {
+        "is_cluster_member": true,
+        "cluster_id": "CLU-2026-01-19-STORM",
+        "cluster_reason": "Storm damage cluster: 4 reports within 1 mile, 4-hour window, correlated with 45 mph wind event"
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "in_progress",
+        "crew_id": "crew-alpha",
+        "priority": "high",
+        "suggested_reason": "Storm damage cluster - large diameter blowdown"
+      },
+      "weather_context": {
+        "timestamp": "2026-01-19T02:00:00Z",
+        "conditions": "Strong winds, rain",
+        "wind_speed_mph": 45,
+        "precipitation_inches": 1.8,
+        "relevant_to_hazard": true
+      }
+    },
+    {
+      "id": "NR-003",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.888, "longitude": -121.725, "accuracy_meters": 6 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "difficult",
+      "description": "Three medium-sized trees down in a row. Looks like a domino effect from the storm. Can climb over but difficult.",
+      "photos": ["/assets/photos/nr003_trees_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T08:00:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.87,
+        "reasoning": "Photo shows three connected blowdowns. Estimated 12-18 inch diameter each. Chainsaw clearing feasible. CLUSTER: Part of storm damage event.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 3,
+          "weather_context": "Storm event"
+        },
+        "recommended_action": "Add to storm damage clearing queue.",
+        "similar_reports": ["NR-001", "NR-002", "NR-004"]
+      },
+      "pattern_detection": {
+        "is_cluster_member": true,
+        "cluster_id": "CLU-2026-01-19-STORM",
+        "cluster_reason": "Storm damage cluster: 4 reports within 1 mile, 4-hour window, correlated with 45 mph wind event"
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "high",
+        "suggested_reason": "Storm damage cluster - chainsaw clearing"
+      },
+      "weather_context": {
+        "timestamp": "2026-01-19T02:00:00Z",
+        "conditions": "Strong winds, rain",
+        "wind_speed_mph": 45,
+        "precipitation_inches": 1.8,
+        "relevant_to_hazard": true
+      }
+    },
+    {
+      "id": "NR-004",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.892, "longitude": -121.715, "accuracy_meters": 4 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "difficult",
+      "description": "Large limbs down and lots of debris. Storm made a mess of this section. Trail passable but messy.",
+      "photos": ["/assets/photos/nr004_debris_01.jpg"],
+      "reporter_type": "anonymous",
+      "submitted_at": "2026-01-19T09:45:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.75,
+        "reasoning": "Photo shows scattered storm debris. Mostly limbs and small branches. Can be hand-cleared. CLUSTER: Part of storm damage event - lowest priority.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": false,
+          "corroborating_reports": 3,
+          "weather_context": "Storm event"
+        },
+        "recommended_action": "Hand crew clearing after priority items addressed.",
+        "similar_reports": ["NR-001", "NR-002", "NR-003"]
+      },
+      "pattern_detection": {
+        "is_cluster_member": true,
+        "cluster_id": "CLU-2026-01-19-STORM",
+        "cluster_reason": "Storm damage cluster: 4 reports within 1 mile, 4-hour window, correlated with 45 mph wind event"
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "medium",
+        "suggested_reason": "Storm damage cluster - hand clearing"
+      },
+      "weather_context": {
+        "timestamp": "2026-01-19T02:00:00Z",
+        "conditions": "Strong winds, rain",
+        "wind_speed_mph": 45,
+        "precipitation_inches": 1.8,
+        "relevant_to_hazard": true
+      }
+    },
+    {
+      "id": "NR-005",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.905, "longitude": -121.710, "accuracy_meters": 8 },
+      "hazard_type": "signing",
+      "severity_estimate": "passable",
+      "description": "Summit sign was blown down by the storm. Found it about 20 feet off trail in the brush.",
+      "photos": ["/assets/photos/nr005_sign_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T11:00:00Z",
+      "triage_result": {
+        "tracs_category": "SGN",
+        "tracs_category_name": "Signing",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.83,
+        "reasoning": "Photo shows downed directional sign. Posts appear intact. Can be reinstalled. Secondary storm damage.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Retrieve and reinstall sign.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "NR-006",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.898, "longitude": -121.705, "accuracy_meters": 5 },
+      "hazard_type": "tread",
+      "severity_estimate": "passable",
+      "description": "Trail surface is really muddy after the rain. Boots are sinking in 3-4 inches in spots.",
+      "photos": [],
+      "reporter_type": "anonymous",
+      "submitted_at": "2026-01-19T12:30:00Z",
+      "triage_result": {
+        "tracs_category": "TRD",
+        "tracs_category_name": "Tread",
+        "severity": "SEV0",
+        "severity_name": "NO_ACTION_NEEDED",
+        "confidence_score": 0.62,
+        "reasoning": "Seasonal mud conditions after heavy rain. Expected to dry within 3-5 days. No structural issue.",
+        "confidence_factors": {
+          "has_photo": false,
+          "photo_matches_hazard": false,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": false,
+          "corroborating_reports": 0,
+          "weather_context": "Post-storm saturation"
+        },
+        "recommended_action": "No action. Seasonal condition.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "resolved"
+      },
+      "weather_context": {
+        "timestamp": "2026-01-19T06:00:00Z",
+        "conditions": "Clearing after rain",
+        "precipitation_inches": 1.8,
+        "relevant_to_hazard": true
+      }
+    },
+    {
+      "id": "NR-007",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.882, "longitude": -121.728, "accuracy_meters": 6 },
+      "hazard_type": "grading",
+      "severity_estimate": "difficult",
+      "description": "Significant erosion on the steep section near the viewpoint. Trail is getting narrow with exposure.",
+      "photos": ["/assets/photos/nr007_erosion_01.jpg"],
+      "reporter_type": "coordinator",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T14:15:00Z",
+      "triage_result": {
+        "tracs_category": "GRD",
+        "tracs_category_name": "Grading",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.86,
+        "reasoning": "Photo confirms progressive erosion on exposed slope. Tread width reduced to ~18 inches. Turnpike or bench cut needed. Pre-existing condition worsened by recent rain.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 1
+        },
+        "recommended_action": "Schedule grading crew. Consider rock crib or turnpike.",
+        "similar_reports": ["NR-2025-042"]
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "NR-008",
+      "trail_id": "trail-north-ridge",
+      "trail_name": "North Ridge Trail",
+      "location": { "latitude": 46.910, "longitude": -121.700, "accuracy_meters": 4 },
+      "hazard_type": "structures",
+      "severity_estimate": "passable",
+      "description": "The bench at the overlook has a broken slat. Still usable but could catch clothes.",
+      "photos": ["/assets/photos/nr008_bench_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T15:45:00Z",
+      "triage_result": {
+        "tracs_category": "STR",
+        "tracs_category_name": "Structures",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.79,
+        "reasoning": "Photo shows one broken bench slat. Minor repair needed. Bench still functional. Low priority.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Add to minor repairs list. Can address during routine patrol.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "03",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "BP-001",
+      "trail_id": "trail-beaver-pond",
+      "trail_name": "Beaver Pond Loop",
+      "location": { "latitude": 46.820, "longitude": -121.790, "accuracy_meters": 5 },
+      "hazard_type": "drainage",
+      "severity_estimate": "passable",
+      "description": "Beaver activity has raised water level. Part of trail near pond is flooded, about 6 inches deep for 30 feet.",
+      "photos": ["/assets/photos/bp001_flood_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T10:30:00Z",
+      "triage_result": {
+        "tracs_category": "DRN",
+        "tracs_category_name": "Drainage",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.84,
+        "reasoning": "Photo confirms beaver dam impact on trail drainage. This is a recurring seasonal issue at this location. Reroute option exists.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 2
+        },
+        "recommended_action": "Monitor beaver activity. Consider seasonal reroute.",
+        "similar_reports": ["BP-2025-011", "BP-2024-008"]
+      },
+      "assignment": {
+        "district_id": "04",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "BP-002",
+      "trail_id": "trail-beaver-pond",
+      "trail_name": "Beaver Pond Loop",
+      "location": { "latitude": 46.825, "longitude": -121.785, "accuracy_meters": 6 },
+      "hazard_type": "signing",
+      "severity_estimate": "passable",
+      "description": "Interpretive sign about beaver habitat is vandalized. Someone spray painted over it.",
+      "photos": ["/assets/photos/bp002_vandal_01.jpg"],
+      "reporter_type": "coordinator",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T11:45:00Z",
+      "triage_result": {
+        "tracs_category": "SGN",
+        "tracs_category_name": "Signing",
+        "severity": "SEV1",
+        "severity_name": "INFO_ONLY",
+        "confidence_score": 0.88,
+        "reasoning": "Photo shows spray paint vandalism on interpretive panel. Documented for law enforcement. Panel may need replacement.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 0
+        },
+        "recommended_action": "Report to law enforcement. Assess if panel can be cleaned or needs replacement.",
+        "similar_reports": []
+      },
+      "assignment": {
+        "district_id": "04",
+        "status": "pending_review",
+        "priority": "low"
+      }
+    },
+    {
+      "id": "BP-003",
+      "trail_id": "trail-beaver-pond",
+      "trail_name": "Beaver Pond Loop",
+      "location": { "latitude": 46.818, "longitude": -121.792, "accuracy_meters": 4 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "difficult",
+      "description": "Large alder tree down across trail just past the first bridge. About 18 inches diameter. Have to climb over or go around through brush.",
+      "photos": ["/assets/photos/bp003_alder_01.jpg"],
+      "reporter_type": "volunteer",
+      "reporter_organization": "WTA",
+      "submitted_at": "2026-01-19T13:00:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.86,
+        "reasoning": "Photo shows red alder blowdown. Moderate diameter, chainsaw clearing required. Standard obstruction.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": true,
+          "corroborating_reports": 1
+        },
+        "recommended_action": "Schedule chainsaw crew.",
+        "similar_reports": ["BP-004"]
+      },
+      "assignment": {
+        "district_id": "04",
+        "status": "pending_review",
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "BP-004",
+      "trail_id": "trail-beaver-pond",
+      "trail_name": "Beaver Pond Loop",
+      "location": { "latitude": 46.8181, "longitude": -121.7919, "accuracy_meters": 5 },
+      "hazard_type": "obstruction",
+      "severity_estimate": "difficult",
+      "description": "Big alder blocking the trail right after the small bridge. Probably 18 inches wide. You have to go around through the ferns.",
+      "photos": ["/assets/photos/bp003_alder_01.jpg"],
+      "reporter_type": "anonymous",
+      "submitted_at": "2026-01-19T13:45:00Z",
+      "triage_result": {
+        "tracs_category": "CLR",
+        "tracs_category_name": "Clearing",
+        "severity": "SEV2",
+        "severity_name": "MAINTENANCE_NEEDED",
+        "confidence_score": 0.82,
+        "reasoning": "POTENTIAL DUPLICATE of BP-003. Same photo reference, GPS within 15m, same hazard type. Similar description and timing. Confidence reduced pending verification.",
+        "confidence_factors": {
+          "has_photo": true,
+          "photo_matches_hazard": true,
+          "gps_accurate": true,
+          "description_specific": true,
+          "reporter_trusted": false,
+          "corroborating_reports": 1
+        },
+        "recommended_action": "Verify if duplicate of BP-003 before dispatching crew.",
+        "similar_reports": ["BP-003"]
+      },
+      "pattern_detection": {
+        "is_duplicate": true,
+        "duplicate_of": "BP-003",
+        "similarity_score": 0.94,
+        "duplicate_reason": "Same photo, GPS within 15m, matching hazard type and description"
+      },
+      "assignment": {
+        "district_id": "04",
+        "status": "pending_review",
+        "priority": "medium"
+      }
+    }
+  ],
+  "insights": [
+    {
+      "id": "INS-STORM-001",
+      "type": "cluster",
+      "title": "Storm Damage Cluster - North Ridge",
+      "description": "4 storm-related reports within 1 mile radius over 4 hours. Correlated with overnight wind event (45 mph gusts). Recommend coordinated multi-crew response.",
+      "location": {
+        "type": "Point",
+        "coordinates": [-121.720, 46.892]
+      },
+      "severity": "high",
+      "report_ids": ["NR-001", "NR-002", "NR-003", "NR-004"],
+      "metadata": {
+        "radius_miles": 1.0,
+        "time_span_hours": 4,
+        "weather_correlation": "45 mph wind gusts, 1.8 inches rain",
+        "report_count": 4
+      }
+    },
+    {
+      "id": "INS-DUP-001",
+      "type": "duplicate",
+      "title": "Potential Duplicate - Beaver Pond Alder",
+      "description": "Reports BP-003 and BP-004 appear to describe the same downed alder tree. Same photo reference, GPS within 15 meters, matching descriptions.",
+      "location": {
+        "type": "Point",
+        "coordinates": [-121.792, 46.818]
+      },
+      "severity": "low",
+      "report_ids": ["BP-003", "BP-004"],
+      "metadata": {
+        "similarity_score": 0.94,
+        "distance_meters": 15,
+        "original_report_id": "BP-003",
+        "duplicate_report_id": "BP-004",
+        "shared_features": ["photo", "hazard_type", "description_keywords", "location"]
+      }
+    },
+    {
+      "id": "INS-BIAS-001",
+      "type": "consistency_check",
+      "title": "District Assignment Imbalance",
+      "description": "All 15 obstruction reports assigned to District 3, none to District 4. Review geographic boundaries or consider load balancing.",
+      "location": {
+        "type": "Point",
+        "coordinates": [-121.760, 46.850]
+      },
+      "severity": "medium",
+      "report_ids": ["RV-001", "RV-005", "RV-008", "RV-010", "NR-001", "NR-002", "NR-003", "NR-004", "BP-003", "BP-004"],
+      "metadata": {
+        "check_type": "district_bias",
+        "affected_districts": ["03", "04"],
+        "expected_distribution": {"03": 10, "04": 5},
+        "actual_distribution": {"03": 15, "04": 0},
+        "deviation_percentage": 50
+      }
+    },
+    {
+      "id": "INS-CRITICAL-001",
+      "type": "anomaly",
+      "title": "Critical Infrastructure Failure",
+      "description": "Eagle Creek footbridge collapse (RV-007) requires immediate attention. High confidence report from coordinator with multiple photos.",
+      "location": {
+        "type": "Point",
+        "coordinates": [-121.775, 46.842]
+      },
+      "severity": "high",
+      "report_ids": ["RV-007"],
+      "metadata": {
+        "alert_type": "safety",
+        "response_time_target_hours": 2,
+        "escalation_required": true
+      }
+    },
+    {
+      "id": "INS-HOTSPOT-001",
+      "type": "hotspot",
+      "title": "Recurring Drainage Issues - Beaver Pond",
+      "description": "3rd consecutive year of beaver-related flooding at this location. Consider permanent reroute or elevated boardwalk.",
+      "location": {
+        "type": "Point",
+        "coordinates": [-121.790, 46.820]
+      },
+      "severity": "low",
+      "report_ids": ["BP-001"],
+      "metadata": {
+        "recurrence_years": 3,
+        "recommended_solution": "Elevated boardwalk or seasonal reroute"
+      }
+    }
+  ],
+  "weather_context": {
+    "event_id": "WX-2026-01-19-STORM",
+    "timestamp": "2026-01-19T02:00:00Z",
+    "duration_hours": 8,
+    "conditions": "Strong winter storm with heavy rain and gusty winds",
+    "max_wind_speed_mph": 45,
+    "total_precipitation_inches": 3.5,
+    "affected_trails": ["trail-north-ridge", "trail-river-valley"],
+    "alerts_issued": ["High Wind Warning", "Flash Flood Watch"]
+  },
+  "metadata": {
+    "generated_at": "2026-01-19T18:00:00Z",
+    "total_reports": 24,
+    "trails": {
+      "river_valley": { "count": 12, "id": "trail-river-valley" },
+      "north_ridge": { "count": 8, "id": "trail-north-ridge" },
+      "beaver_pond": { "count": 4, "id": "trail-beaver-pond" }
+    },
+    "patterns": {
+      "clusters": 1,
+      "duplicates": 1,
+      "high_risk": 1,
+      "bias_checks": 1
+    }
+  }
+}

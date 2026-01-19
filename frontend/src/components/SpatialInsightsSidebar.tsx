@@ -18,6 +18,8 @@ const typeIcons: Record<SpatialInsight['type'], string> = {
     hotspot: '\uD83D\uDD25', // fire
     trend: '\uD83D\uDCC8', // chart
     anomaly: '\u26A0\uFE0F', // warning
+    duplicate: '\uD83D\uDCC4', // document
+    consistency_check: '\u2696\uFE0F', // balance scale
 };
 
 const typeLabels: Record<SpatialInsight['type'], string> = {
@@ -25,6 +27,8 @@ const typeLabels: Record<SpatialInsight['type'], string> = {
     hotspot: 'Hotspot',
     trend: 'Trend',
     anomaly: 'Anomaly',
+    duplicate: 'Duplicate',
+    consistency_check: 'Consistency',
 };
 
 interface InsightCardProps {

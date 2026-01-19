@@ -47,6 +47,53 @@ export interface TriageResult {
     similar_reports: string[];
 }
 
+/**
+ * Pattern detection results from AI analysis.
+ * Identifies clusters, duplicates, and related reports.
+ */
+export interface PatternDetection {
+    is_cluster_member?: boolean;
+    cluster_id?: string;
+    cluster_reason?: string;
+    is_duplicate?: boolean;
+    duplicate_of?: string;
+    similarity_score?: number;
+    duplicate_reason?: string;
+}
+
+/**
+ * Weather context relevant to the hazard report.
+ * Used to correlate weather events with hazard patterns.
+ */
+export interface WeatherContext {
+    timestamp: string;
+    conditions: string;
+    wind_speed_mph?: number;
+    precipitation_inches?: number;
+    relevant_to_hazard: boolean;
+}
+
+/**
+ * Assignment status for district/crew routing.
+ */
+export type AssignmentStatus = 'pending_review' | 'assigned' | 'in_progress' | 'resolved';
+
+/**
+ * Priority level for hazard response.
+ */
+export type AssignmentPriority = 'low' | 'medium' | 'high' | 'urgent';
+
+/**
+ * Assignment information for report routing to districts and crews.
+ */
+export interface Assignment {
+    district_id: string;
+    crew_id?: string;
+    status: AssignmentStatus;
+    priority?: AssignmentPriority;
+    suggested_reason?: string;
+}
+
 export interface HazardReport {
     id: string;
     trail_id?: string;
@@ -63,4 +110,12 @@ export interface HazardReport {
     triaged_at?: string;
     reviewed_at?: string;
     resolved_at?: string;
+    /** Pattern detection results (clusters, duplicates) */
+    pattern_detection?: PatternDetection;
+    /** Assignment routing information */
+    assignment?: Assignment;
+    /** Weather context at time of report */
+    weather_context?: WeatherContext;
+    /** Flag for high-risk hazards requiring immediate attention */
+    safety_alert?: boolean;
 }
