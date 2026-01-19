@@ -1,0 +1,294 @@
+[
+  {
+    "id": "c1b2a3d4-e5f6-7890-1234-567890abcdef",
+    "trail_name": "Pacific Crest Trail - Section J",
+    "location": {
+      "latitude": 37.123456,
+      "longitude": -120.654321
+    },
+    "hazard_type": "clearing",
+    "severity_estimate": "difficult",
+    "description": "Large tree down across the trail, approximately 3 feet in diameter. Difficult to pass.",
+    "photos": [],
+    "reporter_type": "volunteer",
+    "reporter_organization": "PCTA",
+    "submitted_at": "2026-01-15T10:30:00Z",
+    "triage_result": {
+      "tracs_category": "CLR",
+      "tracs_category_name": "Clearing",
+      "severity": "SEV2",
+      "severity_name": "MAINTENANCE_NEEDED",
+      "confidence_score": 0.95,
+      "reasoning": "Large tree (approx 3ft diameter) clearly visible blocking the trail in the provided photo. GPS coordinates align perfectly with Pacific Crest Trail geometry. Description allows for precise volume estimation.",
+      "confidence_factors": {
+        "has_photo": true,
+        "photo_matches_hazard": true,
+        "gps_accurate": true,
+        "description_specific": true,
+        "reporter_trusted": true,
+        "corroborating_reports": 0
+      },
+      "recommended_action": "Dispatch clearing crew with chainsaw.",
+      "similar_reports": []
+    }
+  },
+  {
+    "id": "d2c3b4e5-f6a7-8901-2345-67890abcdef1",
+    "trail_name": "John Muir Trail",
+    "location": {
+      "latitude": 36.5784,
+      "longitude": -118.292
+    },
+    "hazard_type": "drainage",
+    "severity_estimate": "passable",
+    "description": "Trail is muddy and flooded in several sections due to recent rain. Passable with care.",
+    "photos": [],
+    "reporter_type": "anonymous",
+    "submitted_at": "2026-01-16T14:00:00Z",
+    "triage_result": {
+      "tracs_category": "DRN",
+      "tracs_category_name": "Drainage",
+      "severity": "SEV1",
+      "severity_name": "INFO_ONLY",
+      "confidence_score": 0.82,
+      "reasoning": "Description describes 'muddy and flooded' conditions consistent with recent heavy rainfall in the region (2.5\" in last 48h). No photo provided, but hazard type matches terrain analysis (low-lying area).",
+      "confidence_factors": {
+        "has_photo": false,
+        "photo_matches_hazard": false,
+        "gps_accurate": true,
+        "description_specific": true,
+        "reporter_trusted": false,
+        "corroborating_reports": 1,
+        "weather_context": "Heavy rain (2.5\")"
+      },
+      "recommended_action": "Monitor; no immediate action required.",
+      "similar_reports": []
+    }
+  },
+  {
+    "id": "e3d4c5f6-a7b8-9012-3456-7890abcdef12",
+    "trail_name": "Appalachian Trail",
+    "location": {
+      "latitude": 34.6259,
+      "longitude": -84.1943
+    },
+    "hazard_type": "structures",
+    "severity_estimate": "impassable",
+    "description": "Bridge washout at Eagle Creek. The creek is too high to ford safely.",
+    "photos": [],
+    "reporter_type": "coordinator",
+    "reporter_organization": "ATC",
+    "submitted_at": "2026-01-17T09:00:00Z",
+    "triage_result": {
+      "tracs_category": "STR",
+      "tracs_category_name": "Structures",
+      "severity": "SEV3",
+      "severity_name": "CLOSURE_RECOMMENDED",
+      "confidence_score": 0.65,
+      "reasoning": "Report claims 'bridge washout', which is a critical severity event. However, reporter is anonymous and location is 40m off-trail. Satellite imagery shows a bridge nearby, but current water levels are normal.",
+      "confidence_factors": {
+        "has_photo": false,
+        "photo_matches_hazard": false,
+        "gps_accurate": false,
+        "description_specific": true,
+        "reporter_trusted": true,
+        "corroborating_reports": 0
+      },
+      "recommended_action": "Send ranger to inspect immediately.",
+      "similar_reports": []
+    }
+  },
+  {
+    "id": "f4e5d6a7-b8c9-0123-4567-890abcdef123",
+    "trail_name": "Continental Divide Trail",
+    "location": {
+      "latitude": 47.563,
+      "longitude": -113.4354
+    },
+    "hazard_type": "signing",
+    "severity_estimate": "passable",
+    "description": "Trail marker is missing at the junction with the Highline Trail. Caused some confusion.",
+    "photos": [],
+    "reporter_type": "volunteer",
+    "reporter_organization": "CDTC",
+    "submitted_at": "2026-01-18T11:45:00Z",
+    "triage_result": {
+      "tracs_category": "SGN",
+      "tracs_category_name": "Signing",
+      "severity": "SEV1",
+      "severity_name": "INFO_ONLY",
+      "confidence_score": 0.42,
+      "reasoning": "Vague description 'trail marker missing' without specifying which junction or direction. GPS accuracy is low (>50m). Cannot verify against sign inventory without more specific location.",
+      "confidence_factors": {
+        "has_photo": false,
+        "photo_matches_hazard": false,
+        "gps_accurate": false,
+        "description_specific": false,
+        "reporter_trusted": true,
+        "corroborating_reports": 0
+      },
+      "recommended_action": "Request more information from reporter if possible.",
+      "similar_reports": []
+    }
+  },
+  {
+    "id": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
+    "trail_name": "Bright Angel Trail",
+    "location": {
+      "latitude": 36.0584,
+      "longitude": -112.1435
+    },
+    "hazard_type": "grading",
+    "severity_estimate": "difficult",
+    "description": "Significant erosion and deep ruts on the switchbacks below the 3-mile resthouse. Trekking poles recommended.",
+    "photos": [],
+    "reporter_type": "anonymous",
+    "submitted_at": "2026-01-14T16:20:00Z"
+  },
+  {
+    "id": "b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q7",
+    "trail_name": "Long Trail",
+    "location": {
+      "latitude": 44.259,
+      "longitude": -72.784
+    },
+    "hazard_type": "tread",
+    "severity_estimate": "passable",
+    "description": "Trail surface is very rocky and uneven for a half-mile stretch south of Camel's Hump.",
+    "photos": [],
+    "reporter_type": "volunteer",
+    "reporter_organization": "GMC",
+    "submitted_at": "2026-01-13T12:00:00Z"
+  },
+  {
+    "id": "c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8",
+    "trail_name": "Tahoe Rim Trail",
+    "location": {
+      "latitude": 39.096,
+      "longitude": -120.045
+    },
+    "hazard_type": "clearing",
+    "severity_estimate": "passable",
+    "description": "A few small branches down on the trail, but easily cleared by hand.",
+    "photos": [],
+    "reporter_type": "anonymous",
+    "submitted_at": "2026-01-12T18:00:00Z"
+  },
+  {
+    "id": "d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9",
+    "trail_name": "Wonderland Trail",
+    "location": {
+      "latitude": 46.786,
+      "longitude": -121.904
+    },
+    "hazard_type": "drainage",
+    "severity_estimate": "difficult",
+    "description": "Major washout at the Carbon River crossing. The log bridge is gone. River is running high and fast.",
+    "photos": [],
+    "reporter_type": "coordinator",
+    "reporter_organization": "WTA",
+    "submitted_at": "2026-01-11T08:15:00Z"
+  },
+  {
+    "id": "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0",
+    "trail_name": "Superior Hiking Trail",
+    "location": {
+      "latitude": 47.738,
+      "longitude": -90.342
+    },
+    "hazard_type": "structures",
+    "severity_estimate": "passable",
+    "description": "One of the boardwalks over a muddy section is wobbly and needs repair.",
+    "photos": [],
+    "reporter_type": "volunteer",
+    "reporter_organization": "SHTA",
+    "submitted_at": "2026-01-10T13:30:00Z"
+  },
+  {
+    "id": "f6g7h8i9-j0k1-l2m3-n4o5-p6q7r8s9t0u1",
+    "trail_name": "Ozark Highlands Trail",
+    "location": {
+      "latitude": 35.84,
+      "longitude": -93.38
+    },
+    "hazard_type": "signing",
+    "severity_estimate": "passable",
+    "description": "Trail blaze is faded and hard to see in the overgrown section near mile marker 45.",
+    "photos": [],
+    "reporter_type": "anonymous",
+    "submitted_at": "2026-01-09T17:00:00Z"
+  },
+  {
+    "id": "g7h8i9j0-k1l2-m3n4-o5p6-q7r8s9t0u1v2",
+    "trail_name": "Florida Trail",
+    "location": {
+      "latitude": 29.8,
+      "longitude": -82.2
+    },
+    "hazard_type": "grading",
+    "severity_estimate": "passable",
+    "description": "Sandy soil has eroded away in a few spots, creating some minor gullies.",
+    "photos": [],
+    "reporter_type": "volunteer",
+    "reporter_organization": "FTA",
+    "submitted_at": "2026-01-08T10:00:00Z"
+  },
+  {
+    "id": "h8i9j0k1-l2m3-n4o5-p6q7-r8s9t0u1v2w3",
+    "trail_name": "Ice Age Trail",
+    "location": {
+      "latitude": 43.4,
+      "longitude": -89.8
+    },
+    "hazard_type": "tread",
+    "severity_estimate": "passable",
+    "description": "Exposed roots across the trail in the wooded section. Watch your step.",
+    "photos": [],
+    "reporter_type": "anonymous",
+    "submitted_at": "2026-01-07T19:00:00Z"
+  },
+  {
+    "id": "i9j0k1l2-m3n4-o5p6-q7r8-s9t0u1v2w3x4",
+    "trail_name": "North Country Trail",
+    "location": {
+      "latitude": 46.5,
+      "longitude": -87.4
+    },
+    "hazard_type": "clearing",
+    "severity_estimate": "difficult",
+    "description": "Multiple small trees and branches down after a windstorm. Trail is passable but slow going.",
+    "photos": [],
+    "reporter_type": "coordinator",
+    "reporter_organization": "NCTA",
+    "submitted_at": "2026-01-06T11:20:00Z"
+  },
+  {
+    "id": "j0k1l2m3-n4o5-p6q7-r8s9-t0u1v2w3x4y5",
+    "trail_name": "Pacific Northwest Trail",
+    "location": {
+      "latitude": 48.9,
+      "longitude": -118.9
+    },
+    "hazard_type": "drainage",
+    "severity_estimate": "impassable",
+    "description": "Beaver dam has flooded the trail for a 100-yard section. Water is waist-deep.",
+    "photos": [],
+    "reporter_type": "volunteer",
+    "reporter_organization": "PNTA",
+    "submitted_at": "2026-01-05T15:00:00Z"
+  },
+  {
+    "id": "k1l2m3n4-o5p6-q7r8-s9t0-u1v2w3x4y5z6",
+    "trail_name": "Hayduke Trail",
+    "location": {
+      "latitude": 36.9,
+      "longitude": -111.5
+    },
+    "hazard_type": "structures",
+    "severity_estimate": "dangerous",
+    "description": "The fixed rope at the pour-off in Coyote Gulch is frayed and looks unsafe to use.",
+    "photos": [],
+    "reporter_type": "anonymous",
+    "submitted_at": "2026-01-04T12:30:00Z"
+  }
+]

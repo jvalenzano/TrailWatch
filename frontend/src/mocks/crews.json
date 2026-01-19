@@ -1,0 +1,69 @@
+
+[
+  {
+    "id": "crew-alpha",
+    "name": "Alpha Crew",
+    "organization": "PCTA",
+    "members": [
+      { "id": "user-1", "name": "Alice", "role": "leader" },
+      { "id": "user-2", "name": "Bob", "role": "member" },
+      { "id": "user-3", "name": "Charlie", "role": "member" }
+    ],
+    "status": "available",
+    "specialties": ["chainsaw", "crosscut", "rigging"]
+  },
+  {
+    "id": "crew-bravo",
+    "name": "Bravo Crew",
+    "organization": "ATC",
+    "members": [
+      { "id": "user-4", "name": "David", "role": "leader" },
+      { "id": "user-5", "name": "Eve", "role": "member" }
+    ],
+    "status": "available",
+    "specialties": ["tread work", "drainage", "rock work"]
+  },
+  {
+    "id": "crew-charlie",
+    "name": "Charlie Crew",
+    "organization": "CDTC",
+    "members": [
+      { "id": "user-6", "name": "Frank", "role": "leader" },
+      { "id": "user-7", "name": "Grace", "role": "member" },
+      { "id": "user-8", "name": "Heidi", "role": "member" },
+      { "id": "user-9", "name": "Ivan", "role": "member" }
+    ],
+    "status": "assigned",
+    "specialties": ["bridge building", "carpentry"],
+    "current_assignment": {
+      "report_id": "e3d4c5f6-a7b8-9012-3456-7890abcdef12",
+      "assigned_at": "2026-01-18T10:00:00Z"
+    }
+  },
+  {
+    "id": "crew-delta",
+    "name": "Delta Crew",
+    "organization": "WTA",
+    "members": [
+      { "id": "user-10", "name": "Judy", "role": "leader" },
+      { "id": "user-11", "name": "Mallory", "role": "member" }
+    ],
+    "status": "in_progress",
+    "specialties": ["signage", "blazing"],
+    "current_assignment": {
+      "report_id": "f4e5d6a7-b8c9-0123-4567-890abcdef123",
+      "assigned_at": "2026-01-19T09:00:00Z"
+    }
+  },
+  {
+    "id": "crew-echo",
+    "name": "Echo Crew",
+    "organization": "SHTA",
+    "members": [
+      { "id": "user-12", "name": "Trent", "role": "leader" },
+      { "id": "user-13", "name": "Walter", "role": "member" }
+    ],
+    "status": "available",
+    "specialties": ["general maintenance"]
+  }
+]

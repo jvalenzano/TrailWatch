@@ -1,24 +1,31 @@
 # Core
-fastapi>=0.109.0
-uvicorn[standard]>=0.27.0
-pydantic>=2.5.0
-pydantic-settings>=2.1.0
-httpx>=0.26.0
+fastapi>=0.109.0              # Web framework for the API layer
+uvicorn[standard]>=0.27.0     # ASGI server to run FastAPI
+pydantic>=2.5.0               # Data validation and serialization (FastAPI's backbone)
+pydantic-settings>=2.1.0      # Environment/config management with Pydantic
+python-dotenv>=1.0.0          # Load .env files for local development
+httpx>=0.26.0                 # Async HTTP client (for calling external APIs)
 
 # Database
-sqlalchemy>=2.0.0
-alembic>=1.13.0
-geoalchemy2>=0.14.0
-psycopg[binary]>=3.1.18
+sqlalchemy>=2.0.0             # ORM for database access
+alembic>=1.13.0               # Database migrations for SQLAlchemy
+geoalchemy2>=0.14.0           # SQLAlchemy extension for PostGIS geometry types
+psycopg[binary]>=3.1.18       # Psycopg3: modern async-capable Postgres driver
+psycopg2-binary>=2.9.0        # Psycopg2: classic Postgres driver (some libs still need it)
+asyncpg>=0.29.0               # High-performance async Postgres driver
+
+# Geospatial (for USFS trail data processing)
+geopandas>=0.14.0             # Pandas for geospatial data (loads shapefiles, GeoJSON)
+fiona>=1.9.0                  # Low-level geospatial file I/O (GeoPandas dependency)
 
 # AI / Google Cloud
-google-cloud-aiplatform>=1.38.0
-google-adk>=0.1.0
+google-cloud-aiplatform>=1.38.0   # Vertex AI SDK
+google-adk>=0.1.0                 # Agent Development Kit for building Gemini agents
 
 # Logging
-structlog>=24.1.0
+structlog>=24.1.0             # Structured logging (JSON output for Cloud Logging)
 
 # Testing
-pytest>=8.0.0
-pytest-asyncio>=0.23.0
-pytest-cov>=4.1.0
+pytest>=8.0.0                 # Test framework
+pytest-asyncio>=0.23.0        # Async test support
+pytest-cov>=4.1.0             # Coverage reporting

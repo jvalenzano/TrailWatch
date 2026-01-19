@@ -1,0 +1,444 @@
+# TrailWatch Deep Dive
+
+## TL;DR — Critical Context (Read First)
+
+**Project:** Citizen crowdsourcing platform for USFS trail condition reporting with AI-powered triage.
+
+**Current Phase:** Project 1 (Intake Agent) complete. Next: Trail Validation Service per ADR-001.
+
+**Tech Stack Essentials:**
+- Backend: Python 3.11+ / FastAPI / PostgreSQL 17 + PostGIS
+- AI: Google ADK (NOT LangChain), Local LLMs (Llama/Mistral), Vertex AI Gemini
+- Frontend: React 18+ / TypeScript / MapLibre GL JS
+
+**Critical ADRs:**
+- **ADR-001:** Trail Validation Architecture — Use USFS Geodata + PostGIS for GPS validation (blocks Project 2)
+
+**Constraints:**
+- Never use: OpenAI, LangChain, SQLite, Flask, requests
+- Always: Type hints, Google-style docstrings, pytest, 80% coverage, async for external APIs
+
+**Priority Queue:** See `conductor/NEXT.md` for current track decisions.
+**Agent Protocol:** See `docs/onboarding/AGENT_PROTOCOL.md` for strict operating rules.
+
+---
+
+## Overview
+
+TrailWatch is a citizen crowdsourcing platform for US Forest Service trail condition reporting with AI-powered triage. It transforms unstructured citizen reports into actionable intelligence for USFS rangers and volunteer coordinators.
+
+**Mission:** Close the gap between trail conditions on the ground and USFS staff awareness, using AI to convert citizen observations into TRACS-compliant maintenance priorities.
+
+**Why this matters:** USFS is in crisis. Maintained trail miles dropped 22% as of December 2025. Some districts lost 100% of trail staff. TrailWatch is a force multiplier, not additional workload.
+
+## Target Users
+
+| User | Role | Primary Need |
+|------|------|--------------|
+| **Volunteer Coordinator** | Manages adopt-a-trail crews (PCTA, local clubs) | Dashboard showing reports on their adopted trails, crew coordination |
+| **USFS Ranger/Trail Manager** | Oversees 100-400 trail miles per district | Triaged reports with severity + recommended action, closure notice drafts |
+| **Citizen Hiker** | Reports trail conditions via public platforms | Hikers post on AllTrails, Reddit, or partner org sites — no TrailWatch app required |
+
+**Primary users are Coordinators and Rangers, not hikers.** Hikers are data sources (via existing platforms); Coordinators and Rangers are decision-makers.
+
+## Tech Stack
+
+### Platform
+- **Cloud Provider:** Google Cloud Platform (GCP) only
+- **Compute:** Cloud Run (serverless containers)
+- **Database:** PostgreSQL 17 (Operational + Vectors + JSONB), BigQuery (Cold Archive only)
+- **AI/ML:** Local LLMs (Llama 3, Mistral) via Ollama/vLLM; Vertex AI (Gemini) for high-compliance tasks only
+- **Maps:** MapLibre GL JS + Protomaps (Basemaps), Contour/Three.js (3D), PostGIS (Spatial Logic)
+- **Storage:** Cloud Storage (photos, exports)
+- **Auth:** Firebase Auth or Cloud Identity (citizen), IAM (internal)
+
+### Languages & Frameworks
+- **Backend:** Python 3.11+
+- **API Framework:** FastAPI
+- **Agent Framework:** Google ADK (Agent Development Kit)
+- **Frontend:** React 18+ with TypeScript
+- **Mapping:** MapLibre GL JS + Protomaps (see ADR-004)
+- **Ingestion:** Crawlers for AllTrails/Reddit, Partner APIs (PCTA, ATC), PWA web form (see ADR-005)
+
+### Key Dependencies
+```
+# Python
+fastapi>=0.109.0
+google-cloud-aiplatform>=1.38.0
+google-adk>=0.1.0
+sqlalchemy>=2.0.0
+geoalchemy2>=0.14.0
+pydantic>=2.5.0
+httpx>=0.26.0
+
+# Do NOT use
+# - langchain (we use ADK for agent orchestration)
+# - openai (Gemini only for FedRAMP alignment)
+# - sqlite (use PostgreSQL/PostGIS for spatial)
+```
+
+## Architecture
+
+See [Data Flow Diagram](../architecture/data-flow.mmd) and [Agent Orchestration](../architecture/agent-orchestration.md).
+
+## Coding Standards
+
+### Python Style
+- Follow PEP 8, enforced by `ruff`
+- Line length: 88 characters (Black default)
+- Use type hints for all function signatures
+- Google-style docstrings for all public functions
+- No bare `except:` clauses; always specify exception type
+
+### Naming Conventions
+```python
+# Files: snake_case
+hazard_classifier.py
+trail_validator.py
+
+# Classes: PascalCase
+class HazardReport:
+class TrailSegment:
+
+# Functions/methods: snake_case
+def calculate_confidence_score():
+def snap_to_trail():
+
+# Constants: UPPER_SNAKE_CASE
+MAX_REPORT_AGE_DAYS = 30
+DEFAULT_CONFIDENCE_THRESHOLD = 0.7
+
+# Database tables: snake_case, plural
+hazard_reports
+trail_segments
+closure_notices
+```
+
+### Testing Requirements
+- Unit tests required for all business logic
+- Integration tests for API endpoints
+- Minimum 80% coverage for new code
+- Use `pytest` as test framework
+- Mock external APIs (RIDB, Gemini) in unit tests
+- Test TRACS mapping with representative citizen inputs
+
+### Logging
+- Use `structlog` for structured JSON logging
+- Log levels: DEBUG (dev only), INFO (operational), WARNING, ERROR
+- Always include `report_id` in log context when processing reports
+- Never log PII (email, phone, full name)
+- Always log: timestamps, request IDs, confidence scores, TRACS mappings
+
+```python
+import structlog
+logger = structlog.get_logger()
+
+# Good
+logger.info("report_processed", 
+    report_id=report.id,
+    tracs_category=result.category,
+    confidence=result.confidence)
+
+# Bad - contains PII
+logger.info("report_processed", 
+    user_email=report.user_email,  # NEVER
+    description=report.description)  # May contain PII
+```
+
+### Error Handling
+- Use custom exception classes for domain errors
+- Always return structured error responses from APIs
+- Include correlation IDs for debugging
+- Graceful degradation: if RIDB is down, accept report without validation
+
+```python
+# Custom exceptions
+class TrailNotFoundError(Exception):
+    """Raised when GPS coordinates don't match any known trail."""
+    pass
+
+class TriageFailedError(Exception):
+    """Raised when AI triage cannot produce a confident result."""
+    pass
+```
+
+## External Integrations
+
+See [External APIs Reference](../reference/external-apis.md) for RIDB, USFS Geodata, and Weather details.
+
+## TRACS Mapping Reference
+
+See [TRACS Mapping Reference](../reference/tracs-mapping.md) for Category and Severity tables.
+
+### Confidence Scoring
+
+See [Confidence Scoring](../reference/confidence-scoring.md) for the scoring algorithm and weights.
+
+## API Contracts
+
+### Report Submission Endpoint
+
+```
+POST /api/v1/reports
+Content-Type: application/json
+
+{
+  "trail_id": "string (RIDB ID, optional)",
+  "location": {
+    "latitude": 37.123456,
+    "longitude": -120.654321,
+    "accuracy_meters": 50
+  },
+  "hazard_type": "enum: clearing|drainage|grading|structures|signing|tread|other",
+  "severity_estimate": "enum: passable|difficult|impassable|dangerous",
+  "description": "string (free text, max 1000 chars)",
+  "photos": ["string (base64 or Cloud Storage URL)"],
+  "reporter": {
+    "type": "enum: anonymous|volunteer|coordinator",
+    "organization": "string (optional, e.g., 'PCTA')"
+  }
+}
+
+Response 201:
+{
+  "report_id": "uuid",
+  "status": "received",
+  "trail_matched": true,
+  "trail_name": "Pacific Crest Trail - Section J",
+  "estimated_processing_time": "under 5 minutes"
+}
+```
+
+### Triaged Report Schema
+
+```json
+{
+  "report_id": "uuid",
+  "original_submission": { ... },
+  "triage_result": {
+    "tracs_category": "CLR",
+    "tracs_category_name": "Clearing",
+    "severity": "SEV2",
+    "severity_name": "MAINTENANCE_NEEDED",
+    "confidence_score": 0.87,
+    "confidence_factors": {
+      "has_photo": true,
+      "photo_matches_hazard": true,
+      "gps_accurate": true,
+      "description_specific": true,
+      "reporter_trusted": false,
+      "corroborating_reports": 1,
+      "weather_context": "recent_windstorm"
+    },
+    "recommended_action": "Schedule clearing crew within 14 days",
+    "similar_reports": ["uuid1", "uuid2"],
+    "trail_popularity_percentile": 0.78,
+    "estimated_hikers_affected_annually": 12000
+  },
+  "routing": {
+    "assigned_to": "coordinator",
+    "coordinator_id": "uuid (if applicable)",
+    "ranger_district": "Tahoe National Forest - Yuba River RD"
+  },
+  "timestamps": {
+    "submitted_at": "ISO8601",
+    "triaged_at": "ISO8601",
+    "reviewed_at": null,
+    "resolved_at": null
+  }
+}
+```
+
+## Constraints
+
+### Data Quality Requirements
+- All GPS coordinates must be WGS84 (EPSG:4326)
+- All timestamps must be ISO8601 with timezone
+- All text must be UTF-8
+- Photos must be JPEG or PNG, max 10MB
+- Free text descriptions max 1000 characters
+
+### Security Requirements
+- HTTPS/TLS 1.3 for all endpoints
+- Data at rest encryption (Cloud Storage, BigQuery)
+- API keys stored in Secret Manager, never in code
+- Audit logging for all write operations
+- No PII in logs (email, phone, full name)
+
+### Accessibility Requirements
+- All public-facing UI must meet WCAG 2.1 AA
+- Color contrast ratios must pass automated checks
+- Map interfaces must have keyboard navigation
+- Error messages must be descriptive, not just codes
+
+### Compliance Considerations
+- FedRAMP: NOT required (recreation data is low sensitivity)
+- However, maintain security hygiene as if we were seeking FedRAMP Low
+- Data retention: Keep raw reports indefinitely (audit trail)
+- FOIA: All data may be subject to public records requests
+
+## Do Not
+
+### Forbidden Patterns
+- **Never** use OpenAI APIs (Gemini only for GCP alignment)
+- **Never** use LangChain (ADK is our agent framework)
+- **Never** store raw PII in BigQuery (hash or omit)
+- **Never** auto-publish closure notices without human approval
+- **Never** expose internal database IDs in public APIs (use UUIDs)
+- **Never** trust client-provided severity ratings without AI validation
+- **Never** skip trail validation even if RIDB is slow (queue for retry)
+
+### Forbidden Libraries
+```python
+# Do NOT add these to requirements
+openai          # Use Llama 3 / Mistral / Vertex Gemini
+langchain       # Use Google ADK
+sqlite3         # Use PostgreSQL + PostGIS
+flask           # Use FastAPI
+requests        # Use httpx (async support)
+```
+
+### Anti-Patterns to Avoid
+- Synchronous API calls to external services (always async with timeout)
+- Hardcoded API keys or credentials (use Secret Manager)
+- Silent failures (always log errors with context)
+- Broad exception handling (catch specific exceptions)
+- Business logic in API routes (use service layer)
+- Raw SQL strings (use SQLAlchemy ORM or parameterized queries)
+
+## Project Phases
+
+**NOTE:** Before implementing any project, check `docs/adr/` for architectural decisions that may affect implementation order or dependencies.
+
+### Project 1: Intake Agent
+- **Goal:** Accept citizen reports, extract structured data, map to TRACS
+- **Input:** Raw citizen submission (text, photo, GPS)
+- **Output:** Structured HazardReport with TRACS category + confidence
+- **Success:** Process 50 sample reports with 80%+ TRACS accuracy
+
+### Project 2: Status Dashboard
+- **Goal:** Visualize trail status and aggregated reports
+- **Input:** Triaged reports from database
+- **Output:** Map UI with trail status overlay, report clustering
+- **Success:** Coordinator can see their adopted trails + recent reports
+
+### Project 3: Hazard Classifier
+- **Goal:** Analyze photos to validate/enhance hazard classification
+- **Input:** Photo from citizen report
+- **Output:** Hazard type + confidence adjustment
+- **Success:** Photo analysis improves TRACS accuracy by 10%+
+
+### Project 4: Closure Notice Generator
+- **Goal:** Generate draft closure notices for ranger approval
+- **Input:** SEV3 triaged report
+- **Output:** Formatted closure notice (multiple formats: web, social, email)
+- **Success:** Rangers approve 80%+ of generated notices with minor edits
+
+### Project 5: Prioritization Agent
+- **Goal:** Rank maintenance tasks across all open reports
+- **Input:** All triaged reports, trail popularity data, resource availability
+- **Output:** Prioritized maintenance queue with reasoning
+- **Success:** Rangers agree with top 10 priorities 80%+ of the time
+
+## Architecture Decision Records (ADRs)
+
+**IMPORTANT:** Before creating new tracks or making architectural decisions, always check `docs/adr/` for existing decisions.
+
+Current ADRs:
+- **ADR-001:** Trail Validation Architecture (RIDB vs USFS Geodata + PostGIS)
+  - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
+  - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
+  - Status: Intake Agent has boundary validation only; full trail snapping pending
+- **ADR-002:** Conductor Workflow Pattern (Human-Driven Orchestration)
+  - Decision: Use Human-in-the-loop driven Conductor workflow
+  - Impact: Enables safe autonomous execution with human approval gates
+  - Status: Accepted
+- **ADR-004:** Map Library Selection (Google Maps vs MapLibre)
+  - Decision: Use MapLibre GL JS + Protomaps/PMTiles for web mapping
+  - Impact: Enables offline capability; requires tile source configuration
+  - Status: Accepted; frontend workflow updated
+- **ADR-003:** Autonomous Execution Patterns (Gemini CLI YOLO + Sandbox)
+  - Decision: Use USFS Geodata Clearinghouse + PostGIS for GPS trail validation
+  - Impact: Requires separate "Trail Validation Service" track before full GPS confidence scoring
+  - Status: Implemented; guidelines updated for YOLO/Sandbox stability
+- **ADR-005:** Report Ingestion Strategy (Crowdsourcing vs Native App)
+  - Decision: No native mobile app; ingest from AllTrails, Reddit, partner APIs, PWA form
+  - Impact: Requires Ingestion Service track; removes mobile development from scope
+  - Status: Accepted
+
+Template: `docs/adr/ADR-000-template.md`
+
+## References
+
+- **Architecture Decisions:** `docs/adr/` directory (check before planning)
+- **User Journeys:** `docs/USER_JOURNEYS.md` (user workflow requirements)
+- **Frontend Specifications:**
+  - `docs/UI/TrailWatch_UI_Strategy.md` — Strategic rationale for agentic UI
+  - `docs/UI/trailwatch-component-architecture.md` — Component structure and interfaces
+  - `docs/UI/trailwatch-frontend-track.md` — Phase definitions and checkpoint criteria
+- TRACS User Guide: USFS Trail Assessment methodology
+- USFS Geodata Clearinghouse: https://data.fs.usda.gov/geodata/
+- Google ADK Documentation: https://google.github.io/adk-docs/
+- PostGIS Documentation: https://postgis.net/
+- MapLibre GL JS Documentation: https://maplibre.org/maplibre-gl-js/docs/
+
+## Troubleshooting
+
+### Gemini CLI YOLO Mode Freeze (Jan 2026)
+
+**Symptom:** The CLI reads context files but hangs or "silent crashes" without taking further action during `/conductor:implement`.
+
+**Cause:** Known scheduler bug in Gemini CLI's YOLO mode (Issue #16007, #16496).
+
+**Solution:**
+1.  **Disable YOLO Mode:** Run commands in standard interactive mode.
+2.  **Enable Sandbox:** Start the CLI with `gemini --sandbox` or set `export GEMINI_SANDBOX=true` before running to ensure file operations are not blocked.
+3.  **Process Recovery:** If a freeze occurs, kill the process using `kill -9` and restart without the `--yolo` flag.
+
+### Interactive terminal prompts (YOLO Mode)
+
+**Symptom:** Conductor stalls on a command that requires user input (e.g., `Password for user:`).
+
+**Cause:** Commands that trigger interactive prompts (like `psql` without credentials) block the CLI execution loop.
+
+**Immediate Recovery:**
+1.  **Focus Shell:** Press `Ctrl+f` to focus the CLI terminal, type the input, and press `Enter`.
+2.  **Force Kill:** If stuck, `Ctrl+c` or `kill -9` the process.
+
+**Prevention:**
+1.  **Database:** Use `PGPASSWORD` or a `.pgpass` file.
+2.  **Scripts:** Ensure all scripts run in non-interactive mode (e.g., `npm install --no-interactive`, `psql -w`).
+
+For a strategic overview of autonomous execution, see [ADR-003](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/adr/ADR-003-autonomous-execution-patterns.md).
+
+### PostGIS Extension Not Available
+
+**Symptom:** `psycopg.errors.FeatureNotSupported: extension "postgis" is not available` or `Could not open extension control file ".../postgis.control"`.
+
+**Cause:** 
+1. The PostGIS extension is not installed on the system (Mac/Homebrew).
+2. **Port Hijacking (Docker)**: A Docker container (likely a standard Linux `postgres` image) is running on port 5432, intercepting connections meant for the Homebrew service. The Linux image looks for control files in `/usr/share/postgresql/`, which explains the unexpected path in the error message.
+
+**Solution (Mac/Homebrew):**
+1. Check for running Docker containers: `docker ps`.
+2. Stop any container using port 5432: `docker stop <container_name>`.
+3. If PostGIS still isn't found, install it: `brew install postgis`.
+4. Restart the Homebrew service: `brew services restart postgresql@17`.
+
+**Prevention:** Ensure no background Docker Postgres instances are active when developing with the local PostGIS stack.
+
+### GCP Authentication Errors (`invalid_rapt`)
+
+**Symptom:** API Error: `{"error":"invalid_grant","error_description":"reauth related error (invalid_rapt)"}`.
+
+**Cause:** Google Cloud security policies require a fresh login (Reauthentication Prompt), often due to session expiry or MFA requirements.
+
+**Solution:**
+1.  Run `gcloud auth login` and follow the browser prompts.
+2.  Run `gcloud auth application-default login` to refresh the credentials used by the Gemini CLI.
+3.  Restart the Gemini CLI.
+
+---
+
+*Last Updated: January 2026*
+*Maintainer: AI Factory Team*
