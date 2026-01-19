@@ -21,7 +21,7 @@
     - [x] Run `npm run build` and `npm run lint`
 - [x] **Task: Conductor - User Manual Verification 'Phase 0: Project Scaffolding'**
 
-## Phase 1: Core Data Layer
+## Phase 1: Core Data Layer [checkpoint: 5016950]
 
 - [x] **Task: Create API utilities** [e60e5b6]
     - [x] Implement `src/utils/api.ts` with fetch wrapper and error handling
