@@ -33,6 +33,9 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({ score,
             <div
                 className={`flex items-center justify-center w-8 h-6 text-xs font-bold rounded border ${colorClass}`}
                 title={`${label} (${percentage}%)`}
+                role="status"
+                aria-label={`AI confidence: ${percentage}% - ${label}`}
+                data-testid="confidence-indicator-compact"
             >
                 {percentage}
             </div>
@@ -43,8 +46,11 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({ score,
         <div
             className={`flex items-center gap-2 px-2 py-1 text-sm font-medium rounded border ${colorClass}`}
             title={`${label} (${percentage}%)`}
+            role="status"
+            aria-label={`AI confidence: ${percentage}% - ${label}`}
+            data-testid="confidence-indicator"
         >
-            <span className="flex items-center justify-center w-6 h-6 bg-white/20 rounded-full text-xs">
+            <span className="flex items-center justify-center w-6 h-6 bg-white/20 rounded-full text-xs" aria-hidden="true">
                 {percentage}%
             </span>
             <span>{label}</span>
