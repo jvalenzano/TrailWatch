@@ -1,12 +1,16 @@
 import { useUIMode } from '../hooks/useUIMode';
 import { UI_MODES, type UIModeName } from '../config/ui-modes';
+import { useReports } from '../hooks/useReports';
+import { useCrews } from '../hooks/useCrews';
 
 /**
  * Dashboard page showing current UI mode and enabled features.
- * This is a test page for Phase 0 verification.
+ * This is a test page for Phase 1 verification.
  */
 export function Dashboard() {
     const { mode, modeName, setMode } = useUIMode();
+    const { data: reports, isLoading: isLoadingReports, isError: isErrorReports } = useReports();
+    const { data: crews, isLoading: isLoadingCrews, isError: isErrorCrews } = useCrews();
 
     const enabledFeatures = Object.entries(mode.features)
         .filter(([, enabled]) => enabled)
@@ -24,9 +28,28 @@ export function Dashboard() {
                         TrailWatch Ranger Dashboard
                     </h1>
                     <p className="text-gray-400">
-                        Phase 0 Verification — UI Mode Configuration
+                        Phase 1 Verification — Data Hooks
                     </p>
                 </header>
+
+                {/* Data Loading Status */}
+                <section className="mb-8 p-6 bg-gray-800 rounded-lg">
+                    <h2 className="text-xl font-semibold mb-4">Data Loading Status</h2>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <h3 className="text-emerald-400 font-medium mb-2">Reports</h3>
+                            {isLoadingReports && <p className="text-gray-400">Loading...</p>}
+                            {isErrorReports && <p className="text-red-500">Error loading reports</p>}
+                            {reports && <p className="text-gray-300">Loaded {reports.length} reports</p>}
+                        </div>
+                        <div>
+                            <h3 className="text-emerald-400 font-medium mb-2">Crews</h3>
+                            {isLoadingCrews && <p className="text-gray-400">Loading...</p>}
+                            {isErrorCrews && <p className="text-red-500">Error loading crews</p>}
+                            {crews && <p className="text-gray-300">Loaded {crews.length} crews</p>}
+                        </div>
+                    </div>
+                </section>
 
                 {/* Mode Selector */}
                 <section className="mb-8 p-6 bg-gray-800 rounded-lg">
@@ -109,7 +132,7 @@ export function Dashboard() {
                 </section>
 
                 <footer className="mt-8 text-center text-gray-500 text-sm">
-                    TrailWatch Phase 0 • Ranger Dashboard Track • January 2026
+                    TrailWatch Phase 1 • Ranger Dashboard Track • January 2026
                 </footer>
             </div>
         </div>
