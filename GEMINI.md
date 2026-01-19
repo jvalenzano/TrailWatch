@@ -22,3 +22,10 @@ For full project context, architecture, and standards, see:
 ## Architecture
 - [Data Flow](docs/architecture/data-flow.mmd)
 - [Agent Orchestration](docs/architecture/agent-orchestration.md)
+- [Agentic UI Patterns](docs/concepts/agentic_ui_patterns.md)
+- [Agentic User Journeys](docs/USER_JOURNEYS.md)
+
+## UI Development
+- [Specification](docs/UI/UI_SPECIFICATION.md)
+- [Wireframe Catalog](docs/UI/WIREFRAME_CATALOG.md)
+

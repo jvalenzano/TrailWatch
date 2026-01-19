@@ -118,7 +118,12 @@ Use `FeatureGate` component for conditional rendering based on UI mode:
 
 ## Related Documentation
 
+## Related Documentation
+
 - `GEMINI.md` - Global AI instructions and project overview
 - `conductor/workflow.md` - Detailed development workflow
 - `docs/adr/` - Architecture Decision Records
-- `docs/UI/` - Frontend design strategy and component architecture
+- `docs/UI/UI_SPECIFICATION.md` - Detailed Agentic UI Spec
+- `docs/concepts/agentic_ui_patterns.md` - Core UI Patterns (Cluster, Bias, Circuit Breaker)
+- `docs/initiatives/trail_intel_pilot/` - Business & Procurement Context
+

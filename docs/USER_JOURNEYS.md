@@ -127,6 +127,57 @@
 
 ---
 
+
+---
+
+## Agentic User Journeys (Human-in-the-Loop)
+
+### Journey 4: The Proactive Nudge (Pattern A - Cluster Alert)
+**Persona:** Elena (USFS Ranger)
+
+**Scenario:** A storm passed through last night. Elena logs in, expecting to review reports one-by-one.
+
+**Steps:**
+1.  **Trigger:** System analyzes incoming stream, finds 4 reports of "Downed Trees" on Wonderland Trail within 2 miles.
+2.  **Agent Action:** Puts a RED "Spatial Cluster Alert" card at the top of the Left Sidebar. Map pulses the 4 markers.
+3.  **Elena's Reaction:** "Oh, I didn't see that connection." She clicks the card.
+4.  **Interaction:** System highlights the area and suggests: "Issue Single Area Notice?"
+5.  **Resolution:** Elena accepts. System drafts one notice for the whole segment instead of 4 individual work orders.
+6.  **Value:** Saved 30 mins of administrative work; faster public safety warning.
+
+### Journey 5: The Bias Check (Pattern B - Consistency)
+**Persona:** Mike (Volunteer Coordinator)
+
+**Scenario:** Mike is hurriedly assigning repair crews. He habitually assigns "Crew A" because they are fast.
+
+**Steps:**
+1.  **Trigger:** Mike assigns the 5th report in a row to Crew A. Crew B is available and closer.
+2.  **Agent Action:** Display "Consistency Check" card (Yellow/Medium priority).
+3.  **UI:** "Note: Crew B is 5 miles closer and has availability. You have assigned 90% of work to Crew A this month."
+4.  **Mike's Reaction:** "Good catch, I forgot Crew B was free."
+5.  **Interaction:** Mike clicks "Switch to Crew B."
+6.  **Resolution:** Assignments rebalanced.
+7.  **Value:** Prevented crew burnout and optimized travel time.
+
+### Journey 6: The Circuit Breaker (Safety Guard)
+**Persona:** Elena (USFS Ranger)
+
+**Scenario:** A hiker reports a "Collapsed Bridge." The AI identifies it as CRITICAL severity.
+
+**Steps:**
+1.  **Trigger:** Report comes in. AI confidence is 0.95 (High).
+2.  **Agent Action:** Instead of auto-flagging it for closure, the UI locks the "Approve Closure" button.
+3.  **UI:** Displays "HIGH RISK DECISION" warning. Requires:
+    *   [ ] Verify Photo
+    *   [ ] Confirm GPS Match
+    *   [ ] Type Justification
+4.  **Elena's Reaction:** She pauses. She zooms in on the photo. She checks the GPS.
+5.  **Interaction:** She types "Valid crash, structure failure confirmed." and checks the boxes.
+6.  **Resolution:** The button unlocks. She clicks "Approve."
+7.  **Value:** Human accountability is enforced for life-safety decisions. AI serves, it does not rule.
+
+---
+
 ## Test Cases (For Future QA)
 
 ### Functional Test Cases
