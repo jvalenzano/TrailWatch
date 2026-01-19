@@ -500,6 +500,19 @@ Template: `docs/adr/ADR-000-template.md`
 - Google ADK Documentation: https://google.github.io/adk-docs/
 - PostGIS Documentation: https://postgis.net/
 
+## Troubleshooting
+
+### Gemini CLI YOLO Mode Freeze (Jan 2026)
+
+**Symptom:** The CLI reads context files but hangs or "silent crashes" without taking further action during `/conductor:implement`.
+
+**Cause:** Known scheduler bug in Gemini CLI's YOLO mode (Issue #16007, #16496).
+
+**Solution:**
+1.  **Disable YOLO Mode:** Run commands in standard interactive mode.
+2.  **Enable Sandbox:** Start the CLI with `gemini --sandbox` or set `export GEMINI_SANDBOX=true` before running to ensure file operations are not blocked.
+3.  **Process Recovery:** If a freeze occurs, kill the process using `kill -9` and restart without the `--yolo` flag.
+
 ---
 
 *Last Updated: January 2026*

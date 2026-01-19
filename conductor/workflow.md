@@ -2,12 +2,13 @@
 
 ## Guiding Principles
 
-1. **The Plan is the Source of Truth:** All work must be tracked in `plan.md`
-2. **The Tech Stack is Deliberate:** Changes to the tech stack must be documented in `tech-stack.md` *before* implementation
-3. **Test-Driven Development:** Write unit tests before implementing functionality
-4. **High Code Coverage:** Aim for >80% code coverage for all modules
-5. **User Experience First:** Every decision should prioritize user experience
-6. **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
+1.  **The Plan is the Source of Truth:** All work must be tracked in `plan.md`
+2.  **The Tech Stack is Deliberate:** Changes to the tech stack must be documented in `tech-stack.md` *before* implementation
+3.  **Test-Driven Development:** Write unit tests before implementing functionality
+4.  **High Code Coverage:** Aim for >80% code coverage for all modules
+5.  **User Experience First:** Every decision should prioritize user experience
+6.  **Sandboxing Preferred:** Enable the sandbox via CLI flag (`--sandbox`) or environment variable (`GEMINI_SANDBOX=true`) to isolate file operations and prevent environment-related stalls.
+7.  **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
 
 ## Track Initiation (Human-Driven)
 
@@ -33,6 +34,17 @@ enhance confidence scoring.
 ```
 
 Conductor then generates `spec.md` and `plan.md` based on this assignment.
+
+## Known Environmental Issues
+
+> [!WARNING]
+> **Gemini CLI YOLO Mode Freeze Bug (Jan 2026)**
+> Avoid using `--yolo` or the `Ctrl+Y` toggle in Gemini CLI when running long-running Conductor commands like `/conductor:implement`. There is a known scheduler bug that can cause the agent to freeze after reading context.
+>
+> **Recommended Workaround:**
+> 1. Run in **Interactive Mode** (approval required for each step).
+> 2. Enable the sandbox: Start the CLI with `gemini --sandbox` or set `export GEMINI_SANDBOX=true`.
+> 3. If the CLI freezes, kill the process with `kill -9` and restart without YOLO mode.
 
 ## Task Workflow
 
