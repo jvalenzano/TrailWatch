@@ -26,11 +26,12 @@
 
 🎯 **Ranger Dashboard (Frontend)** — In Progress
 - Track: `frontend_dashboard_20260118`
-- Phase 0 complete (scaffolding, UI modes, type definitions)
-- Phase 1 complete (Core Data Layer)
-- Phase 2 complete (Traditional Mode UI)
-- Phase 3 complete (Moderate Mode UI) — Pending Human Sign-Off
-- Phase 4 pending (Agentic Mode UI)
+- **Current Branch:** `feature/dashboard-phase-4-agentic`
+- Phase 0-3 complete (scaffolding through Moderate Mode)
+- Phase 3 merged to develop — Pending Human Sign-Off for main
+- Phase 4 branch created — Awaiting human approval to implement
+
+See: `conductor/tracks/phase4-agentic-mode/implementation_plan.md`
 
 **Scope:**
 - React 18+ / TypeScript / Vite / Tailwind CSS / TanStack Query

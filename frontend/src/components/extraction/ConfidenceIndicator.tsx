@@ -44,7 +44,7 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({ score,
 
     return (
         <div
-            className={`flex items-center gap-2 px-2 py-1 text-sm font-medium rounded border ${colorClass}`}
+            className={`flex items-center gap-2 px-4 py-2 text-lg font-bold rounded border shadow-md mb-4 ${colorClass}`}
             title={`${label} (${percentage}%)`}
             role="status"
             aria-label={`AI confidence: ${percentage}% - ${label}`}

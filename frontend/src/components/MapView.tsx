@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
+const LIGHT_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+const DARK_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+
 interface MapViewProps {
     initialCenter?: [number, number];
     initialZoom?: number;
@@ -25,27 +28,12 @@ export function MapView({
         if (!mapContainer.current) return;
 
         try {
+            const isDarkTheme = window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false;
+            const mapStyle = isDarkTheme ? DARK_STYLE : LIGHT_STYLE;
+
             const mapInstance = new maplibregl.Map({
                 container: mapContainer.current,
-                style: {
-                    version: 8,
-                    sources: {
-                        'osm': {
-                            type: 'raster',
-                            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-                            tileSize: 256,
-                            attribution: '&copy; OpenStreetMap Contributors',
-                            maxzoom: 19
-                        }
-                    },
-                    layers: [
-                        {
-                            id: 'osm',
-                            type: 'raster',
-                            source: 'osm'
-                        }
-                    ]
-                },
+                style: mapStyle,
                 center: initialCenter,
                 zoom: initialZoom,
             });
