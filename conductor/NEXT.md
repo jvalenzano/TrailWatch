@@ -14,27 +14,34 @@
 
 ## Next Track
 
-🎯 **Trail Validation Service**
+✅ **Trail Validation Service** — Project 2 complete
+- Checkpoint: `3cc300b`
+- PostGIS GPS snapping, USFS geodata ingestion
+- Verified spatial accuracy (PostGIS 3.6 + Postgres 17)
 
-**Reason:** ADR-001 requires this before Project 2 (Status Dashboard). Provides GPS-to-trail snapping infrastructure.
+## Next Track
 
-**Unblocks:** Status Dashboard map rendering, accurate trail matching
+🎯 **Status Dashboard (Project 2)**
+
+**Reason:** Core backend infrastructure (Intake + Validation) is stable. The coordinator needs to visualize this data on a map.
+
+**Unblocks:** Visual triage, spatial report clustering, ranger district dashboard
 
 **Scope:**
-- Load USFS Geodata into PostGIS
-- Implement GPS coordinate snapping to trail geometries
-- Enhance confidence scoring with `gps_accurate` factor
-- Target: GPS within 50m of known trail = validated
+- Implement MapLibre GL JS frontend
+- Create API endpoints for fetching triaged reports with trail metadata
+- Implement trail status overlay (PostGIS-backed)
+- Cluster reports by severity and ranger district
 
-**Reference:** [ADR-001](docs/adr/ADR-001-trail-validation-architecture.md)
+**Reference:** [Project 2 Specification](conductor/archive/trail_validation_service_20260117/spec.md) (Context)
 
 ## Priority Queue
 
 | # | Track | Status | Dependency |
 |---|-------|--------|------------|
-| 1 | Trail Validation Service | 🎯 NEXT | ADR-001 |
-| 2 | Status Dashboard (Project 2) | ⏸️ Blocked | Requires #1 |
-| 3 | Hazard Classifier (Project 3) | ⏸️ Waiting | — |
+| 1 | Status Dashboard (Project 2) | 🎯 NEXT | Validation Service |
+| 2 | Hazard Classifier (Project 3) | ⏸️ Waiting | — |
+| 3 | Closure Notice Generator (Project 4)| ⏸️ Waiting | — |
 
 ## Future Considerations
 
