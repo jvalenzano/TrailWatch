@@ -35,6 +35,29 @@ export interface ConfidenceFactors {
     weather_context?: string;
 }
 
+/**
+ * Step type for reasoning chain visualization.
+ * Represents the AI analysis pipeline stages.
+ */
+export type ReasoningStepType = 'vision' | 'spatial' | 'policy';
+
+/**
+ * Status of a reasoning step.
+ */
+export type ReasoningStepStatus = 'pending' | 'processing' | 'complete' | 'skipped';
+
+/**
+ * Individual step in the AI reasoning chain.
+ */
+export interface ReasoningStep {
+    type: ReasoningStepType;
+    label: string;
+    status: ReasoningStepStatus;
+    summary: string;
+    details?: string[];
+    confidence?: number;
+}
+
 export interface TriageResult {
     tracs_category: TRACSCategoryCode;
     tracs_category_name: string;
@@ -45,6 +68,8 @@ export interface TriageResult {
     confidence_factors: ConfidenceFactors;
     recommended_action: string;
     similar_reports: string[];
+    /** Step-by-step reasoning chain for agentic UI */
+    reasoning_steps?: ReasoningStep[];
 }
 
 /**
