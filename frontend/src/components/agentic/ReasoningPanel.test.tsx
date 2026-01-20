@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import { ReasoningPanel, type ReasoningStep } from './ReasoningPanel';
 
 const mockSteps: ReasoningStep[] = [
@@ -157,6 +158,143 @@ describe('ReasoningPanel', () => {
 
             const panel = screen.getByTestId('reasoning-panel');
             expect(panel).toHaveClass('bg-gray-800');
+        });
+    });
+
+    // WF4 Enhancement Tests - Step numbering, tool names, classifications, audit log
+
+    describe('step numbering', () => {
+        it('should display step numbers (Step 1, Step 2, etc.)', () => {
+            render(<ReasoningPanel steps={mockSteps} overallConfidence={0.89} />);
+
+            expect(screen.getByText(/Step 1/)).toBeInTheDocument();
+            expect(screen.getByText(/Step 2/)).toBeInTheDocument();
+            expect(screen.getByText(/Step 3/)).toBeInTheDocument();
+            expect(screen.getByText(/Step 4/)).toBeInTheDocument();
+        });
+
+        it('should style step numbers prominently', () => {
+            render(<ReasoningPanel steps={mockSteps} overallConfidence={0.89} />);
+
+            const stepNumber = screen.getByText(/Step 1/);
+            expect(stepNumber).toHaveClass('font-bold');
+        });
+    });
+
+    describe('tool names', () => {
+        const stepsWithTools: ReasoningStep[] = [
+            {
+                step: 'Visual Analysis',
+                status: 'success',
+                detail: 'Identified fallen tree',
+                toolName: 'ImageClassifier',
+            },
+            {
+                step: 'Location Check',
+                status: 'success',
+                detail: 'GPS validated',
+                toolName: 'GeoValidator',
+            },
+        ];
+
+        it('should display tool name when provided', () => {
+            render(<ReasoningPanel steps={stepsWithTools} overallConfidence={0.89} />);
+
+            expect(screen.getByText(/ImageClassifier/)).toBeInTheDocument();
+            expect(screen.getByText(/GeoValidator/)).toBeInTheDocument();
+        });
+
+        it('should display tool name with icon or badge styling', () => {
+            render(<ReasoningPanel steps={stepsWithTools} overallConfidence={0.89} />);
+
+            const toolBadge = screen.getByText(/ImageClassifier/);
+            expect(toolBadge.closest('[data-testid="tool-badge"]')).toBeInTheDocument();
+        });
+    });
+
+    describe('alternative classifications', () => {
+        const classifications = {
+            primary: { code: 'TRACS 245', confidence: 0.89 },
+            alternatives: [
+                { code: 'TRACS 242', confidence: 0.08 },
+                { code: 'TRACS 248', confidence: 0.03 },
+            ],
+        };
+
+        it('should display primary classification when provided', () => {
+            render(
+                <ReasoningPanel
+                    steps={mockSteps}
+                    overallConfidence={0.89}
+                    classifications={classifications}
+                />
+            );
+
+            expect(screen.getByText(/TRACS 245/)).toBeInTheDocument();
+            // Use getAllByText since 89% appears in confidence badge and classification
+            expect(screen.getAllByText(/89%/).length).toBeGreaterThanOrEqual(2);
+        });
+
+        it('should display alternative classifications', () => {
+            render(
+                <ReasoningPanel
+                    steps={mockSteps}
+                    overallConfidence={0.89}
+                    classifications={classifications}
+                />
+            );
+
+            expect(screen.getByText(/TRACS 242/)).toBeInTheDocument();
+            expect(screen.getByText(/8%/)).toBeInTheDocument();
+        });
+
+        it('should label primary and alternative classifications', () => {
+            render(
+                <ReasoningPanel
+                    steps={mockSteps}
+                    overallConfidence={0.89}
+                    classifications={classifications}
+                />
+            );
+
+            expect(screen.getByText('Primary:')).toBeInTheDocument();
+            // Multiple alternatives may be shown
+            expect(screen.getAllByText('Alternative:').length).toBeGreaterThanOrEqual(1);
+        });
+    });
+
+    describe('audit log link', () => {
+        it('should render "View Full Audit Log" link', () => {
+            render(
+                <ReasoningPanel
+                    steps={mockSteps}
+                    overallConfidence={0.89}
+                    onViewAuditLog={() => {}}
+                />
+            );
+
+            expect(screen.getByRole('button', { name: /View Full Audit Log/i })).toBeInTheDocument();
+        });
+
+        it('should call onViewAuditLog callback when clicked', () => {
+            const mockHandler = vi.fn();
+            render(
+                <ReasoningPanel
+                    steps={mockSteps}
+                    overallConfidence={0.89}
+                    onViewAuditLog={mockHandler}
+                />
+            );
+
+            const link = screen.getByRole('button', { name: /View Full Audit Log/i });
+            link.click();
+            expect(mockHandler).toHaveBeenCalledTimes(1);
+        });
+
+        it('should not render audit log link when callback not provided', () => {
+            render(<ReasoningPanel steps={mockSteps} overallConfidence={0.89} />);
+
+            expect(screen.queryByRole('button', { name: /View Full Audit Log/i })).not.toBeInTheDocument();
         });
     });
 });

@@ -10,6 +10,22 @@ export interface ReasoningStep {
     status: 'success' | 'warning' | 'info';
     /** Detailed explanation, e.g., "Identified fallen tree > 12in diameter" */
     detail: string;
+    /** Tool name used for this step, e.g., "ImageClassifier" */
+    toolName?: string;
+}
+
+export interface Classification {
+    /** Classification code, e.g., "TRACS 245" */
+    code: string;
+    /** Confidence score for this classification (0.0 - 1.0) */
+    confidence: number;
+}
+
+export interface ClassificationResults {
+    /** Primary classification */
+    primary: Classification;
+    /** Alternative classifications ordered by confidence */
+    alternatives: Classification[];
 }
 
 export interface ReasoningPanelProps {
@@ -17,6 +33,10 @@ export interface ReasoningPanelProps {
     steps: ReasoningStep[];
     /** Overall confidence score (0.0 - 1.0) */
     overallConfidence: number;
+    /** Classification results with primary and alternatives */
+    classifications?: ClassificationResults;
+    /** Callback when "View Full Audit Log" is clicked */
+    onViewAuditLog?: () => void;
 }
 
 /**
@@ -97,7 +117,12 @@ function StatusIndicator({ status }: { status: ReasoningStep['status'] }) {
  *   overallConfidence={0.89}
  * />
  */
-export function ReasoningPanel({ steps, overallConfidence }: ReasoningPanelProps) {
+export function ReasoningPanel({
+    steps,
+    overallConfidence,
+    classifications,
+    onViewAuditLog,
+}: ReasoningPanelProps) {
     const confidencePercentage = Math.round(overallConfidence * 100);
     const confidenceColorClass = getConfidenceColorClass(overallConfidence);
 
@@ -141,9 +166,22 @@ export function ReasoningPanel({ steps, overallConfidence }: ReasoningPanelProps
 
                             {/* Step content */}
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-white">
-                                    {step.step}
-                                </p>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-xs font-bold text-blue-400">
+                                        Step {index + 1}:
+                                    </span>
+                                    <p className="text-sm font-medium text-white">
+                                        {step.step}
+                                    </p>
+                                    {step.toolName && (
+                                        <span
+                                            data-testid="tool-badge"
+                                            className="px-1.5 py-0.5 text-xs font-mono bg-gray-700 text-gray-300 rounded"
+                                        >
+                                            {step.toolName}
+                                        </span>
+                                    )}
+                                </div>
                                 <p className="text-xs text-gray-400 mt-0.5">
                                     {step.detail}
                                 </p>
@@ -159,6 +197,50 @@ export function ReasoningPanel({ steps, overallConfidence }: ReasoningPanelProps
                         </li>
                     ))}
                 </ul>
+            )}
+
+            {/* Classification results */}
+            {classifications && (
+                <div className="mt-4 pt-4 border-t border-gray-700">
+                    <h5 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                        Classification Results
+                    </h5>
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2 text-sm">
+                            <span className="text-gray-400">Primary:</span>
+                            <span className="font-medium text-white">
+                                {classifications.primary.code}
+                            </span>
+                            <span className="text-emerald-400">
+                                ({Math.round(classifications.primary.confidence * 100)}%)
+                            </span>
+                        </div>
+                        {classifications.alternatives.slice(0, 2).map((alt, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-sm">
+                                <span className="text-gray-400">Alternative:</span>
+                                <span className="text-gray-300">
+                                    {alt.code}
+                                </span>
+                                <span className="text-gray-500">
+                                    ({Math.round(alt.confidence * 100)}%)
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Audit log link */}
+            {onViewAuditLog && (
+                <div className="mt-4 pt-3 border-t border-gray-700">
+                    <button
+                        type="button"
+                        onClick={onViewAuditLog}
+                        className="text-sm text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors"
+                    >
+                        View Full Audit Log
+                    </button>
+                </div>
             )}
         </section>
     );
