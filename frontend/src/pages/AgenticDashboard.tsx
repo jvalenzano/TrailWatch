@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
-import { AgenticLayout, type LeftPanelContent, type RightPanelContent } from '../components/common/AgenticLayout';
-import { AgenticMarkerCluster } from '../components/AgenticMarkerCluster';
+import { MapFirstLayout } from '../components/layout/MapFirstLayout';
+import { MapView } from '../components/MapView';
+import { SmartMarkerCluster } from '../components/map/SmartMarkerCluster';
 import { SpatialInsightsSidebar } from '../components/SpatialInsightsSidebar';
 import { ReportList } from '../components/ReportList';
 import { ReportDetail } from '../components/ReportDetail';
@@ -45,10 +46,6 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
         cancelExtraction,
         reset: resetExtraction,
     } = useStreamingExtraction();
-
-    // Panel state
-    const [activeLeftPanel, setActiveLeftPanel] = useState<LeftPanelContent>('insights');
-    const [activeRightPanel, setActiveRightPanel] = useState<RightPanelContent>('reports');
 
     // Selection state
     const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
@@ -97,7 +94,6 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
     // Handle report selection from map
     const handleReportClickFromMap = useCallback((reportId: string) => {
         setSelectedReportId(reportId);
-        setActiveRightPanel('reports');
     }, []);
 
     // Handle report selection from list
@@ -150,11 +146,6 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
 
     const handleHighRiskCancel = useCallback(() => {
         setShowHighRiskConfirm(false);
-    }, []);
-
-    // Clear highlights when clicking on map background
-    const handleViewportChange = useCallback(() => {
-        // Could track viewport changes here if needed
     }, []);
 
     return (
@@ -245,27 +236,31 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                 </div>
             </header>
 
-            {/* Main content area */}
+            {/* Main content area - 20/60/20 layout */}
             <main className="flex-1 overflow-hidden">
-                <AgenticLayout
-                    initialCenter={[-121.75, 46.85]}
-                    initialZoom={10}
-                    flyToViewport={flyToViewport}
-                    onViewportChange={handleViewportChange}
-                    activeLeftPanel={activeLeftPanel}
-                    activeRightPanel={activeRightPanel}
-                    onLeftPanelToggle={setActiveLeftPanel}
-                    onRightPanelToggle={setActiveRightPanel}
-                    leftPanel={
-                        <div className="h-full flex flex-col">
-                            <SpatialInsightsSidebar
-                                insights={insights}
-                                selectedInsightId={selectedInsightId}
-                                onSelectInsight={handleInsightSelect}
-                            />
-                        </div>
+                <MapFirstLayout
+                    insightPanel={
+                        <SpatialInsightsSidebar
+                            insights={insights}
+                            selectedInsightId={selectedInsightId}
+                            onSelectInsight={handleInsightSelect}
+                        />
                     }
-                    rightPanel={
+                    mapPanel={
+                        <MapView
+                            initialCenter={[-121.75, 46.85]}
+                            initialZoom={10}
+                            flyToViewport={flyToViewport}
+                        >
+                            <SmartMarkerCluster
+                                reports={reports}
+                                selectedReportId={selectedReportId}
+                                highlightedReportIds={highlightedReportIds}
+                                onReportClick={handleReportClickFromMap}
+                            />
+                        </MapView>
+                    }
+                    reportPanel={
                         <div className="h-full flex flex-col">
                             {/* Report list header */}
                             <div className="p-4 border-b border-gray-700/50 shrink-0">
@@ -330,13 +325,6 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                                 </div>
                             )}
                         </div>
-                    }
-                    mapOverlay={
-                        <AgenticMarkerCluster
-                            reports={reports}
-                            highlightedReportIds={highlightedReportIds}
-                            onReportClick={handleReportClickFromMap}
-                        />
                     }
                 />
             </main>

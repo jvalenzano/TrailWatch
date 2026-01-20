@@ -12,9 +12,22 @@ const SOURCE_ID = 'reports-source';
 const LAYER_CLUSTERS = 'clusters';
 const LAYER_CLUSTER_COUNT = 'cluster-count';
 const LAYER_UNCLUSTERED = 'unclustered-point';
+const LAYER_HIGHLIGHTED = 'highlighted-point';
+const LAYER_SELECTED = 'selected-point';
 
 /** Hover delay in milliseconds before showing cluster preview */
 const HOVER_DELAY_MS = 2000;
+
+export interface SmartMarkerClusterProps {
+    /** Optional reports to display (overrides useReports hook) */
+    reports?: HazardReport[];
+    /** ID of currently selected report */
+    selectedReportId?: string | null;
+    /** IDs of highlighted reports (e.g., from insight selection) */
+    highlightedReportIds?: string[];
+    /** Callback when a report marker is clicked */
+    onReportClick?: (reportId: string) => void;
+}
 
 interface ClusterPreviewData {
     clusterId: number;
@@ -26,7 +39,12 @@ interface ClusterPreviewData {
 /**
  * Convert HazardReports to a GeoJSON FeatureCollection.
  */
-function reportsToGeoJSON(reports: HazardReport[]): GeoJSON.FeatureCollection {
+function reportsToGeoJSON(
+    reports: HazardReport[],
+    highlightedIds: string[] = [],
+    selectedId?: string | null
+): GeoJSON.FeatureCollection {
+    const highlightedSet = new Set(highlightedIds);
     return {
         type: 'FeatureCollection',
         features: reports.map((report) => ({
@@ -43,6 +61,8 @@ function reportsToGeoJSON(reports: HazardReport[]): GeoJSON.FeatureCollection {
                 description: report.description,
                 confidence_score: report.triage_result?.confidence_score,
                 tracs_category: report.triage_result?.tracs_category,
+                isHighlighted: highlightedSet.has(report.id),
+                isSelected: report.id === selectedId,
             },
         })),
     };
@@ -57,9 +77,16 @@ function getClusterColor(pointCount: number): string {
     return '#10b981'; // emerald-500
 }
 
-export function SmartMarkerCluster() {
+export function SmartMarkerCluster({
+    reports: propReports,
+    selectedReportId,
+    highlightedReportIds = [],
+    onReportClick,
+}: SmartMarkerClusterProps = {}) {
     const { map } = useContext(MapContext);
-    const { data: reports, isLoading } = useReports();
+    const { data: hookReports, isLoading } = useReports();
+    // Use prop reports if provided, otherwise use hook reports
+    const reports = propReports ?? hookReports;
     const [previewData, setPreviewData] = useState<ClusterPreviewData | null>(null);
     const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const pendingHoverRef = useRef<ClusterPreviewData | null>(null);
@@ -156,19 +183,20 @@ export function SmartMarkerCluster() {
             if (!e.features?.[0]) return;
 
             const feature = e.features[0];
-            const reportId = feature.properties?.id;
+            const reportId = feature.properties?.id as string;
 
-            // Could emit an event or call a callback here
-            console.log('Report clicked:', reportId);
+            if (reportId && onReportClick) {
+                onReportClick(reportId);
+            }
         },
-        []
+        [onReportClick]
     );
 
     // Add source and layers when map and reports are ready
     useEffect(() => {
         if (!map || isLoading || !reports) return;
 
-        const geoJSON = reportsToGeoJSON(reports);
+        const geoJSON = reportsToGeoJSON(reports, highlightedReportIds, selectedReportId);
 
         // Check if source already exists
         const existingSource = map.getSource(SOURCE_ID);
@@ -233,16 +261,37 @@ export function SmartMarkerCluster() {
             },
         });
 
-        // Add unclustered point layer
+        // Add unclustered point layer with data-driven styling
         map.addLayer({
             id: LAYER_UNCLUSTERED,
             type: 'circle',
             source: SOURCE_ID,
             filter: ['!', ['has', 'point_count']],
             paint: {
-                'circle-color': '#6366f1', // indigo-500
-                'circle-radius': 8,
-                'circle-stroke-width': 2,
+                // Color: emerald for highlighted, cyan for selected, indigo for default
+                'circle-color': [
+                    'case',
+                    ['==', ['get', 'isSelected'], true],
+                    '#06b6d4', // cyan-500 for selected
+                    ['==', ['get', 'isHighlighted'], true],
+                    '#10b981', // emerald-500 for highlighted
+                    '#6366f1', // indigo-500 default
+                ],
+                // Larger radius for selected/highlighted
+                'circle-radius': [
+                    'case',
+                    ['==', ['get', 'isSelected'], true],
+                    12,
+                    ['==', ['get', 'isHighlighted'], true],
+                    10,
+                    8,
+                ],
+                'circle-stroke-width': [
+                    'case',
+                    ['==', ['get', 'isSelected'], true],
+                    3,
+                    2,
+                ],
                 'circle-stroke-color': '#ffffff',
             },
         });
@@ -289,6 +338,8 @@ export function SmartMarkerCluster() {
         map,
         reports,
         isLoading,
+        highlightedReportIds,
+        selectedReportId,
         handleClusterMouseEnter,
         handleClusterMouseLeave,
         handleClusterClick,
