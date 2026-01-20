@@ -187,15 +187,15 @@
     - [ ] Add manual cache clear option (deferred - requires UI component)
     - [x] Test service worker registration (verified via vite build)
 
-- [ ] **Task: Implement IndexedDB persistence layer** (P0, L)
-    - [ ] Set up Dexie.js (or native IndexedDB)
-    - [ ] Store reports locally
-    - [ ] Store spatial insights locally
-    - [ ] Store pending actions (sync queue)
-    - [ ] Handle storage quota limits
-    - [ ] Implement migration strategy for schema changes
-    - [ ] Integrate with React Query persistence
-    - [ ] Write unit tests
+- [x] **Task: Implement IndexedDB persistence layer** (P0, L) — `108c2f3`
+    - [x] Set up Dexie.js (or native IndexedDB)
+    - [x] Store reports locally
+    - [x] Store spatial insights locally
+    - [x] Store pending actions (sync queue)
+    - [x] Handle storage quota limits
+    - [ ] Implement migration strategy for schema changes (deferred - version 1 only)
+    - [ ] Integrate with React Query persistence (deferred - separate integration task)
+    - [x] Write unit tests (30 tests, 87.73% coverage)
 
 - [x] **Task: Mock offline sync queue API** (P0, S) — `cd59e8f`
     - [x] Create mock API endpoints (4 endpoints: GET/POST queue, POST execute, GET status)
