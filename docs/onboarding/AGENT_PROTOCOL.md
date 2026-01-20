@@ -56,7 +56,8 @@ This document outlines the operational protocols, coding standards, and workflow
 
 ### Documentation Entry Points
 - **Quick Start:** `CLAUDE.md` (for Claude Code agents)
-- **Comprehensive Guide:** `GEMINI.md` (all agents should read)
+- **Workflow Guide:** `conductor/workflow.md` (Track-Based Workflow Pattern)
+- **Quick Reference:** `conductor/QUICK_START.md` (if available)
 - **Deep Dive:** `docs/onboarding/deep-dive.md`
 
 ### Tech Stack
@@ -86,9 +87,9 @@ frontend/          # Frontend source
 
 ---
 
-## 3. Workflow Standard (The "Conductor" Pattern)
+## 3. Workflow Standard (The Track-Based Workflow Pattern)
 
-Agents operate within "Tracks" defined in the `conductor` folder.
+Agents operate within "Tracks" defined in the `conductor` folder. This pattern (formerly called "Conductor Pattern") organizes work into tracks, phases, and tasks with systematic checkpoints and audit trails.
 
 ### 1. Discovery Phase
 - Read `conductor/NEXT.md` to find the active track
@@ -107,9 +108,40 @@ Agents operate within "Tracks" defined in the `conductor` folder.
 4. **Verify:** Run pre-commit checks (see Section 5)
 
 ### 4. Completion Phase
-- Update `task.md` with completion status
-- Create `walkthrough.md` with proof of verification (screenshots/logs)
+- Update `plan.md` with task completion (mark `[x]` with commit SHA)
+- Create checkpoint commit if phase complete
+- Attach git note with verification report
+- Update `tracks.md` if track complete
 - Generate `SESSION_HANDOVER.md` if ending session
+
+### Claude Code-Specific Guidance
+
+**For Claude Code agents working in chat interface:**
+
+1. **Track Discovery:**
+   - Always read `conductor/NEXT.md` first to find active track
+   - Read track's `spec.md` and `plan.md` before starting work
+   - Check `docs/adr/` for architectural constraints
+
+2. **Task Execution:**
+   - Announce each task start: "Starting task: [Name]"
+   - Follow TDD strictly: Red → Green → Refactor
+   - Update `plan.md` status: `[ ]` → `[~]` → `[x]` + SHA
+   - Commit after each task with git note
+
+3. **Communication:**
+   - Provide status updates after each task
+   - Use format: ✅ Completed | 🔄 Next | ⚠️ Issues
+   - Pause for user confirmation on checkpoints
+   - Document deviations in commit messages
+
+4. **Autonomous Execution:**
+   - When given autonomy, follow workflow.md strictly
+   - Only ask for approval if:
+     - Quality gates fail after 2 fix attempts
+     - Blocked for >15 minutes
+     - Need to add new dependencies
+     - Breaking changes required
 
 ---
 

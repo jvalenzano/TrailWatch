@@ -2,10 +2,13 @@
 
 > **Last Updated:** 2026-01-19
 > 
-> This file is the handoff artifact between strategic planning and Conductor execution.
+> This file is the handoff artifact between strategic planning and Claude Code execution.
 > Keep under 50 lines. Update after each track completes.
 >
-> 🛑 **STOP & READ:** Before picking up any task, you MUST read the [Agent Protocol](../docs/onboarding/AGENT_PROTOCOL.md).
+> 🛑 **STOP & READ:** Before picking up any task, you MUST read:
+> - [Agent Protocol](../docs/onboarding/AGENT_PROTOCOL.md)
+> - [Workflow Guide](./workflow.md)
+> - [Quick Start](./QUICK_START.md) (for new team members)
 
 ## Current Status
 

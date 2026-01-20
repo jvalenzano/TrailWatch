@@ -1,34 +1,35 @@
-# ADR-002: Conductor Workflow Pattern (Human-Driven Orchestration)
+# ADR-002: Track-Based Workflow Pattern (Human-Driven Orchestration)
 
-**Status:** Accepted
+**Status:** Accepted  
+**Updated:** 2026-01-20 (Terminology clarification)
 
 **Date:** 2026-01-17
 
 **Decision Makers:** AI Factory Team
 
-**Technical Story:** Discovered during Intake Agent track completion when Conductor failed to autonomously follow Track Creation Protocol
+**Technical Story:** Discovered during Intake Agent track completion when Gemini CLI Conductor failed to autonomously follow Track Creation Protocol. This led to the decision to separate strategic planning (human) from tactical execution (agent), establishing what is now called the "Track-Based Workflow Pattern."
 
 ---
 
 ## Context
 
-After completing the Intake Agent track (3 phases, 38 tests), we attempted to have Gemini CLI Conductor autonomously select the next track by following a documented "Track Creation Protocol" in `workflow.md`. The protocol required Conductor to:
-1. Review GEMINI.md for project phases
+After completing the Intake Agent track (3 phases, 38 tests), we attempted to have Gemini CLI Conductor autonomously select the next track by following a documented "Track Creation Protocol" in `workflow.md`. The protocol required the agent to:
+1. Review project documentation for phases
 2. Check ADRs for dependencies  
 3. Consult USER_JOURNEYS.md
 4. Propose the next track with justification
 
-**What happened:** Conductor deferred to the user instead of executing the protocol, prompting: "What would you like to work on?"
+**What happened:** The agent deferred to the user instead of executing the protocol, prompting: "What would you like to work on?"
 
-**Root cause:** Conductor is architecturally designed as a **tactical executor**, not a **strategic planner**. Per Google's design, Conductor operates in "conductor mode" where the human conducts and triggers actions, unlike "orchestrator mode" agents that plan autonomously.
+**Root cause:** AI coding agents (including Gemini CLI Conductor and Claude Code) are architecturally designed as **tactical executors**, not **strategic planners**. They excel at implementing code when given clear assignments, but struggle with complex, long-term strategic planning decisions.
 
 ## Decision Drivers
 
 - **Team training:** Need reproducible workflow pattern for team adoption
-- **Conductor limitations:** LLMs struggle with complex, long-term strategic planning  
+- **Agent limitations:** AI coding agents struggle with complex, long-term strategic planning  
 - **Solo developer efficiency:** Minimize ceremony while maintaining context continuity
-- **Context engineering:** Conductor only reads `conductor/` directory, not `.agent/rules/`
-- **File size limits:** Conductor struggles with files >15KB; positional bias loses mid-file info
+- **Context engineering:** Agents work best with focused, lightweight context (NEXT.md pattern)
+- **Tool agnostic:** Pattern should work regardless of which AI coding tool is used
 
 ## Considered Options
 
@@ -38,20 +39,22 @@ After completing the Intake Agent track (3 phases, 38 tests), we attempted to ha
 
 ## Decision Outcome
 
-**Chosen option:** "Human-Driven Orchestration" because it aligns with Conductor's architectural strengths (tactical execution, TDD workflow, checkpointing) while acknowledging its limitations (strategic planning, autonomous protocol execution).
+**Chosen option:** "Human-Driven Orchestration" because it aligns with AI coding agents' architectural strengths (tactical execution, TDD workflow, checkpointing) while acknowledging their limitations (strategic planning, autonomous protocol execution). This pattern is now called the **Track-Based Workflow Pattern**.
 
 ### Positive Consequences
 
-- Clear separation of concerns: strategic AI for planning, Conductor for execution
+- Clear separation of concerns: human for strategic planning, AI agent for tactical execution
 - Reduced friction: no time wasted waiting for autonomous decisions that won't come
 - Better context engineering: NEXT.md as lightweight mission brief
 - Team-scalable: pattern works for solo developers and teams
+- Tool-agnostic: works with Claude Code, Gemini CLI, or any AI coding assistant
 
 ### Negative Consequences
 
 - Requires human judgment for track prioritization
 - Strategic planning not automated (must consult with strategic AI or make solo decision)
 - Additional artifact (NEXT.md) to maintain
+- Terminology confusion: "Conductor" was used for both tool and pattern (now clarified as "Track-Based Workflow Pattern")
 
 ### Risks and Mitigations
 
@@ -59,7 +62,8 @@ After completing the Intake Agent track (3 phases, 38 tests), we attempted to ha
 |------|------------|--------|------------|
 | NEXT.md becomes stale | Medium | Low | Update as part of track completion checklist |
 | Context overload as project grows | Medium | Medium | Keep NEXT.md under 50 lines; archive completed tracks |
-| Team misunderstands Conductor capabilities | High | Medium | This ADR + training documentation |
+| Team misunderstands agent capabilities | High | Medium | This ADR + training documentation + QUICK_START.md |
+| Terminology confusion | Medium | Low | Glossary.md + updated documentation |
 
 ---
 
@@ -95,12 +99,12 @@ After completing the Intake Agent track (3 phases, 38 tests), we attempted to ha
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  TACTICAL LAYER (Conductor)                                 │
+│  TACTICAL LAYER (Claude Code / AI Agent)                   │
 │  Frequency: Daily execution                                 │
 ├─────────────────────────────────────────────────────────────┤
-│  1. /conductor:new Track: [explicit assignment from NEXT.md]│
-│  2. Conductor reads NEXT.md for context                     │
-│  3. Generates spec.md, plan.md                              │
+│  1. Create new track: [explicit assignment from NEXT.md]    │
+│  2. Agent reads NEXT.md for context                         │
+│  3. Generates spec.md, plan.md                             │
 │  4. Executes TDD workflow with checkpoints                  │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -139,3 +143,4 @@ After completing the Intake Agent track (3 phases, 38 tests), we attempted to ha
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-01-17 | AI Factory Team | Initial decision based on Perplexity Pro consultation |
+| 2026-01-20 | Claude Code | Updated terminology: "Conductor Pattern" → "Track-Based Workflow Pattern". Clarified tool-agnostic nature. Added references to new documentation (QUICK_START.md, GLOSSARY.md). |

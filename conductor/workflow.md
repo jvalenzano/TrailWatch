@@ -1,5 +1,24 @@
 # Project Workflow
 
+## Why This Workflow Matters
+
+This workflow pattern creates a **sustainable development rhythm** that:
+- Maintains context across sessions (git notes, checkpoints)
+- Enables parallel work (clear track boundaries)
+- Provides audit trail (every task linked to commit)
+- Scales from solo to team (consistent patterns)
+
+**Maintaining the rhythm is critical.** Don't skip checkpoints, don't skip git notes, don't skip plan.md updates. These artifacts are what make the workflow work.
+
+## Terminology
+
+- **Track:** A major feature or component development effort (e.g., "Intake Agent Track")
+- **Phase:** A logical grouping of related tasks within a track
+- **Task:** A single, completable unit of work tracked in `plan.md`
+- **Checkpoint:** A phase completion commit with verification report (git note)
+- **Track-Based Workflow:** The development pattern using tracks/phases/tasks (formerly called "Conductor Pattern")
+- **Track-Based Workflow Pattern:** The systematic approach to organizing development work into tracks, phases, and tasks with checkpoints and audit trails
+
 ## Guiding Principles
 
 1.  **The Plan is the Source of Truth:** All work must be tracked in `plan.md`
@@ -7,18 +26,18 @@
 3.  **Test-Driven Development:** Write unit tests before implementing functionality
 4.  **High Code Coverage:** Aim for >80% code coverage for all modules
 5.  **User Experience First:** Every decision should prioritize user experience
-6.  **Sandboxing Preferred:** Enable the sandbox via CLI flag (`--sandbox`) or environment variable (`GEMINI_SANDBOX=true`) to isolate file operations and prevent environment-related stalls.
-7.  **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
-8.  **Agent Protocol:** All agents MUST follow `docs/onboarding/AGENT_PROTOCOL.md`.
+6.  **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
+7.  **Agent Protocol:** All agents MUST follow `docs/onboarding/AGENT_PROTOCOL.md`.
+8.  **Claude Code Standards:** All code work must follow `CLAUDE.md` guidelines and maintain code quality standards.
 
 ## Track Initiation (Human-Driven)
 
-> **Note:** Track selection is a strategic decision made by the developer, not Conductor.
-> Conductor excels at tactical execution once given a clear assignment.
+> **Note:** Track selection is a strategic decision made by the developer, not Claude Code.
+> Claude Code excels at tactical execution once given a clear assignment.
 
 ### Before Starting a New Track
 
-The developer (not Conductor) performs strategic planning:
+The developer (not Claude Code) performs strategic planning:
 
 1. Review `conductor/NEXT.md` for the current priority queue
 2. Consult `docs/adr/` for architectural dependencies  
@@ -26,28 +45,80 @@ The developer (not Conductor) performs strategic planning:
 
 ### Starting a Track
 
-Command Conductor with an explicit assignment:
+Command Claude Code with an explicit assignment:
 
 ```
-/conductor:new Track: Trail Validation Service — Implement PostGIS-based 
+Create a new track: Trail Validation Service — Implement PostGIS-based 
 GPS-to-trail snapping per ADR-001. Load USFS Geodata, create spatial queries,
 enhance confidence scoring.
 ```
 
-Conductor then generates `spec.md` and `plan.md` based on this assignment.
+Claude Code then generates `spec.md` and `plan.md` based on this assignment.
+
+## Claude Code Interaction Patterns
+
+### Starting a Track
+When you want Claude Code to begin a new track, provide:
+
+1. **Explicit Instruction:** "Create a new track: [Track Name]"
+2. **Context Reference:** "See `conductor/NEXT.md` for details"
+3. **Expected Output:** "Generate `spec.md` and `plan.md` in `conductor/tracks/[track-name]/`"
+
+**Example:**
+```
+Create a new track: Synthetic Data Quality Enhancement
+- See conductor/NEXT.md for priority
+- Reference: conductor/tracks/synthetic_data_quality_20260120/DESIGN_CRITIQUE.md
+- Generate spec.md and plan.md following the pattern in conductor/tracks/intake_agent_20260116/
+```
+
+### Task Execution
+Claude Code should:
+1. Read `plan.md` to find next `[ ]` task
+2. Announce: "Starting task: [Task Name]"
+3. Mark `[~]` in plan.md
+4. Follow TDD workflow (Red → Green → Refactor)
+5. Mark `[x]` with commit SHA
+6. Update plan.md and commit
+
+### Phase Completion
+Claude Code should:
+1. Detect phase completion (last task in phase)
+2. Announce: "Phase [X] complete. Starting checkpoint protocol."
+3. Follow 10-step checkpoint protocol from workflow.md
+4. Pause for user confirmation on manual verification
+
+## Communication Standards for Claude Code
+
+### Progress Updates
+- **Task Start:** "Starting task: [Name] from Phase [X]"
+- **Task Complete:** "Task complete: [Name] (commit: abc1234)"
+- **Phase Complete:** "Phase [X] complete. Checkpoint protocol starting..."
+- **Blocked:** "Blocked on [issue]. See BLOCKED.md for details."
+
+### Status Reporting
+After each task, provide:
+- ✅ What was completed
+- 🔄 What's next
+- ⚠️ Any issues or deviations
+
+### Checkpoint Communication
+When phase completes:
+1. Announce protocol start
+2. Show test results
+3. Present manual verification plan
+4. **WAIT for user confirmation** (critical!)
+5. Create checkpoint commit
+6. Announce completion with checkpoint SHA
 
 ## Known Environmental Issues
 
-> [!WARNING]
-> **Gemini CLI YOLO Mode Freeze Bug (Jan 2026)**
-> Avoid using `--yolo` or the `Ctrl+Y` toggle in Gemini CLI when running long-running Conductor commands like `/conductor:implement`. There is a known scheduler bug that can cause the agent to freeze after reading context.
->
-> **Recommended Workaround:**
-> 1. Run in **Interactive Mode** (approval required for each step).
-> 2. Enable the sandbox: Start the CLI with `gemini --sandbox` or set `export GEMINI_SANDBOX=true`.
-> 3. If the CLI freezes, kill the process with `kill -9` and restart without YOLO mode.
->
-> For details on autonomous/programmatic execution patterns, see [ADR-003](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/adr/ADR-003-autonomous-execution-patterns.md).
+> [!NOTE]
+> **Claude Code Best Practices**
+> - Always use non-interactive commands with `CI=true` flag when running tests or linters
+> - Ensure all environment variables are set in `.env` files to avoid prompts
+> - Use explicit flags for package managers (e.g., `npx -y ...`) to prevent interactive prompts
+> - For details on autonomous/programmatic execution patterns, see [ADR-003](file:///Users/jvalenzano/Documents/10-TrailWatch/docs/adr/ADR-003-autonomous-execution-patterns.md).
 
 ## Task Workflow
 
@@ -110,6 +181,7 @@ All tasks follow a strict lifecycle:
 11. **Commit Plan Update:**
     - **Action:** Stage the modified `plan.md` file.
     - **Action:** Commit this change with a descriptive message (e.g., `conductor(plan): Mark task 'Create user model' as complete`).
+    -   **Note:** The commit type prefix `conductor` is historical; you may use `docs(plan)` or `chore(plan)` as the type instead.
 
 ### Phase Completion Verification and Checkpointing Protocol
 
@@ -163,6 +235,7 @@ All tasks follow a strict lifecycle:
 6.  **Create Checkpoint Commit:**
     -   Stage all changes. If no changes occurred in this step, proceed with an empty commit.
     -   Perform the commit with a clear and concise message (e.g., `conductor(checkpoint): Checkpoint end of Phase X`).
+    -   **Note:** The commit type prefix `conductor` is historical; you may use `checkpoint` or `phase` as the type instead.
 
 7.  **Attach Auditable Verification Report using Git Notes:**
     -   **Step 7.1: Draft Note Content:** Create a detailed verification report including the automated test command, the manual verification steps, and the user's confirmation.
@@ -176,6 +249,7 @@ All tasks follow a strict lifecycle:
 9. **Commit Plan Update:**
     - **Action:** Stage the modified `plan.md` file.
     - **Action:** Commit this change with a descriptive message following the format `conductor(plan): Mark phase '<PHASE NAME>' as complete`.
+    -   **Note:** The commit type prefix `conductor` is historical; you may use `docs(plan)` or `chore(plan)` as the type instead.
 
 10.  **Announce Completion:** Inform the user that the phase is complete and the checkpoint has been created, with the detailed verification report attached as a git note.
 
@@ -195,7 +269,7 @@ Before marking any task complete, verify:
 
 ## Development Commands
 
-**AI AGENT INSTRUCTION: This section should be adapted to the project's specific language, framework, and build tools.**
+**CLAUDE CODE INSTRUCTION: This section should be adapted to the project's specific language, framework, and build tools.**
 
 ### Setup
 ```bash
@@ -379,8 +453,9 @@ A task is complete when:
 
 ## Non-Interactive Development
 
-To prevent YOLO mode stalls, all development commands must be non-interactive:
+To ensure reliable automation, all development commands must be non-interactive:
 
 1.  **No Manual Passwords:** Never run commands that prompt for passwords (e.g., `psql`). Use environment variables (like `PGPASSWORD`) or configuration files.
 2.  **Tool Flags:** Use non-interactive flags for package managers and setup scripts (e.g., `npx -y ...`).
 3.  **Environment Files:** Ensure `.env` files contain all necessary credentials for automated tools to bypass prompts.
+4.  **CI Mode:** Always use `CI=true` flag for test runners and linters to ensure single execution (e.g., `CI=true npm test`, `CI=true pytest`).

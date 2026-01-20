@@ -1,36 +1,64 @@
-# ADR-003: Autonomous Execution Patterns (Gemini CLI YOLO + Sandbox)
+# ADR-003: Autonomous Execution Patterns
 
 ## Status
-Proposed (2026-01-18)
+Accepted (Updated 2026-01-20)
 
 ## Context
-Standard AI coding agents often require manual approval for file edits and terminal commands to ensure safety. This "interactive mode" is the default for both Claude Code and Gemini CLI. However, for high-velocity development and long-running Conductor implementation tracks, this manual overhead can become a bottleneck.
+Standard AI coding agents often require manual approval for file edits and terminal commands to ensure safety. This "interactive mode" is the default for most AI coding assistants. However, for high-velocity development and long-running track implementation, this manual overhead can become a bottleneck.
 
-Claude Code provides a `--dangerously-skip-permissions` flag to enable autonomous execution. Gemini CLI provides a functionally equivalent "YOLO mode" (`--yolo` or `Ctrl+Y`).
+Different AI coding tools provide different mechanisms for autonomous execution:
+- **Claude Code:** Operates in chat interface; autonomy is granted through explicit instructions
+- **Gemini CLI (Historical):** Provided "YOLO mode" (`--yolo` or `Ctrl+Y`) with sandboxing
 
-A critical challenge discovered in January 2026 is that the Gemini CLI's YOLO mode can trigger a scheduler stall during project indexing if enabled at startup. Additionally, total autonomy requires a robust safety boundary to prevent destructive actions on the host system.
+Total autonomy requires a robust safety boundary to prevent destructive actions on the host system.
 
 ## Decision
-To achieve autonomous and programmatic execution while maintaining project safety, we adopt the following pattern:
+To achieve autonomous and programmatic execution while maintaining project safety, we adopt the following tool-agnostic pattern:
 
-1.  **Mandatory Sandboxing**: All autonomous/YOLO sessions MUST use the Gemini CLI sandbox (`--sandbox` or `GEMINI_SANDBOX=true`). On macOS, this leverages the native Seatbelt sandbox.
-2.  **Delayed YOLO Activation**: To mitigate the startup indexing bug, developers should start the CLI in standard interactive mode (with `--sandbox`) and toggle YOLO mode via `Ctrl+Y` only after the agent has acknowledged the initial prompt or finished reading context.
-3.  **Programmatic Prompts**: Prompts for autonomous runs should explicitly mandate autonomy (e.g., "Operate with FULL AUTONOMY and programmatically drive this track to completion") to clarify intent to the model.
+1.  **Explicit Autonomy Declaration**: When autonomous execution is desired, explicitly state: "Operate with FULL AUTONOMY and programmatically drive this track to completion. Follow the workflow in `conductor/workflow.md`. Only ask for approval if blocked or if quality gates fail after 2 fix attempts."
+2.  **Safety Boundaries**: Agents must never:
+   - Commit to `main` or `develop` directly
+   - Add new dependencies without approval
+   - Delete >50 lines of code without confirmation
+   - Skip quality gates (tests, coverage, linting)
+3.  **Programmatic Prompts**: Prompts for autonomous runs should explicitly mandate autonomy and reference the workflow document to clarify intent.
+
+## Tool-Specific Implementation
+
+### Claude Code
+Claude Code operates in a chat interface and doesn't have "YOLO mode" or sandbox flags. Instead:
+
+1. **Explicit Autonomy:** When you want autonomous execution, state: "Execute this track autonomously. Follow the workflow in `conductor/workflow.md`. Only ask for approval if blocked or if quality gates fail."
+
+2. **Safety Boundaries:** Claude Code should:
+   - Never commit to `main` or `develop` directly
+   - Always run tests before committing
+   - Ask before deleting >50 lines of code
+   - Ask before adding new dependencies
+   - Follow quality gates strictly
+
+3. **Progress Reporting:** Claude Code should provide status updates after each task completion using the format: ✅ Completed | 🔄 Next | ⚠️ Issues
+
+### Historical: Gemini CLI (No Longer Used)
+~~Gemini CLI provided "YOLO mode" with sandboxing. A critical bug discovered in January 2026 caused scheduler stalls when YOLO mode was enabled at startup. The workaround was to start in interactive mode and toggle YOLO after context loading.~~
+
+**Note:** This project has migrated from Gemini CLI to Claude Code. This section is preserved for historical context only.
 
 ## Consequences
 
 ### Positive
-*   **High Velocity**: Eliminates the need for manual "Allow" clicks for dozens of file edits and command executions.
-*   **Safety via Isolation**: The sandbox restricts the agent's write access to the project directory, protecting the underlying OS.
+*   **High Velocity**: Eliminates the need for manual approval for routine file edits and command executions.
+*   **Safety via Boundaries**: Explicit rules prevent destructive actions.
 *   **Programmatic Consistency**: Standardizes the prompt patterns for autonomous work.
+*   **Tool Agnostic**: Pattern works with any AI coding assistant.
 
 ### Negative
-*   **Bug Sensitivity**: Requires developers to be aware of the "startup stall" and uses a manual toggle (`Ctrl+Y`) as a workaround.
-*   **Silent Errors**: Issues in code generation may persist through multiple steps before a human reviews them.
+*   **Requires Discipline**: Agents must follow safety boundaries strictly.
+*   **Silent Errors**: Issues in code generation may persist through multiple steps before a human reviews them (mitigated by quality gates).
 
 ## Alternatives Considered
 *   **Full Interactive Mode**: Rejected for long implementation tracks due to UX friction.
-*   **CLI-Level Flag (`--yolo`) at Startup**: Use with caution; only recommended once the scheduler bug is patched in the Gemini CLI.
+*   **No Autonomy**: Rejected as it would slow development velocity significantly.
 
 ## Compliance
-All future implementation plans and developer onboarding must reference this ADR when autonomous execution is intended.
+All future implementation plans and developer onboarding must reference this ADR when autonomous execution is intended. Agents must follow the safety boundaries regardless of which tool is used.

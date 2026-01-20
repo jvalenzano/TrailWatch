@@ -56,7 +56,7 @@ src/trailwatch/              # Python FastAPI backend
 ├── confidence_scoring.py    # AI confidence algorithms
 └── validation/              # Trail validation service (PostGIS + USFS geodata)
 
-conductor/                   # Gemini Conductor workflow management
+conductor/                   # Conductor workflow management (executed by Claude Code)
 ├── index.md                 # Project context hub
 ├── workflow.md              # TDD workflow, phase checkpointing
 └── tracks/                  # Active development tracks with plan.md files
@@ -120,8 +120,11 @@ Use `FeatureGate` component for conditional rendering based on UI mode:
 
 ## Related Documentation
 
-- `GEMINI.md` - Global AI instructions and project overview
-- `conductor/workflow.md` - Detailed development workflow
+- `CLAUDE.md` - This file (Claude Code instructions and project overview)
+- `conductor/workflow.md` - Detailed Track-Based Workflow Pattern
+- `conductor/QUICK_START.md` - Quick reference for new team members
+- `conductor/GLOSSARY.md` - Terminology definitions
+- `conductor/WORKFLOW_EXAMPLES.md` - Concrete examples of workflow in action
 - `docs/adr/` - Architecture Decision Records
 - `docs/UI/UI_SPECIFICATION.md` - Detailed Agentic UI Spec
 - `docs/concepts/agentic_ui_patterns.md` - Core UI Patterns (Cluster, Bias, Circuit Breaker)
