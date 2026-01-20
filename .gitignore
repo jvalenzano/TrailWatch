@@ -56,3 +56,6 @@ dist/
 /frontend/playwright-report/
 /frontend/blob-report/
 /frontend/playwright/.cache/
+
+# Coverage reports (generated)
+/frontend/coverage/
