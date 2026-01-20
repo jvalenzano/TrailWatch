@@ -71,6 +71,8 @@ export interface ConsistencyCheckMetadata {
     expected_distribution?: Record<string, number>;
     actual_distribution?: Record<string, number>;
     deviation_percentage?: number;
+    /** Possible causes / explanations for the detected bias */
+    explanations?: string[];
 }
 
 /**

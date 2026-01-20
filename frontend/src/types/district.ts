@@ -37,3 +37,22 @@ export interface DistrictsResponse {
     /** Optional suggestion based on selected reports */
     suggestion?: DistrictSuggestion;
 }
+
+/**
+ * Status of a district boundary for map rendering.
+ */
+export type DistrictBoundaryStatus = 'active' | 'inactive';
+
+/**
+ * District boundary for map rendering with GeoJSON geometry.
+ */
+export interface DistrictBoundary {
+    /** Unique identifier */
+    id: string;
+    /** Human-readable district name */
+    name: string;
+    /** Status for color coding */
+    status: DistrictBoundaryStatus;
+    /** GeoJSON Polygon geometry */
+    geometry: GeoJSON.Polygon;
+}
