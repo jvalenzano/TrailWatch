@@ -164,13 +164,13 @@
     - [x] Explains data may not be current
     - [x] Write unit tests (13 tests, 100% coverage)
 
-- [ ] **Task: Create SyncQueue component** (P0, M)
-    - [ ] Create `src/components/offline/SyncQueue.tsx`
-    - [ ] List pending actions with descriptions
-    - [ ] Show "Queue for Sync" button
-    - [ ] Progress indicator during sync
-    - [ ] Handle sync failures gracefully
-    - [ ] Write unit tests
+- [x] **Task: Create SyncQueue component** (P0, M) — `3f5d610`
+    - [x] Create `src/components/offline/SyncQueue.tsx`
+    - [x] List pending actions with descriptions
+    - [x] Show "Sync Now" button
+    - [x] Progress indicator during sync
+    - [x] Handle sync failures gracefully
+    - [x] Write unit tests (30 tests, >80% coverage)
 
 - [x] **Task: Create OfflineMapOverlay component** (P0, S) — `cd59e8f`
     - [x] Create `src/components/offline/OfflineMapOverlay.tsx`
