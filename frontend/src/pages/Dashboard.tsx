@@ -9,10 +9,11 @@ import { ReportDetail } from '../components/ReportDetail';
 import { MapFirstLayout } from '../components/common/MapFirstLayout';
 import { SpatialInsightsSidebar } from '../components/SpatialInsightsSidebar';
 import { MarkerCluster } from '../components/MarkerCluster';
+import { AgenticDashboard } from './AgenticDashboard';
 import type { MapViewport } from '../types/spatial';
 
 export function Dashboard() {
-    const { mode } = useUIMode();
+    const { mode, setMode } = useUIMode();
     const { data: reports } = useReports();
     const { data: insights, isLoading: insightsLoading } = useSpatialInsights();
 
@@ -62,7 +63,16 @@ export function Dashboard() {
         console.log('Marking as resolved', reportId);
     };
 
-    // Agentic mode: Map-first layout with spatial insights
+    // Agentic mode: Use the new AgenticDashboard with persistent map
+    if (mode.name === 'agentic') {
+        return (
+            <AgenticDashboard
+                onSwitchToTraditional={() => setMode('traditional')}
+            />
+        );
+    }
+
+    // Moderate mode with mapPrimary: Map-first layout with spatial insights (legacy)
     if (mode.features.mapPrimary) {
         return (
             <div className="h-screen flex flex-col bg-gray-900 text-white">
@@ -139,8 +149,22 @@ export function Dashboard() {
     return (
         <div className="h-screen flex flex-col bg-gray-900 text-white" data-testid="list-first-layout">
             <header className="p-4 border-b border-gray-800">
-                <h1 className="text-xl font-bold">Dashboard</h1>
-                <p className="text-sm text-gray-400">Mode: {mode.name} | Reports: {reports?.length}</p>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-xl font-bold">Dashboard</h1>
+                        <p className="text-sm text-gray-400">Mode: {mode.name} | Reports: {reports?.length}</p>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => setMode('agentic')}
+                        className="px-4 py-2 text-sm font-medium bg-emerald-600 hover:bg-emerald-500
+                                   text-white rounded-lg transition-colors
+                                   focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                        data-testid="switch-to-agentic-btn"
+                    >
+                        Switch to Agentic Mode
+                    </button>
+                </div>
             </header>
             <main className="flex-1 flex overflow-hidden">
                 <div className="w-1/4 overflow-y-auto border-r border-gray-800">
