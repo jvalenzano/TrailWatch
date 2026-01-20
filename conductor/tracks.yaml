@@ -39,7 +39,7 @@ planned:
   - id: wireframe-conformance
     name: "Wireframe Conformance & Feature Completion"
     status: in_progress
-    current_phase: "Phase 4.2 - WF6 & WF10 COMPLETE, WF9 Offline Mode next"
+    current_phase: "Phase 4.2 - WF6 & WF10 COMPLETE, WF9 Offline Mode in progress (2/11 tasks)"
     current_branch: "feature/dashboard-phase-4-agentic"
     blocked_by: null
     owner: "Claude Code"
@@ -51,7 +51,7 @@ planned:
     estimated_team_size: "4-6 engineers"
     created_at: "2026-01-20T00:00:00-08:00"
     updated_at: "2026-01-20T23:30:00-08:00"
-    notes: "WF6 Batch Assignment & WF10 Feature Admin complete (641 tests, >80% coverage). Next: WF9 Offline Mode (final unimplemented feature). **Sequencing:** Complete wireframe conformance BEFORE UI consolidation migration."
+    notes: "WF6 Batch Assignment & WF10 Feature Admin complete (641 tests). WF9 Offline Mode in progress: OfflineBanner & useOfflineStatus complete (683 tests, >80% coverage). 9 tasks remaining. **Sequencing:** Complete wireframe conformance BEFORE UI consolidation migration."
     
   - id: synthetic-data-quality
     name: "Synthetic Data Quality & Demo Enhancement"
