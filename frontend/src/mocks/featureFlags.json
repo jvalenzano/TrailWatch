@@ -1,0 +1,75 @@
+[
+  {
+    "id": "structured-ai-reasoning",
+    "name": "Structured AI Reasoning",
+    "description": "Display AI classification reasoning in structured step format",
+    "status": "enabled",
+    "metric": {
+      "type": "adoption_rate",
+      "value": 87,
+      "label": "Adoption Rate",
+      "period": "Last 30 days"
+    },
+    "availableActions": ["disable_globally"],
+    "updatedAt": "2026-01-15T10:30:00Z",
+    "updatedBy": "admin@trailwatch.gov"
+  },
+  {
+    "id": "spatial-cluster-alerts",
+    "name": "Spatial Cluster Alerts",
+    "description": "AI-powered detection of report clusters indicating larger trail issues",
+    "status": "beta",
+    "metric": {
+      "type": "acceptance_rate",
+      "value": 68,
+      "label": "Acceptance Rate",
+      "period": "Last 30 days"
+    },
+    "availableActions": ["enable_for_all", "disable"],
+    "updatedAt": "2026-01-18T14:00:00Z",
+    "updatedBy": "admin@trailwatch.gov"
+  },
+  {
+    "id": "assignment-consistency",
+    "name": "Assignment Consistency",
+    "description": "AI bias detection for crew assignment patterns",
+    "status": "alpha",
+    "metric": {
+      "type": "pilot_users",
+      "value": 5,
+      "label": "Active Pilot Users"
+    },
+    "availableActions": ["promote_to_beta"],
+    "updatedAt": "2026-01-10T09:00:00Z",
+    "updatedBy": "admin@trailwatch.gov"
+  },
+  {
+    "id": "batch-operations",
+    "name": "Batch Operations",
+    "description": "Multi-select reports for batch crew assignment",
+    "status": "enabled",
+    "metric": {
+      "type": "adoption_rate",
+      "value": 92,
+      "label": "Adoption Rate",
+      "period": "Last 30 days"
+    },
+    "availableActions": ["disable_globally"],
+    "updatedAt": "2026-01-12T16:45:00Z",
+    "updatedBy": "admin@trailwatch.gov"
+  },
+  {
+    "id": "offline-mode",
+    "name": "Offline Mode",
+    "description": "Field ranger access with cached data and sync queue",
+    "status": "disabled",
+    "metric": {
+      "type": "adoption_rate",
+      "value": 0,
+      "label": "Adoption Rate"
+    },
+    "availableActions": ["enable_globally"],
+    "updatedAt": "2026-01-05T08:00:00Z",
+    "updatedBy": "admin@trailwatch.gov"
+  }
+]

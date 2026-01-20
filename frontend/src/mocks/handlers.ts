@@ -3,6 +3,7 @@ import reports from './reports.json';
 import crews from './crews.json';
 import insights from './insights.json';
 import districts from './districts.json';
+import featureFlagsData from './featureFlags.json';
 import syntheticData from '../data/synthetic_day_in_life.json';
 import type { District, DistrictSuggestion } from '../types/district';
 import type {
@@ -12,6 +13,16 @@ import type {
     BatchAssignmentResult,
     CrewPerformanceLevel,
 } from '../types/assignment';
+import type {
+    FeatureFlag,
+    FeatureFlagUpdateRequest,
+    FeatureFlagUpdateResponse,
+    FeatureStatus,
+    FeatureAction,
+} from '../types/featureFlag';
+
+// Mutable copy of feature flags for simulating state changes
+let featureFlags: FeatureFlag[] = JSON.parse(JSON.stringify(featureFlagsData));
 
 // Type for synthetic data structure
 interface SyntheticData {
@@ -284,5 +295,98 @@ export const handlers = [
     };
 
     return HttpResponse.json(result);
+  }),
+
+  // ========================================
+  // Feature Flag Admin Endpoints (WF10)
+  // ========================================
+
+  // GET /api/admin/features - List all feature flags
+  http.get('/api/admin/features', () => {
+    return HttpResponse.json(featureFlags);
+  }),
+
+  // GET /api/admin/features/:id - Get single feature flag
+  http.get('/api/admin/features/:id', ({ params }) => {
+    const { id } = params;
+    const feature = featureFlags.find((f) => f.id === id);
+
+    if (!feature) {
+      return new HttpResponse(
+        JSON.stringify({ message: 'Feature not found' }),
+        {
+          status: 404,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    return HttpResponse.json(feature);
+  }),
+
+  // POST /api/admin/features/:id/action - Update feature flag status
+  http.post('/api/admin/features/:id/action', async ({ params, request }) => {
+    const { id } = params;
+    const body = (await request.json()) as { action: FeatureAction };
+
+    const featureIndex = featureFlags.findIndex((f) => f.id === id);
+    if (featureIndex === -1) {
+      return new HttpResponse(
+        JSON.stringify({ message: 'Feature not found' }),
+        {
+          status: 404,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const feature = featureFlags[featureIndex];
+
+    // Calculate new status based on action
+    const actionToStatus: Record<FeatureAction, FeatureStatus> = {
+      enable_globally: 'enabled',
+      disable_globally: 'disabled',
+      enable_for_all: 'enabled',
+      disable: 'disabled',
+      promote_to_beta: 'beta',
+      promote_to_enabled: 'enabled',
+      demote_to_alpha: 'alpha',
+      demote_to_disabled: 'disabled',
+    };
+
+    // Calculate new available actions based on new status
+    const statusToActions: Record<FeatureStatus, FeatureAction[]> = {
+      enabled: ['disable_globally'],
+      beta: ['enable_for_all', 'disable'],
+      alpha: ['promote_to_beta'],
+      disabled: ['enable_globally'],
+    };
+
+    const newStatus = actionToStatus[body.action];
+    const newActions = statusToActions[newStatus];
+
+    // Update the feature flag
+    const updatedFeature: FeatureFlag = {
+      ...feature,
+      status: newStatus,
+      availableActions: newActions,
+      updatedAt: new Date().toISOString(),
+    };
+
+    featureFlags[featureIndex] = updatedFeature;
+
+    const response: FeatureFlagUpdateResponse = {
+      success: true,
+      feature: updatedFeature,
+      message: `Feature "${feature.name}" status changed to ${newStatus}`,
+    };
+
+    return HttpResponse.json(response);
+  }),
+
+  // POST /api/admin/features/reset - Reset feature flags to initial state (for testing)
+  http.post('/api/admin/features/reset', () => {
+    featureFlags = JSON.parse(JSON.stringify(featureFlagsData));
+    return HttpResponse.json({ success: true, message: 'Feature flags reset to initial state' });
   }),
 ];
