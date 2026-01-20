@@ -9,3 +9,5 @@ export type { FeatureStatusBadgeProps } from './FeatureStatusBadge';
 
 export { FeatureCard } from './FeatureCard';
 export type { FeatureCardProps } from './FeatureCard';
+
+export { FeatureAdminPanel } from './FeatureAdminPanel';

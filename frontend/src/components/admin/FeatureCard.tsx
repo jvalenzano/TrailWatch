@@ -129,9 +129,9 @@ export function FeatureCard({ feature, onAction, isLoading = false }: FeatureCar
             {isLoading && <LoadingSpinner />}
 
             {/* Header: Feature name */}
-            <h3 id={titleId} className="text-lg font-semibold text-white mb-2">
+            <h2 id={titleId} className="text-lg font-semibold text-white mb-2">
                 {feature.name}
-            </h3>
+            </h2>
 
             {/* Status badge */}
             <div className="mb-4">
