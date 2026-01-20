@@ -8,12 +8,15 @@ import type { HazardReport } from '../../types/report';
 
 export interface HighRiskConfirmationProps {
     report: HazardReport;
-    onConfirm: () => void;
+    /** Called when confirmed - receives the justification text */
+    onConfirm: (justification: string) => void;
     onCancel: () => void;
     /** Custom action label (default: "Approve Closure") */
     actionLabel?: string;
     /** Whether the confirm button is in loading state */
     isLoading?: boolean;
+    /** Minimum characters required for justification (default: 50) */
+    minJustificationLength?: number;
 }
 
 interface ChecklistItem {
@@ -38,6 +41,11 @@ const defaultChecklist: ChecklistItem[] = [
         label: 'I understand this action may close the trail to public access',
         required: true,
     },
+    {
+        id: 'severity-appropriate',
+        label: 'Severity level is appropriate for the reported hazard',
+        required: true,
+    },
 ];
 
 export function HighRiskConfirmation({
@@ -46,15 +54,20 @@ export function HighRiskConfirmation({
     onCancel,
     actionLabel = 'Approve Action',
     isLoading = false,
+    minJustificationLength = 50,
 }: HighRiskConfirmationProps) {
     const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+    const [justification, setJustification] = useState('');
     const formId = useId();
+    const justificationCountId = `${formId}-justification-count`;
 
     const checklist = defaultChecklist;
     const requiredItems = checklist.filter((item) => item.required);
     const allRequiredChecked = requiredItems.every((item) =>
         checkedItems.has(item.id)
     );
+    const justificationValid = justification.length >= minJustificationLength;
+    const canSubmit = allRequiredChecked && justificationValid;
 
     const handleCheckChange = (itemId: string, checked: boolean) => {
         setCheckedItems((prev) => {
@@ -70,8 +83,8 @@ export function HighRiskConfirmation({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (allRequiredChecked && !isLoading) {
-            onConfirm();
+        if (canSubmit && !isLoading) {
+            onConfirm(justification);
         }
     };
 
@@ -217,6 +230,35 @@ export function HighRiskConfirmation({
                     </div>
                 </fieldset>
 
+                {/* Justification textarea */}
+                <div className="mt-4">
+                    <label
+                        htmlFor={`${formId}-justification`}
+                        className="block text-sm font-medium text-white mb-2"
+                    >
+                        Justification <span className="text-red-400">*</span>
+                    </label>
+                    <textarea
+                        id={`${formId}-justification`}
+                        value={justification}
+                        onChange={(e) => setJustification(e.target.value)}
+                        placeholder="Enter mandatory justification for this high-risk action..."
+                        required
+                        rows={3}
+                        className="w-full px-3 py-2 text-sm bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+                        aria-describedby={justificationCountId}
+                    />
+                    <div
+                        id={justificationCountId}
+                        className={`mt-1 text-xs ${
+                            justificationValid ? 'text-green-400' : 'text-gray-400'
+                        }`}
+                    >
+                        {justification.length} / {minJustificationLength} characters
+                        {!justificationValid && ' (minimum required)'}
+                    </div>
+                </div>
+
                 {/* Action buttons */}
                 <div className="flex gap-3 mt-6">
                     <button
@@ -230,9 +272,9 @@ export function HighRiskConfirmation({
                     </button>
                     <button
                         type="submit"
-                        disabled={!allRequiredChecked || isLoading}
+                        disabled={!canSubmit || isLoading}
                         className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                            allRequiredChecked && !isLoading
+                            canSubmit && !isLoading
                                 ? 'bg-red-600 hover:bg-red-500 text-white'
                                 : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                         }`}
@@ -270,6 +312,11 @@ export function HighRiskConfirmation({
                 {!allRequiredChecked && (
                     <p className="mt-3 text-xs text-gray-500 text-center">
                         Please check all required items before confirming
+                    </p>
+                )}
+                {allRequiredChecked && !justificationValid && (
+                    <p className="mt-3 text-xs text-gray-500 text-center">
+                        Justification must be at least {minJustificationLength} characters
                     </p>
                 )}
             </form>

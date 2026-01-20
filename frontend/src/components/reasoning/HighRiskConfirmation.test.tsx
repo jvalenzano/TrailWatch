@@ -79,7 +79,7 @@ describe('HighRiskConfirmation', () => {
         expect(confirmButton).toBeDisabled();
     });
 
-    it('enables confirm button when all required checkboxes are checked', () => {
+    it('enables confirm button when all required checkboxes are checked and justification is valid', () => {
         render(<HighRiskConfirmation {...defaultProps} />);
 
         // Check all checkboxes
@@ -88,11 +88,16 @@ describe('HighRiskConfirmation', () => {
             fireEvent.click(checkbox);
         });
 
+        // Add valid justification
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        const justification = 'This is a valid justification that exceeds fifty characters minimum.';
+        fireEvent.change(textarea, { target: { value: justification } });
+
         const confirmButton = screen.getByTestId('high-risk-confirm');
         expect(confirmButton).not.toBeDisabled();
     });
 
-    it('calls onConfirm when form is submitted with all checks', () => {
+    it('calls onConfirm when form is submitted with all checks and justification', () => {
         const onConfirm = vi.fn();
         render(<HighRiskConfirmation {...defaultProps} onConfirm={onConfirm} />);
 
@@ -102,9 +107,15 @@ describe('HighRiskConfirmation', () => {
             fireEvent.click(checkbox);
         });
 
+        // Add valid justification
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        const justification = 'This is a valid justification that exceeds fifty characters minimum.';
+        fireEvent.change(textarea, { target: { value: justification } });
+
         // Submit
         fireEvent.click(screen.getByTestId('high-risk-confirm'));
         expect(onConfirm).toHaveBeenCalledTimes(1);
+        expect(onConfirm).toHaveBeenCalledWith(justification);
     });
 
     it('does not call onConfirm when not all checks are completed', () => {
@@ -172,7 +183,7 @@ describe('HighRiskConfirmation', () => {
         ).toBeInTheDocument();
     });
 
-    it('hides helper text when all required items checked', () => {
+    it('hides checkbox helper text when all required items checked', () => {
         render(<HighRiskConfirmation {...defaultProps} />);
 
         // Check all checkboxes
@@ -181,9 +192,14 @@ describe('HighRiskConfirmation', () => {
             fireEvent.click(checkbox);
         });
 
+        // The checkbox helper text should be hidden
         expect(
             screen.queryByText(/Please check all required items/)
         ).not.toBeInTheDocument();
+        // But justification helper should show
+        expect(
+            screen.getByText(/Justification must be at least/)
+        ).toBeInTheDocument();
     });
 
     it('has correct role and aria attributes', () => {
@@ -198,6 +214,156 @@ describe('HighRiskConfirmation', () => {
         render(<HighRiskConfirmation {...defaultProps} />);
 
         expect(screen.getByTestId('high-risk-confirmation')).toBeInTheDocument();
+    });
+
+    // WF7 Enhancement Tests - 4th checkbox, justification textarea
+
+    it('renders 4 checklist items including severity appropriate', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        expect(screen.getByText(/reviewed all attached photos/)).toBeInTheDocument();
+        expect(screen.getByText(/verified the GPS location/)).toBeInTheDocument();
+        expect(screen.getByText(/close the trail/)).toBeInTheDocument();
+        expect(screen.getByText(/Severity level is appropriate/)).toBeInTheDocument();
+
+        const checkboxes = screen.getAllByRole('checkbox');
+        expect(checkboxes).toHaveLength(4);
+    });
+
+    it('renders justification textarea', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        expect(textarea).toBeInTheDocument();
+        expect(textarea).toHaveAttribute('required');
+    });
+
+    it('displays character count for justification', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        expect(screen.getByText(/0 \/ 50 characters/)).toBeInTheDocument();
+    });
+
+    it('updates character count as user types', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        fireEvent.change(textarea, { target: { value: 'Hello' } });
+
+        expect(screen.getByText(/5 \/ 50 characters/)).toBeInTheDocument();
+    });
+
+    it('shows character count in green when minimum reached', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        const justification = 'This is a valid justification that exceeds fifty characters minimum.';
+        fireEvent.change(textarea, { target: { value: justification } });
+
+        const charCount = screen.getByText(new RegExp(`${justification.length} \\/ 50 characters`));
+        expect(charCount).toHaveClass('text-green-400');
+    });
+
+    it('shows character count in gray when below minimum', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        fireEvent.change(textarea, { target: { value: 'Short text' } });
+
+        const charCount = screen.getByText(/10 \/ 50 characters/);
+        expect(charCount).toHaveClass('text-gray-400');
+    });
+
+    it('requires justification >= 50 characters for confirm button', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        // Check all checkboxes
+        const checkboxes = screen.getAllByRole('checkbox');
+        checkboxes.forEach((checkbox) => {
+            fireEvent.click(checkbox);
+        });
+
+        // Confirm button should still be disabled without justification
+        const confirmButton = screen.getByTestId('high-risk-confirm');
+        expect(confirmButton).toBeDisabled();
+    });
+
+    it('enables confirm button when all checkboxes checked AND justification >= 50 chars', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        // Check all checkboxes
+        const checkboxes = screen.getAllByRole('checkbox');
+        checkboxes.forEach((checkbox) => {
+            fireEvent.click(checkbox);
+        });
+
+        // Add valid justification
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        const justification = 'This is a valid justification that exceeds fifty characters minimum.';
+        fireEvent.change(textarea, { target: { value: justification } });
+
+        const confirmButton = screen.getByTestId('high-risk-confirm');
+        expect(confirmButton).not.toBeDisabled();
+    });
+
+    it('calls onConfirm with justification when form is submitted', () => {
+        const onConfirm = vi.fn();
+        render(<HighRiskConfirmation {...defaultProps} onConfirm={onConfirm} />);
+
+        // Check all checkboxes
+        const checkboxes = screen.getAllByRole('checkbox');
+        checkboxes.forEach((checkbox) => {
+            fireEvent.click(checkbox);
+        });
+
+        // Add valid justification
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        const justification = 'This is a valid justification that exceeds fifty characters minimum.';
+        fireEvent.change(textarea, { target: { value: justification } });
+
+        // Submit
+        fireEvent.click(screen.getByTestId('high-risk-confirm'));
+        expect(onConfirm).toHaveBeenCalledWith(justification);
+    });
+
+    it('shows helper text when justification is too short', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        // Check all checkboxes
+        const checkboxes = screen.getAllByRole('checkbox');
+        checkboxes.forEach((checkbox) => {
+            fireEvent.click(checkbox);
+        });
+
+        expect(
+            screen.getByText(/Justification must be at least 50 characters/)
+        ).toBeInTheDocument();
+    });
+
+    it('hides justification helper text when minimum reached', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        // Check all checkboxes
+        const checkboxes = screen.getAllByRole('checkbox');
+        checkboxes.forEach((checkbox) => {
+            fireEvent.click(checkbox);
+        });
+
+        // Add valid justification
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        const justification = 'This is a valid justification that exceeds fifty characters minimum.';
+        fireEvent.change(textarea, { target: { value: justification } });
+
+        expect(
+            screen.queryByText(/Justification must be at least 50 characters/)
+        ).not.toBeInTheDocument();
+    });
+
+    it('has justification textarea with aria-describedby for character count', () => {
+        render(<HighRiskConfirmation {...defaultProps} />);
+
+        const textarea = screen.getByPlaceholderText(/Enter mandatory justification/);
+        expect(textarea).toHaveAttribute('aria-describedby');
     });
 });
 
