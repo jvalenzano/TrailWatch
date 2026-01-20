@@ -1,14 +1,45 @@
-import React, { useState, useId } from 'react';
+import React, { useState, useId, useCallback } from 'react';
 import type { TriageResult } from '../../types/report';
+import { useAuditLog } from '../../hooks/useAuditLog';
+import { useUIMode } from '../../hooks/useUIMode';
+import { FeatureGate } from '../common/FeatureGate';
+import { FeedbackComponent } from '../feedback';
 
 interface ReasoningPanelProps {
     triageResult: TriageResult;
+    /** Optional ID for audit logging and feedback */
+    targetId?: string;
 }
 
-export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({ triageResult }) => {
+export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({
+    triageResult,
+    targetId,
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const { reasoning, confidence_factors } = triageResult;
     const panelId = useId();
+    const { log } = useAuditLog();
+    const { isFeatureEnabled } = useUIMode();
+
+    // Handle toggle with audit logging
+    const handleToggle = useCallback(() => {
+        const newIsOpen = !isOpen;
+        setIsOpen(newIsOpen);
+
+        // Log when panel is expanded (not collapsed)
+        if (newIsOpen && isFeatureEnabled('enable_audit_logging') && targetId) {
+            log({
+                actionType: 'reasoning_expanded',
+                source: 'ReasoningPanel',
+                description: 'User expanded AI reasoning panel',
+                payload: {
+                    targetId,
+                    reasoning: reasoning?.substring(0, 100), // Truncate for logging
+                },
+                outcome: 'success',
+            });
+        }
+    }, [isOpen, isFeatureEnabled, targetId, log, reasoning]);
 
     const factors = [
         { label: 'Photo matches hazard', value: confidence_factors.has_photo && confidence_factors.photo_matches_hazard, icon: '📸' },
@@ -25,7 +56,7 @@ export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({ triageResult }) 
             data-testid="reasoning-panel"
         >
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={handleToggle}
                 className="w-full flex items-center justify-between p-3 text-sm font-medium text-indigo-900 hover:bg-indigo-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
@@ -74,6 +105,20 @@ export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({ triageResult }) 
                             </div>
                         ))}
                     </div>
+
+                    {/* Feedback for AI reasoning */}
+                    {targetId && (
+                        <FeatureGate feature="enable_feedback">
+                            <div className="mt-3 pt-3 border-t border-indigo-100">
+                                <FeedbackComponent
+                                    targetId={`${targetId}-reasoning`}
+                                    targetType="classification"
+                                    aiOutput={reasoning || 'AI classification reasoning'}
+                                    compact
+                                />
+                            </div>
+                        </FeatureGate>
+                    )}
                 </div>
             )}
         </div>
