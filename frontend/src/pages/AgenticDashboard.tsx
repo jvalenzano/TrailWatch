@@ -8,11 +8,14 @@ import { ReportDetail } from '../components/ReportDetail';
 import { HighRiskConfirmation, isHighRiskReport } from '../components/reasoning';
 import { BatchAssignmentModal } from '../components/assignment';
 import { FeatureGate } from '../components/common/FeatureGate';
+import { OfflineBanner } from '../components/offline/OfflineBanner';
+import { SyncQueue } from '../components/offline/SyncQueue';
 import { useMockAgent } from '../hooks/useMockAgent';
 import { useStreamingExtraction } from '../hooks/useStreamingExtraction';
 import { useBatchAssignment } from '../hooks/useBatchAssignment';
 import { useDistricts } from '../hooks/useDistricts';
 import { useCrews } from '../hooks/useCrews';
+import { useOfflineStatus } from '../hooks/useOfflineStatus';
 import { calculateInsightBounds, expandBounds } from '../utils/mapUtils';
 import type { MapViewport } from '../types/spatial';
 
@@ -43,6 +46,13 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
         reset: resetScenario,
         weatherContext,
     } = useMockAgent();
+
+    // Offline status for banner and sync queue
+    const {
+        isOffline,
+        lastSyncTime,
+        pendingSyncCount,
+    } = useOfflineStatus();
 
     // Streaming extraction
     const {
@@ -201,6 +211,13 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
 
     return (
         <div className="h-screen flex flex-col bg-gray-950 text-white">
+            {/* Offline banner */}
+            <OfflineBanner
+                isOffline={isOffline}
+                lastSyncTime={lastSyncTime}
+                pendingSyncCount={pendingSyncCount}
+            />
+
             {/* Header with mode toggle and scenario controls */}
             <header className="px-4 py-3 border-b border-gray-800 bg-gray-900/95 backdrop-blur-sm shrink-0 z-20">
                 <div className="flex items-center justify-between">
@@ -349,6 +366,11 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                                         onOpenBatchAssignment={handleOpenBatchAssignment}
                                     />
                                 </FeatureGate>
+                            </div>
+
+                            {/* Sync queue */}
+                            <div className="border-t border-gray-700/50 p-2 shrink-0">
+                                <SyncQueue className="bg-gray-800" />
                             </div>
 
                             {/* Report detail */}

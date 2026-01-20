@@ -3,12 +3,15 @@ import { useUIMode } from '../hooks/useUIMode';
 import { useReports } from '../hooks/useReports';
 import { useSpatialInsights } from '../hooks/useSpatialInsights';
 import { useStreamingExtraction } from '../hooks/useStreamingExtraction';
+import { useOfflineStatus } from '../hooks/useOfflineStatus';
 import { MapView } from '../components/MapView';
 import { ReportList } from '../components/ReportList';
 import { ReportDetail } from '../components/ReportDetail';
 import { MapFirstLayout } from '../components/common/MapFirstLayout';
 import { SpatialInsightsSidebar } from '../components/SpatialInsightsSidebar';
 import { MarkerCluster } from '../components/MarkerCluster';
+import { OfflineBanner } from '../components/offline/OfflineBanner';
+import { SyncQueue } from '../components/offline/SyncQueue';
 import { AgenticDashboard } from './AgenticDashboard';
 import type { MapViewport } from '../types/spatial';
 
@@ -16,6 +19,13 @@ export function Dashboard() {
     const { mode, setMode } = useUIMode();
     const { data: reports } = useReports();
     const { data: insights, isLoading: insightsLoading } = useSpatialInsights();
+
+    // Offline status for banner and sync queue
+    const {
+        isOffline,
+        lastSyncTime,
+        pendingSyncCount,
+    } = useOfflineStatus();
 
     // Streaming extraction state
     const {
@@ -76,6 +86,11 @@ export function Dashboard() {
     if (mode.features.mapPrimary) {
         return (
             <div className="h-screen flex flex-col bg-gray-900 text-white">
+                <OfflineBanner
+                    isOffline={isOffline}
+                    lastSyncTime={lastSyncTime}
+                    pendingSyncCount={pendingSyncCount}
+                />
                 <header className="p-4 border-b border-gray-800 shrink-0">
                     <h1 className="text-xl font-bold">Dashboard</h1>
                     <p className="text-sm text-gray-400">
@@ -123,6 +138,9 @@ export function Dashboard() {
                                         />
                                     )}
                                 </div>
+                                <div className="border-t border-gray-700 p-2 shrink-0">
+                                    <SyncQueue className="bg-gray-800" />
+                                </div>
                                 {selectedReport && (
                                     <div className="border-t border-gray-700 max-h-[40%] overflow-y-auto">
                                         <ReportDetail
@@ -148,6 +166,11 @@ export function Dashboard() {
     // Traditional/Moderate mode: List-first layout
     return (
         <div className="h-screen flex flex-col bg-gray-900 text-white" data-testid="list-first-layout">
+            <OfflineBanner
+                isOffline={isOffline}
+                lastSyncTime={lastSyncTime}
+                pendingSyncCount={pendingSyncCount}
+            />
             <header className="p-4 border-b border-gray-800">
                 <div className="flex items-center justify-between">
                     <div>
@@ -167,14 +190,19 @@ export function Dashboard() {
                 </div>
             </header>
             <main className="flex-1 flex overflow-hidden">
-                <div className="w-1/4 overflow-y-auto border-r border-gray-800">
-                    {reports && (
-                        <ReportList
-                            reports={reports}
-                            onSelectReport={setSelectedReportId}
-                            selectedReportId={selectedReportId}
-                        />
-                    )}
+                <div className="w-1/4 overflow-y-auto border-r border-gray-800 flex flex-col">
+                    <div className="flex-1 overflow-y-auto">
+                        {reports && (
+                            <ReportList
+                                reports={reports}
+                                onSelectReport={setSelectedReportId}
+                                selectedReportId={selectedReportId}
+                            />
+                        )}
+                    </div>
+                    <div className="border-t border-gray-700 p-2">
+                        <SyncQueue className="bg-gray-800" />
+                    </div>
                 </div>
                 <div className="flex-1 relative">
                     <MapView>
