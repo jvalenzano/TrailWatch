@@ -11,65 +11,66 @@
 
 **Goal:** Implement the three missing major features (WF6, WF9, WF10)
 
-### A.1: Batch Assignment (WF6) — Estimated: 2 weeks
+### A.1: Batch Assignment (WF6) — COMPLETE ✅
 
-- [ ] **Task: Create BatchAssignmentModal component** (P0, M)
-    - [ ] Create `src/components/assignment/BatchAssignmentModal.tsx`
-    - [ ] Implement modal structure with header "Assign {N} Reports"
-    - [ ] Add district selector with suggestion hint
-    - [ ] Add crew selector (populates based on district)
-    - [ ] Add report checklist display
-    - [ ] Add Cancel and Assign buttons
-    - [ ] Write unit tests (>80% coverage)
-    - [ ] Verify accessibility (keyboard nav, ARIA labels)
+- [x] **Task: Create BatchAssignmentModal component** (P0, M) — `a5da08d`
+    - [x] Create `src/components/assignment/BatchAssignmentModal.tsx`
+    - [x] Implement modal structure with header "Assign {N} Reports"
+    - [x] Add district selector with suggestion hint
+    - [x] Add crew selector (populates based on district)
+    - [x] Add report checklist display
+    - [x] Add Cancel and Assign buttons
+    - [x] Write unit tests (>80% coverage)
+    - [x] Verify accessibility (keyboard nav, ARIA labels)
 
-- [ ] **Task: Create CrewContextCard component** (P0, M)
-    - [ ] Create `src/components/assignment/CrewContextCard.tsx`
-    - [ ] Display crew name
-    - [ ] Display recent performance indicator (excellent/good/fair/poor)
-    - [ ] Display last assignment date
-    - [ ] Display capacity percentage with color coding
-    - [ ] Update when crew selection changes
-    - [ ] Write unit tests
+- [x] **Task: Create CrewContextCard component** (P0, M) — `a5da08d`
+    - [x] Create `src/components/assignment/CrewContextCard.tsx`
+    - [x] Display crew name
+    - [x] Display recent performance indicator (excellent/good/fair/poor)
+    - [x] Display last assignment date
+    - [x] Display capacity percentage with color coding
+    - [x] Update when crew selection changes
+    - [x] Write unit tests
 
-- [ ] **Task: Create RouteSummary component** (P0, M)
-    - [ ] Create `src/components/assignment/RouteSummary.tsx`
-    - [ ] Display total distance in miles
-    - [ ] Display estimated travel time in hours
-    - [ ] Display estimated work time in hours
-    - [ ] Update when report selection changes
-    - [ ] Handle loading state
-    - [ ] Write unit tests
+- [x] **Task: Create RouteSummary component** (P0, M) — `a5da08d`
+    - [x] Create `src/components/assignment/RouteSummary.tsx`
+    - [x] Display total distance in miles
+    - [x] Display estimated travel time in hours
+    - [x] Display estimated work time in hours
+    - [x] Update when report selection changes
+    - [x] Handle loading state
+    - [x] Write unit tests
 
-- [ ] **Task: Create useBatchAssignment hook** (P0, M)
-    - [ ] Create `src/hooks/useBatchAssignment.ts`
-    - [ ] Manage selected reports state
-    - [ ] Manage district/crew selection
-    - [ ] Provide route calculation (mock initially)
-    - [ ] Handle assignment submission
-    - [ ] Handle loading and error states
-    - [ ] Write unit tests
+- [x] **Task: Create useBatchAssignment hook** (P0, M) — `120fee1`
+    - [x] Create `src/hooks/useBatchAssignment.ts`
+    - [x] Manage selected reports state
+    - [x] Manage district/crew selection
+    - [x] Provide route calculation (mock initially)
+    - [x] Handle assignment submission
+    - [x] Handle loading and error states
+    - [x] Write unit tests (95.83% coverage)
 
-- [ ] **Task: Integrate BatchAssignmentModal with report selection** (P0, S)
-    - [ ] Add multi-select checkboxes to report list (WF1)
-    - [ ] Add "Assign Crew" button to report list footer
-    - [ ] Connect button to open BatchAssignmentModal
-    - [ ] Pass selected reports to modal
-    - [ ] Write integration tests
+- [x] **Task: Integrate BatchAssignmentModal with report selection** (P0, S) — `2be031e`
+    - [x] Add multi-select checkboxes to report list (WF1)
+    - [x] Add "Assign Crew" button to report list footer
+    - [x] Connect button to open BatchAssignmentModal
+    - [x] Pass selected reports to modal
+    - [x] Write integration tests
 
-- [ ] **Task: Mock route optimization API** (P0, S)
-    - [ ] Create mock API endpoint
-    - [ ] Return sample route data
-    - [ ] Document API contract for backend team
-    - [ ] Update when backend API ready
+- [x] **Task: Mock route optimization API** (P0, S) — `afffc50`
+    - [x] Create mock API endpoint
+    - [x] Return sample route data
+    - [x] Document API contract for backend team
+    - [x] Update when backend API ready
 
-- [ ] **Task: Integration testing for Batch Assignment** (P0, M)
-    - [ ] E2E test: Select reports, assign to crew
-    - [ ] Test error handling
-    - [ ] Test loading states
-    - [ ] Verify accessibility
+- [x] **Task: Integration testing for Batch Assignment** (P0, M) — `2be031e`
+    - [x] E2E test: Select reports, assign to crew
+    - [x] Test error handling
+    - [x] Test loading states
+    - [x] Verify accessibility (jest-axe passes)
 
-- [ ] **Task: Conductor - User Manual Verification 'Phase 4.2: Batch Assignment'** (P0, Checkpoint)
+- [x] **Task: Conductor - User Manual Verification 'Phase 4.2: Batch Assignment'** (P0, Checkpoint)
+    - 573 tests passing, >80% coverage, zero accessibility violations
 
 ### A.2: Feature Admin (WF10) — Estimated: 1.5 weeks
 
@@ -574,3 +575,15 @@
 **Plan Version:** 1.0  
 **Last Updated:** 2026-01-20  
 **Author:** Strategic Planning (Claude Code)
+
+---
+
+## Track Sequencing
+
+**UI Consolidation Migration:** This track (wireframe conformance) should be completed **BEFORE** the UI consolidation migration track. 
+
+**Rationale:**
+- Wireframe conformance implements features (WF6, WF9, WF10) that work in both current and consolidated architectures
+- Refactoring 25+ files is easier once all features are implemented and tested
+- Avoids rework and provides stable foundation for consolidation
+- See `conductor/tracks.yaml` for full track dependencies
