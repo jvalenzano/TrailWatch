@@ -6,8 +6,13 @@ import { SpatialInsightsSidebar } from '../components/SpatialInsightsSidebar';
 import { ReportList } from '../components/ReportList';
 import { ReportDetail } from '../components/ReportDetail';
 import { HighRiskConfirmation, isHighRiskReport } from '../components/reasoning';
+import { BatchAssignmentModal } from '../components/assignment';
+import { FeatureGate } from '../components/common/FeatureGate';
 import { useMockAgent } from '../hooks/useMockAgent';
 import { useStreamingExtraction } from '../hooks/useStreamingExtraction';
+import { useBatchAssignment } from '../hooks/useBatchAssignment';
+import { useDistricts } from '../hooks/useDistricts';
+import { useCrews } from '../hooks/useCrews';
 import { calculateInsightBounds, expandBounds } from '../utils/mapUtils';
 import type { MapViewport } from '../types/spatial';
 
@@ -57,8 +62,32 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
     const [showHighRiskConfirm, setShowHighRiskConfirm] = useState(false);
     const [highRiskConfirmLoading, setHighRiskConfirmLoading] = useState(false);
 
+    // Batch assignment state
+    const [showBatchAssignmentModal, setShowBatchAssignmentModal] = useState(false);
+
+    // Batch assignment hook
+    const batchAssignment = useBatchAssignment({
+        onSuccess: () => {
+            setShowBatchAssignmentModal(false);
+            batchAssignment.reset();
+        },
+    });
+
+    // Districts and crews for batch assignment
+    const { data: districtsData, isLoading: isLoadingDistricts } = useDistricts({
+        reportIds: batchAssignment.selectedReportIds,
+        enabled: showBatchAssignmentModal,
+    });
+
+    const { data: crewsData } = useCrews();
+
     const selectedReport = allReports.find((r) => r.id === selectedReportId);
     const selectedReportIsHighRisk = selectedReport ? isHighRiskReport(selectedReport) : false;
+
+    // Get selected reports for batch assignment
+    const selectedReportsForBatch = allReports.filter((r) =>
+        batchAssignment.selectedReportIds.includes(r.id)
+    );
 
     // Handle insight selection - calculates bounding box from insight reports
     const handleInsightSelect = useCallback(
@@ -146,6 +175,28 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
 
     const handleHighRiskCancel = useCallback(() => {
         setShowHighRiskConfirm(false);
+    }, []);
+
+    // Batch assignment handlers
+    const handleBatchSelectionChange = useCallback(
+        (reportId: string, selected: boolean) => {
+            if (selected) {
+                batchAssignment.selectReport(reportId);
+            } else {
+                batchAssignment.deselectReport(reportId);
+            }
+        },
+        [batchAssignment]
+    );
+
+    const handleOpenBatchAssignment = useCallback(() => {
+        if (batchAssignment.hasSelection) {
+            setShowBatchAssignmentModal(true);
+        }
+    }, [batchAssignment.hasSelection]);
+
+    const handleCloseBatchAssignment = useCallback(() => {
+        setShowBatchAssignmentModal(false);
     }, []);
 
     return (
@@ -272,14 +323,32 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                                 </p>
                             </div>
 
-                            {/* Report list */}
-                            <div className="flex-1 overflow-y-auto">
-                                <ReportList
-                                    reports={reports}
-                                    onSelectReport={handleReportSelect}
-                                    selectedReportId={selectedReportId}
-                                    highlightedReportIds={highlightedReportIds}
-                                />
+                            {/* Report list with optional multi-select for batch assignment */}
+                            <div className="flex-1 overflow-hidden">
+                                <FeatureGate
+                                    feature="batchOperations"
+                                    fallback={
+                                        <div className="h-full overflow-y-auto">
+                                            <ReportList
+                                                reports={reports}
+                                                onSelectReport={handleReportSelect}
+                                                selectedReportId={selectedReportId}
+                                                highlightedReportIds={highlightedReportIds}
+                                            />
+                                        </div>
+                                    }
+                                >
+                                    <ReportList
+                                        reports={reports}
+                                        onSelectReport={handleReportSelect}
+                                        selectedReportId={selectedReportId}
+                                        highlightedReportIds={highlightedReportIds}
+                                        multiSelectEnabled={true}
+                                        selectedForBatch={batchAssignment.selectedReportIds}
+                                        onBatchSelectionChange={handleBatchSelectionChange}
+                                        onOpenBatchAssignment={handleOpenBatchAssignment}
+                                    />
+                                </FeatureGate>
                             </div>
 
                             {/* Report detail */}
@@ -328,6 +397,31 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                     }
                 />
             </main>
+
+            {/* Batch Assignment Modal */}
+            <FeatureGate feature="batchOperations">
+                <BatchAssignmentModal
+                    isOpen={showBatchAssignmentModal}
+                    onClose={handleCloseBatchAssignment}
+                    onSubmit={batchAssignment.submitAssignment}
+                    selectedReports={selectedReportsForBatch}
+                    onDeselectReport={batchAssignment.deselectReport}
+                    districts={districtsData?.districts ?? []}
+                    selectedDistrictId={batchAssignment.selectedDistrictId}
+                    onSelectDistrict={batchAssignment.setSelectedDistrictId}
+                    districtSuggestion={districtsData?.suggestion}
+                    isLoadingDistricts={isLoadingDistricts}
+                    crews={crewsData ?? []}
+                    selectedCrewId={batchAssignment.selectedCrewId}
+                    onSelectCrew={batchAssignment.setSelectedCrewId}
+                    crewContext={batchAssignment.crewContext}
+                    isLoadingCrewContext={batchAssignment.isLoadingCrewContext}
+                    routeSummary={batchAssignment.routeSummary}
+                    isLoadingRoute={batchAssignment.isLoadingRoute}
+                    isSubmitting={batchAssignment.isSubmitting}
+                    canSubmit={batchAssignment.canSubmit}
+                />
+            </FeatureGate>
         </div>
     );
 }
