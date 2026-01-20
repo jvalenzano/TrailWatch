@@ -1,0 +1,32 @@
+[
+  {
+    "id": "district-01",
+    "name": "Mt. Adams Ranger District",
+    "number": 1,
+    "default_crew_ids": ["crew-alpha", "crew-bravo"]
+  },
+  {
+    "id": "district-02",
+    "name": "Cowlitz Valley Ranger District",
+    "number": 2,
+    "default_crew_ids": ["crew-charlie", "crew-delta"]
+  },
+  {
+    "id": "district-03",
+    "name": "Mt. St. Helens National Volcanic Monument",
+    "number": 3,
+    "default_crew_ids": ["crew-echo"]
+  },
+  {
+    "id": "district-04",
+    "name": "Wind River Ranger District",
+    "number": 4,
+    "default_crew_ids": ["crew-alpha", "crew-echo"]
+  },
+  {
+    "id": "district-05",
+    "name": "Gifford Pinchot National Forest HQ",
+    "number": 5,
+    "default_crew_ids": []
+  }
+]
