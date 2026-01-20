@@ -1,10 +1,10 @@
 ```markdown
 # TrailWatch Agent Protocol
 
-**Version:** 1.1  
+**Version:** 1.2  
 **Target Audience:** Autonomous Agents (Claude Code, Gemini CLI, etc.)  
 **Status:** Active  
-**Last Updated:** 2026-01-19
+**Last Updated:** 2026-01-20
 
 This document outlines the operational protocols, coding standards, and workflow requirements for agents working on the TrailWatch codebase. **Adhere to these rules strictly.**
 
@@ -62,8 +62,8 @@ This document outlines the operational protocols, coding standards, and workflow
 
 ### Tech Stack
 **Frontend:**
-- React 18, TypeScript, Vite, Tailwind CSS, MapLibre GL JS
-- Testing: Vitest + React Testing Library + jest-axe
+- React 19, TypeScript, Vite, Tailwind CSS, MapLibre GL JS
+- Testing: Vitest + React Testing Library + jest-axe (unit tests), Playwright (E2E)
 
 **Backend:**
 - Python 3.11+, FastAPI, PostgreSQL 17 + PostGIS, Google ADK
@@ -92,8 +92,9 @@ frontend/          # Frontend source
 Agents operate within "Tracks" defined in the `conductor` folder. This pattern (formerly called "Conductor Pattern") organizes work into tracks, phases, and tasks with systematic checkpoints and audit trails.
 
 ### 1. Discovery Phase
-- Read `conductor/NEXT.md` to find the active track
-- Read `task.md` (if active) for immediate status
+- **First:** Read `conductor/tracks.yaml` - **SINGLE SOURCE OF TRUTH** for all track status
+- Read `conductor/NEXT.md` for current active track and priority queue
+- Read track's `plan.md` and `spec.md` in the specific track directory
 - Check `docs/adr/` for relevant architectural decisions
 
 ### 2. Planning Phase
@@ -111,7 +112,7 @@ Agents operate within "Tracks" defined in the `conductor` folder. This pattern (
 - Update `plan.md` with task completion (mark `[x]` with commit SHA)
 - Create checkpoint commit if phase complete
 - Attach git note with verification report
-- Update `tracks.md` if track complete
+- Update `conductor/tracks.yaml` if track status changes (status, phase, notes)
 - Generate `SESSION_HANDOVER.md` if ending session
 
 ### Claude Code-Specific Guidance
@@ -119,7 +120,8 @@ Agents operate within "Tracks" defined in the `conductor` folder. This pattern (
 **For Claude Code agents working in chat interface:**
 
 1. **Track Discovery:**
-   - Always read `conductor/NEXT.md` first to find active track
+   - **First:** Read `conductor/tracks.yaml` - Single source of truth for track status
+   - Read `conductor/NEXT.md` for current active track and priority queue
    - Read track's `spec.md` and `plan.md` before starting work
    - Check `docs/adr/` for architectural constraints
 
@@ -270,11 +272,14 @@ npx tsc --noEmit
 # Linting (catches syntax issues)
 npm run lint
 
-# Tests (catches logic errors)
-npm test
+# Unit tests (catches logic errors)
+npm run test:unit
 
 # Coverage check
 npm run coverage
+
+# E2E tests (optional, run before PR)
+npm test
 ```
 
 ### Backend
@@ -394,8 +399,8 @@ If a previous commit was broken, fix it in a new commit. Do not force push or am
 ## 9. Failure Recovery Protocols
 
 ### If Agent Gets Stuck (>5 minutes on one task)
-1. Document current state in `task.md`
-2. Create `BLOCKED.md` with:
+1. Document current state in track's `plan.md` (add note to current task)
+2. Create `BLOCKED.md` in track directory with:
    - What you attempted
    - Why it failed
    - What you need to proceed
@@ -406,13 +411,13 @@ If a previous commit was broken, fix it in a new commit. Do not force push or am
 2. Run full test suite to identify scope of breakage
 3. **Option A:** Fix regression immediately if obvious
 4. **Option B:** Revert breaking commit (`git reset --hard HEAD~1`)
-5. Document in `task.md`: "Attempted X, caused Y, reverted/fixed"
+5. Document in track's `plan.md` or commit message: "Attempted X, caused Y, reverted/fixed"
 
 ### If External Dependency Fails (API down, rate limit)
 1. Add graceful degradation (mock data, cached response)
 2. Log warning: `logger.warning("dependency_unavailable", service="RIDB")`
 3. Continue with degraded functionality
-4. Document in `task.md`: "External service X unavailable, implemented fallback"
+4. Document in track's `plan.md` or commit message: "External service X unavailable, implemented fallback"
 
 ### If Tests Fail After Refactoring
 1. Read test failure messages carefully (don't assume)
@@ -451,19 +456,25 @@ When checking for "zero console errors":
 
 ## 11. Testing Requirements
 
-### Frontend (Vitest)
+### Frontend (Vitest for unit tests, Playwright for E2E)
 ```bash
-# Run all tests
+# Run unit tests (Vitest)
+npm run test:unit
+
+# Run unit tests in watch mode
+npm run test:unit:watch
+
+# Run specific unit test file
+npm run test:unit -- src/components/FeatureGate.test.tsx
+
+# Coverage report (unit tests)
+npm run coverage
+
+# Run E2E tests (Playwright)
 npm test
 
-# Run specific test file
-npm test -- src/components/FeatureGate.test.tsx
-
-# Watch mode (for development)
-npm run test:watch
-
-# Coverage report
-npm run coverage
+# Run E2E tests with UI
+npm run test:ui
 ```
 
 **Test Structure:**
