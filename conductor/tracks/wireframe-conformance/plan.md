@@ -203,14 +203,15 @@
     - [x] Document API contract via TypeScript interfaces (src/types/sync.ts)
     - [ ] Update when backend API ready
 
-- [ ] **Task: E2E offline testing** (P0, L)
-    - [ ] Test offline banner display
-    - [ ] Test cached data display
-    - [ ] Test staleness warnings
-    - [ ] Test sync queue functionality
-    - [ ] Test service worker caching
-    - [ ] Test IndexedDB persistence
-    - [ ] Test reconnection and sync
+- [x] **Task: E2E offline testing** (P0, L) — `a9eb894`
+    - [x] Test offline banner display (offline-ui.spec.ts)
+    - [x] Test cached data display (offline-dataflow.spec.ts)
+    - [x] Test staleness warnings (offline-ui.spec.ts)
+    - [x] Test sync queue functionality (offline-sync.spec.ts)
+    - [x] Test service worker caching (offline-sync.spec.ts)
+    - [x] Test IndexedDB persistence (offline-sync.spec.ts)
+    - [x] Test reconnection and sync (offline-dataflow.spec.ts)
+    - Total: 45 E2E Playwright tests
 
 - [ ] **Task: Conductor - User Manual Verification 'Phase 4.2: Offline Mode'** (P0, Checkpoint)
 
