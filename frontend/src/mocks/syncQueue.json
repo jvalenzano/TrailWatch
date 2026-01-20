@@ -1,0 +1,49 @@
+[
+  {
+    "id": "sync-001",
+    "type": "report_create",
+    "data": {
+      "trail_name": "Pacific Crest Trail - Section K",
+      "location": {
+        "latitude": 37.456789,
+        "longitude": -120.123456
+      },
+      "hazard_type": "clearing",
+      "severity_estimate": "difficult",
+      "description": "Large fallen tree blocking trail near mile marker 245. Approximately 2 feet in diameter.",
+      "photos": [],
+      "reporter_type": "volunteer",
+      "reporter_organization": "PCTA"
+    },
+    "timestamp": "2026-01-19T08:30:00Z",
+    "status": "pending",
+    "retryCount": 0
+  },
+  {
+    "id": "sync-002",
+    "type": "report_update",
+    "data": {
+      "report_id": "c1b2a3d4-e5f6-7890-1234-567890abcdef",
+      "updates": {
+        "severity_estimate": "impassable",
+        "description": "Large tree down across the trail, approximately 3 feet in diameter. Update: Trail now fully blocked after additional debris fell."
+      }
+    },
+    "timestamp": "2026-01-19T09:15:00Z",
+    "status": "pending",
+    "retryCount": 0
+  },
+  {
+    "id": "sync-003",
+    "type": "insight_action",
+    "data": {
+      "insight_id": "insight-cluster-001",
+      "action": "acknowledge",
+      "notes": "Acknowledged cluster alert for Section J. Coordinating with crew Alpha for response."
+    },
+    "timestamp": "2026-01-19T07:45:00Z",
+    "status": "failed",
+    "retryCount": 2,
+    "lastError": "Network timeout: Unable to reach server after 30 seconds"
+  }
+]

@@ -1,9 +1,10 @@
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, delay } from 'msw';
 import reports from './reports.json';
 import crews from './crews.json';
 import insights from './insights.json';
 import districts from './districts.json';
 import featureFlagsData from './featureFlags.json';
+import syncQueueData from './syncQueue.json';
 import syntheticData from '../data/synthetic_day_in_life.json';
 import type { District, DistrictSuggestion } from '../types/district';
 import type {
@@ -20,9 +21,23 @@ import type {
     FeatureStatus,
     FeatureAction,
 } from '../types/featureFlag';
+import type {
+    SyncQueueItem,
+    SyncQueueAddRequest,
+    SyncQueueAddResponse,
+    SyncQueueResponse,
+    SyncExecuteResponse,
+    SyncStatus,
+} from '../types/sync';
 
 // Mutable copy of feature flags for simulating state changes
 let featureFlags: FeatureFlag[] = JSON.parse(JSON.stringify(featureFlagsData));
+
+// Mutable copy of sync queue for simulating state changes
+let syncQueue: SyncQueueItem[] = JSON.parse(JSON.stringify(syncQueueData));
+
+// Track last sync timestamp for status endpoint
+let lastSyncTimestamp: string | null = null;
 
 // Type for synthetic data structure
 interface SyntheticData {
@@ -388,5 +403,153 @@ export const handlers = [
   http.post('/api/admin/features/reset', () => {
     featureFlags = JSON.parse(JSON.stringify(featureFlagsData));
     return HttpResponse.json({ success: true, message: 'Feature flags reset to initial state' });
+  }),
+
+  // ========================================
+  // Offline Sync Queue Endpoints (WF9)
+  // ========================================
+
+  // GET /api/sync/queue - Get pending sync items
+  http.get('/api/sync/queue', async () => {
+    // Simulate realistic network delay (50-100ms)
+    await delay(75);
+
+    const response: SyncQueueResponse = {
+      items: syncQueue,
+      count: syncQueue.length,
+    };
+
+    return HttpResponse.json(response);
+  }),
+
+  // POST /api/sync/queue - Add item to sync queue
+  http.post('/api/sync/queue', async ({ request }) => {
+    // Simulate realistic network delay (50-100ms)
+    await delay(60);
+
+    const body = (await request.json()) as SyncQueueAddRequest;
+
+    // Validate request
+    if (!body.type) {
+      return new HttpResponse(
+        JSON.stringify({ message: 'Type is required' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    if (!body.data || Object.keys(body.data).length === 0) {
+      return new HttpResponse(
+        JSON.stringify({ message: 'Data is required' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    // Create new sync queue item
+    const newItem: SyncQueueItem = {
+      id: `sync-${Date.now()}`,
+      type: body.type,
+      data: body.data,
+      timestamp: body.timestamp || new Date().toISOString(),
+      status: 'pending',
+      retryCount: 0,
+    };
+
+    syncQueue.push(newItem);
+
+    const response: SyncQueueAddResponse = {
+      id: newItem.id,
+      status: 'pending',
+    };
+
+    return HttpResponse.json(response, { status: 201 });
+  }),
+
+  // POST /api/sync/execute - Execute sync (when back online)
+  http.post('/api/sync/execute', async () => {
+    // Simulate realistic sync delay (100ms)
+    await delay(100);
+
+    // Simulate sync execution
+    const pendingItems = syncQueue.filter((item) => item.status === 'pending');
+    const failedItems = syncQueue.filter((item) => item.status === 'failed');
+
+    // Mock: successfully sync all pending items, keep failed items as failed
+    let syncedCount = 0;
+    let failedCount = 0;
+    const errors: string[] = [];
+
+    // Process pending items (simulate 90% success rate)
+    for (const item of pendingItems) {
+      if (Math.random() > 0.1) {
+        // Success - remove from queue
+        syncedCount++;
+      } else {
+        // Failure - mark as failed
+        item.status = 'failed';
+        item.retryCount++;
+        item.lastError = 'Server error: Unable to process request';
+        failedCount++;
+        errors.push(`Failed to sync ${item.type} (${item.id}): Server error`);
+      }
+    }
+
+    // Failed items remain failed (need manual retry or intervention)
+    for (const item of failedItems) {
+      if (item.retryCount < 3 && Math.random() > 0.5) {
+        // Retry succeeded
+        syncedCount++;
+      } else {
+        // Still failing
+        failedCount++;
+        errors.push(`Failed to sync ${item.type} (${item.id}): ${item.lastError || 'Unknown error'}`);
+      }
+    }
+
+    // Remove successfully synced items from queue
+    syncQueue = syncQueue.filter(
+      (item) => item.status === 'failed' || item.status === 'syncing'
+    );
+
+    // Update last sync timestamp
+    lastSyncTimestamp = new Date().toISOString();
+
+    const response: SyncExecuteResponse = {
+      synced: syncedCount,
+      failed: failedCount,
+      errors,
+    };
+
+    return HttpResponse.json(response);
+  }),
+
+  // GET /api/sync/status - Get sync status
+  http.get('/api/sync/status', async () => {
+    // Simulate realistic network delay (50-100ms)
+    await delay(50);
+
+    const pendingCount = syncQueue.filter(
+      (item) => item.status === 'pending' || item.status === 'failed'
+    ).length;
+
+    const response: SyncStatus = {
+      isOnline: true, // Mock server always reports online
+      pendingCount,
+      lastSync: lastSyncTimestamp,
+    };
+
+    return HttpResponse.json(response);
+  }),
+
+  // POST /api/sync/reset - Reset sync queue to initial state (for testing)
+  http.post('/api/sync/reset', () => {
+    syncQueue = JSON.parse(JSON.stringify(syncQueueData));
+    lastSyncTimestamp = null;
+    return HttpResponse.json({ success: true, message: 'Sync queue reset to initial state' });
   }),
 ];
