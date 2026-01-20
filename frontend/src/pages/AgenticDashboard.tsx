@@ -8,6 +8,7 @@ import { ReportDetail } from '../components/ReportDetail';
 import { HighRiskConfirmation, isHighRiskReport } from '../components/reasoning';
 import { BatchAssignmentModal } from '../components/assignment';
 import { FeatureGate } from '../components/common/FeatureGate';
+import { ReportPanelHeader } from '../components/common/ReportPanelHeader';
 import { OfflineBanner } from '../components/offline/OfflineBanner';
 import { SyncQueue } from '../components/offline/SyncQueue';
 import { useMockAgent } from '../hooks/useMockAgent';
@@ -156,6 +157,13 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
     const handleExtract = (reportId: string) => {
         console.log('Extracting info for', reportId);
     };
+
+    // Batch extract info handler
+    const handleBatchExtractInfo = useCallback((reportIds: string[]) => {
+        console.log('Batch extracting info for', reportIds.length, 'reports:', reportIds);
+        // In a real implementation, this would trigger batch extraction
+        // For now, log and show potential integration point
+    }, []);
 
     const handleMarkResolved = (reportId: string) => {
         console.log('Marking as resolved', reportId);
@@ -331,14 +339,10 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                     reportPanel={
                         <div className="h-full flex flex-col">
                             {/* Report list header */}
-                            <div className="p-4 border-b border-gray-700/50 shrink-0">
-                                <h2 className="text-lg font-semibold text-white">Reports</h2>
-                                <p className="text-xs text-gray-400 mt-1">
-                                    {highlightedReportIds.length > 0
-                                        ? `${highlightedReportIds.length} highlighted`
-                                        : `${reports.length} total`}
-                                </p>
-                            </div>
+                            <ReportPanelHeader
+                                totalCount={reports.length}
+                                highlightedCount={highlightedReportIds.length}
+                            />
 
                             {/* Report list with optional multi-select for batch assignment */}
                             <div className="flex-1 overflow-hidden">
@@ -364,6 +368,7 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                                         selectedForBatch={batchAssignment.selectedReportIds}
                                         onBatchSelectionChange={handleBatchSelectionChange}
                                         onOpenBatchAssignment={handleOpenBatchAssignment}
+                                        onExtractInfo={handleBatchExtractInfo}
                                     />
                                 </FeatureGate>
                             </div>

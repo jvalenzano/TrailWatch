@@ -40,7 +40,7 @@ describe('InsightCard', () => {
         ).toBeInTheDocument();
     });
 
-    it('renders type icon and label', () => {
+    it('renders trend level indicator with type and severity', () => {
         renderWithProviders(
             <InsightCard
                 insight={mockInsight}
@@ -49,8 +49,10 @@ describe('InsightCard', () => {
             />
         );
 
-        expect(screen.getByText('Cluster')).toBeInTheDocument();
-        expect(screen.getByRole('img', { name: 'Cluster' })).toBeInTheDocument();
+        const indicator = screen.getByTestId('trend-level-indicator');
+        expect(indicator).toBeInTheDocument();
+        expect(indicator).toHaveTextContent(/CLUSTER/);
+        expect(indicator).toHaveTextContent(/High/);
     });
 
     it('renders severity badge', () => {
@@ -166,28 +168,26 @@ describe('InsightCard', () => {
         });
     });
 
-    it('renders different type icons correctly', () => {
-        const types: Array<SpatialInsight['type']> = [
-            'cluster',
-            'hotspot',
-            'trend',
-            'anomaly',
-            'duplicate',
-            'consistency_check',
-        ];
+    it('renders different types correctly via trend level indicator', () => {
+        const typeLabels: Record<SpatialInsight['type'], string> = {
+            cluster: 'CLUSTER',
+            hotspot: 'PATTERN',
+            trend: 'TREND',
+            anomaly: 'ANOMALY',
+            duplicate: 'DUPLICATE',
+            consistency_check: 'CONSISTENCY',
+        };
 
-        types.forEach((type) => {
+        Object.entries(typeLabels).forEach(([type, label]) => {
             const { unmount } = renderWithProviders(
                 <InsightCard
-                    insight={{ ...mockInsight, type }}
+                    insight={{ ...mockInsight, type: type as SpatialInsight['type'] }}
                     isSelected={false}
                     onSelect={vi.fn()}
                 />
             );
 
-            const expectedLabel =
-                type === 'consistency_check' ? 'Consistency' : type.charAt(0).toUpperCase() + type.slice(1);
-            expect(screen.getByRole('img', { name: expectedLabel })).toBeInTheDocument();
+            expect(screen.getByText(new RegExp(label))).toBeInTheDocument();
             unmount();
         });
     });

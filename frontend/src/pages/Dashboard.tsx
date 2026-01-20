@@ -8,6 +8,7 @@ import { MapView } from '../components/MapView';
 import { ReportList } from '../components/ReportList';
 import { ReportDetail } from '../components/ReportDetail';
 import { MapFirstLayout } from '../components/common/MapFirstLayout';
+import { ReportPanelHeader } from '../components/common/ReportPanelHeader';
 import { SpatialInsightsSidebar } from '../components/SpatialInsightsSidebar';
 import { MarkerCluster } from '../components/MarkerCluster';
 import { OfflineBanner } from '../components/offline/OfflineBanner';
@@ -120,14 +121,10 @@ export function Dashboard() {
                         }
                         listContent={
                             <div className="h-full flex flex-col">
-                                <div className="p-4 border-b border-gray-700 shrink-0">
-                                    <h2 className="text-lg font-semibold text-white">Reports</h2>
-                                    <p className="text-xs text-gray-400 mt-1">
-                                        {highlightedReportIds.length > 0
-                                            ? `${highlightedReportIds.length} highlighted`
-                                            : `${reports?.length ?? 0} total`}
-                                    </p>
-                                </div>
+                                <ReportPanelHeader
+                                    totalCount={reports?.length ?? 0}
+                                    highlightedCount={highlightedReportIds.length}
+                                />
                                 <div className="flex-1 overflow-y-auto">
                                     {reports && (
                                         <ReportList

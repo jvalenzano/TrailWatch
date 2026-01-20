@@ -17,6 +17,8 @@ interface ReportListProps {
   onBatchSelectionChange?: (reportId: string, selected: boolean) => void;
   /** Callback to open batch assignment modal */
   onOpenBatchAssignment?: () => void;
+  /** Callback to extract info from selected reports */
+  onExtractInfo?: (reportIds: string[]) => void;
 }
 
 export function ReportList({
@@ -28,6 +30,7 @@ export function ReportList({
   selectedForBatch = [],
   onBatchSelectionChange,
   onOpenBatchAssignment,
+  onExtractInfo,
 }: ReportListProps) {
   const isHighlighted = (reportId: string) => highlightedReportIds.includes(reportId);
   const isSelectedForBatch = (reportId: string) => selectedForBatch.includes(reportId);
@@ -147,14 +150,24 @@ export function ReportList({
             <span className="font-medium text-white">{batchSelectionCount}</span>
             {' '}report{batchSelectionCount !== 1 ? 's' : ''} selected
           </span>
-          <button
-            type="button"
-            onClick={onOpenBatchAssignment}
-            className="px-4 py-2 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-            data-testid="batch-assign-button"
-          >
-            Assign Crew
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onExtractInfo?.(selectedForBatch)}
+              className="px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+              data-testid="batch-extract-button"
+            >
+              Extract Info
+            </button>
+            <button
+              type="button"
+              onClick={onOpenBatchAssignment}
+              className="px-4 py-2 text-sm font-medium bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+              data-testid="batch-assign-button"
+            >
+              Assign Crew
+            </button>
+          </div>
         </div>
       )}
     </div>

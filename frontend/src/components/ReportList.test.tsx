@@ -159,6 +159,40 @@ describe('ReportList', () => {
       expect(onOpenBatchAssignment).toHaveBeenCalled();
     });
 
+    it('should show Extract Info button when reports are selected', () => {
+      render(
+        <MemoryRouter>
+          <ReportList
+            reports={mockReports}
+            onSelectReport={() => {}}
+            multiSelectEnabled={true}
+            selectedForBatch={['1', '2']}
+          />
+        </MemoryRouter>
+      );
+
+      expect(screen.getByTestId('batch-extract-button')).toBeInTheDocument();
+      expect(screen.getByText('Extract Info')).toBeInTheDocument();
+    });
+
+    it('should call onExtractInfo when Extract Info button clicked', () => {
+      const onExtractInfo = vi.fn();
+      render(
+        <MemoryRouter>
+          <ReportList
+            reports={mockReports}
+            onSelectReport={() => {}}
+            multiSelectEnabled={true}
+            selectedForBatch={['1', '2']}
+            onExtractInfo={onExtractInfo}
+          />
+        </MemoryRouter>
+      );
+
+      fireEvent.click(screen.getByTestId('batch-extract-button'));
+      expect(onExtractInfo).toHaveBeenCalledWith(['1', '2']);
+    });
+
     it('should highlight batch selected reports', () => {
       render(
         <MemoryRouter>

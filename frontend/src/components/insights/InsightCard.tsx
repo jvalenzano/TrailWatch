@@ -9,6 +9,7 @@ import { useAuditLog } from '../../hooks/useAuditLog';
 import { useUIMode } from '../../hooks/useUIMode';
 import { FeatureGate } from '../common/FeatureGate';
 import { FeedbackComponent } from '../feedback';
+import { TrendLevelIndicator } from './TrendLevelIndicator';
 import type { AuditActionType } from '../../types/audit';
 import type { FeedbackTargetType } from '../../types/feedback';
 
@@ -140,20 +141,9 @@ export function InsightCard({
             aria-pressed={isSelected}
             data-testid={`insight-card-${insight.id}`}
         >
-            {/* Header row with type icon and severity badge */}
+            {/* Header row with trend level indicator */}
             <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                    <span
-                        className="text-lg"
-                        role="img"
-                        aria-label={typeLabels[insight.type]}
-                    >
-                        {typeIcons[insight.type]}
-                    </span>
-                    <span className="text-xs text-gray-400 uppercase tracking-wider">
-                        {typeLabels[insight.type]}
-                    </span>
-                </div>
+                <TrendLevelIndicator type={insight.type} severity={insight.severity} />
                 <span
                     className={`
                         px-2 py-0.5 text-xs font-medium rounded border
