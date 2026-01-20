@@ -1,73 +1,105 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
+import { axe, toHaveNoViolations } from 'jest-axe';
+import { describe, it, expect, vi } from 'vitest';
 import { ReportActions } from './ReportActions';
-import type { HazardReport } from '../types/report';
 
-const mockReport: HazardReport = {
-  id: '1',
-  location: { latitude: 0, longitude: 0 },
-  hazard_type: 'clearing',
-  severity_estimate: 'difficult',
-  description: 'A large tree has fallen across the trail making it impassable.',
-  photos: [],
-  reporter_type: 'anonymous',
-  submitted_at: '2026-01-01T00:00:00Z',
-};
+expect.extend(toHaveNoViolations);
 
 describe('ReportActions', () => {
-  it('should render action buttons', () => {
-    render(
-      <ReportActions
-        reportId={mockReport.id}
-        onAssignCrew={() => { }}
-        onExtract={() => { }}
-        onMarkResolved={() => { }}
-      />
-    );
-    expect(screen.getByRole('button', { name: /Assign Crew/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Extract Info/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Mark Resolved/i })).toBeInTheDocument();
-  });
+    it('should render WF3 action buttons with correct labels', () => {
+        render(
+            <ReportActions
+                reportId="test-123"
+                onAssignCrew={() => { }}
+                onExtract={() => { }}
+                onMarkResolved={() => { }}
+            />
+        );
+        // WF3: Primary action buttons
+        expect(screen.getByRole('button', { name: /Approve & Route/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /Edit/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /Assign Crew/i })).toBeInTheDocument();
+    });
 
-  it('should call onAssignCrew when button is clicked', () => {
-    const mockOnAssignCrew = vi.fn();
-    render(
-      <ReportActions
-        reportId={mockReport.id}
-        onAssignCrew={mockOnAssignCrew}
-        onExtract={() => { }}
-        onMarkResolved={() => { }}
-      />
-    );
-    fireEvent.click(screen.getByRole('button', { name: /Assign Crew/i }));
-    expect(mockOnAssignCrew).toHaveBeenCalledWith(mockReport.id);
-  });
+    it('should call onMarkResolved when Approve & Route button is clicked', () => {
+        const mockOnMarkResolved = vi.fn();
+        render(
+            <ReportActions
+                reportId="test-123"
+                onAssignCrew={() => { }}
+                onExtract={() => { }}
+                onMarkResolved={mockOnMarkResolved}
+            />
+        );
+        fireEvent.click(screen.getByTestId('approve-route-button'));
+        expect(mockOnMarkResolved).toHaveBeenCalledWith('test-123');
+    });
 
-  it('should call onExtract when button is clicked', () => {
-    const mockOnExtract = vi.fn();
-    render(
-      <ReportActions
-        reportId={mockReport.id}
-        onAssignCrew={() => { }}
-        onExtract={mockOnExtract}
-        onMarkResolved={() => { }}
-      />
-    );
-    fireEvent.click(screen.getByRole('button', { name: /Extract Info/i }));
-    expect(mockOnExtract).toHaveBeenCalledWith(mockReport.id);
-  });
+    it('should call onExtract when Edit button is clicked', () => {
+        const mockOnExtract = vi.fn();
+        render(
+            <ReportActions
+                reportId="test-123"
+                onAssignCrew={() => { }}
+                onExtract={mockOnExtract}
+                onMarkResolved={() => { }}
+            />
+        );
+        fireEvent.click(screen.getByTestId('edit-button'));
+        expect(mockOnExtract).toHaveBeenCalledWith('test-123');
+    });
 
-  it('should call onMarkResolved when button is clicked', () => {
-    const mockOnMarkResolved = vi.fn();
-    render(
-      <ReportActions
-        reportId={mockReport.id}
-        onAssignCrew={() => { }}
-        onExtract={() => { }}
-        onMarkResolved={mockOnMarkResolved}
-      />
-    );
-    fireEvent.click(screen.getByRole('button', { name: /Mark Resolved/i }));
-    expect(mockOnMarkResolved).toHaveBeenCalledWith(mockReport.id);
-  });
+    it('should call onAssignCrew when Assign Crew button is clicked', () => {
+        const mockOnAssignCrew = vi.fn();
+        render(
+            <ReportActions
+                reportId="test-123"
+                onAssignCrew={mockOnAssignCrew}
+                onExtract={() => { }}
+                onMarkResolved={() => { }}
+            />
+        );
+        fireEvent.click(screen.getByTestId('assign-crew-button'));
+        expect(mockOnAssignCrew).toHaveBeenCalledWith('test-123');
+    });
+
+    it('should have proper button types', () => {
+        render(
+            <ReportActions
+                reportId="test-123"
+                onAssignCrew={() => { }}
+                onExtract={() => { }}
+                onMarkResolved={() => { }}
+            />
+        );
+        const buttons = screen.getAllByRole('button');
+        buttons.forEach((button) => {
+            expect(button).toHaveAttribute('type', 'button');
+        });
+    });
+
+    it('should have no accessibility violations', async () => {
+        const { container } = render(
+            <ReportActions
+                reportId="test-123"
+                onAssignCrew={() => { }}
+                onExtract={() => { }}
+                onMarkResolved={() => { }}
+            />
+        );
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+    });
+
+    it('should have proper ARIA role group', () => {
+        render(
+            <ReportActions
+                reportId="test-123"
+                onAssignCrew={() => { }}
+                onExtract={() => { }}
+                onMarkResolved={() => { }}
+            />
+        );
+        expect(screen.getByRole('group', { name: /Report actions/i })).toBeInTheDocument();
+    });
 });

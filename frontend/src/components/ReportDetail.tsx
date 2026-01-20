@@ -11,6 +11,65 @@ import { ReasoningPanel, type ReasoningStep } from './agentic/ReasoningPanel';
 import { ExternalIntelligence } from './ExternalIntelligence';
 
 /**
+ * WF3: Numbered section header component for report detail view.
+ * Implements "1. PHOTO SECTION", "2. AI CLASSIFICATION", etc.
+ */
+interface SectionHeaderProps {
+    number: number;
+    title: string;
+    className?: string;
+}
+
+function SectionHeader({ number, title, className = '' }: SectionHeaderProps) {
+    return (
+        <h4
+            className={`text-lg font-bold text-gray-300 uppercase tracking-wide border-b border-gray-700 pb-2 mb-3 ${className}`}
+            data-testid={`section-header-${number}`}
+        >
+            {number}. {title}
+        </h4>
+    );
+}
+
+/**
+ * WF3: Format classification timestamp for display.
+ * Shows when the AI classified the report (e.g., "8:16 AM").
+ */
+function formatClassificationTime(timestamp?: string): string | null {
+    if (!timestamp) return null;
+    try {
+        const date = new Date(timestamp);
+        return date.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * WF3: Generate assignment reasoning text based on report data.
+ * Shows reasoning like "Based on 4 similar reports in District 7".
+ */
+function getAssignmentReasoning(report: HazardReport): string | null {
+    const similarReportsCount = report.triage_result?.similar_reports?.length ?? 0;
+    const districtId = report.assignment?.district_id;
+
+    if (similarReportsCount > 0 && districtId) {
+        return `Based on ${similarReportsCount} similar report${similarReportsCount > 1 ? 's' : ''} in District ${districtId}`;
+    }
+    if (similarReportsCount > 0) {
+        return `Based on ${similarReportsCount} similar report${similarReportsCount > 1 ? 's' : ''} in the area`;
+    }
+    if (districtId) {
+        return `Assigned to District ${districtId}`;
+    }
+    return null;
+}
+
+/**
  * Convert triage_result confidence factors to ReasoningStep format.
  */
 function buildReasoningSteps(report: HazardReport): ReasoningStep[] {
@@ -113,12 +172,17 @@ export function ReportDetail({
 }: ReportDetailProps) {
     // Determine if we should show streaming view
     const showStreamingView = extractionState && extractionState.status !== 'idle';
+    // WF3: Classification timestamp
+    const classificationTime = formatClassificationTime(report.triaged_at);
+    // WF3: Assignment reasoning
+    const assignmentReasoning = getAssignmentReasoning(report);
 
     return (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-md space-y-4 h-full overflow-y-auto">
+        <div className="bg-gray-800 p-6 rounded-lg shadow-md space-y-6 h-full overflow-y-auto">
+            {/* Header with title and severity */}
             <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                    <h3 className="text-2xl font-bold text-emerald-400">Report Details</h3>
+                    <h3 className="text-2xl font-bold text-emerald-400">Report #{report.id}</h3>
                     {/* Confidence Badge - shown in moderate and agentic modes */}
                     <FeatureGate feature="enable_confidence_indicators">
                         {report.triage_result && (
@@ -136,115 +200,140 @@ export function ReportDetail({
                 </span>
             </div>
 
+            {/* Basic info */}
             <div className="space-y-2">
-                <p className="text-gray-300"><span className="font-semibold text-gray-400">ID:</span> {report.id}</p>
                 <p className="text-gray-300"><span className="font-semibold text-gray-400">Trail:</span> {report.trail_name || 'Unknown Trail'}</p>
-
-                <div className="grid grid-cols-2 gap-4">
-                    <p className="text-gray-300">
-                        <span className="font-semibold text-gray-400">Hazard:</span> {report.hazard_type}
-                        <FeatureGate feature="enable_ai_attribution_badges">
-                            <AIAttributionBadge field="hazard_type" />
-                        </FeatureGate>
-                    </p>
-                    <p className="text-gray-300">
-                        <span className="font-semibold text-gray-400">Reporter:</span> {report.reporter_type}
-                        <FeatureGate feature="enable_ai_attribution_badges">
-                            <AIAttributionBadge field="reporter_type" />
-                        </FeatureGate>
-                    </p>
-                </div>
-
-                <div className="bg-gray-900 p-3 rounded border border-gray-700 mt-2">
-                    <p className="text-gray-300 italic">"{report.description}"</p>
-                </div>
-
                 <p className="text-gray-400 text-sm">
                     Submitted: {new Date(report.submitted_at).toLocaleString()}
                 </p>
-
-                {/* AI Reasoning Panel - shown in moderate and agentic modes */}
-                <FeatureGate feature="enable_reasoning_panel">
-                    {report.triage_result && (
-                        <div className="mt-4">
-                            <ReasoningPanel
-                                steps={buildReasoningSteps(report)}
-                                overallConfidence={report.triage_result.confidence_score}
-                            />
-                            {/* AI Reasoning Summary */}
-                            {report.triage_result.reasoning && (
-                                <div className="mt-3 p-3 bg-gray-900 rounded border border-gray-700">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                                        AI Summary
-                                    </p>
-                                    <p className="text-sm text-gray-300">
-                                        {report.triage_result.reasoning}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </FeatureGate>
-
-                {/* Streaming Extraction View (Agentic mode) */}
-                <FeatureGate feature="streamingExtraction">
-                    {showStreamingView && extractionState && onCancelStreamingExtraction && onResetStreamingExtraction ? (
-                        <StreamingExtractionView
-                            state={extractionState}
-                            onCancel={onCancelStreamingExtraction}
-                            onReset={onResetStreamingExtraction}
-                        />
-                    ) : onStartStreamingExtraction ? (
-                        <button
-                            type="button"
-                            onClick={() => onStartStreamingExtraction(report.id)}
-                            className="px-4 py-2 text-sm font-medium text-emerald-400 border border-emerald-500/50 rounded-lg hover:bg-emerald-500/10 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            data-testid="start-streaming-extraction"
-                        >
-                            Start AI Extraction
-                        </button>
-                    ) : null}
-                </FeatureGate>
-
-                {/* Static Extraction Display (fallback for non-streaming modes) */}
-                <FeatureGate feature="streamingExtraction" fallback={<ExtractionDisplay report={report} />}>
-                    {/* If streaming is enabled but not active, show static display as fallback */}
-                    {!showStreamingView && extractionState?.status === 'idle' && (
-                        <ExtractionDisplay report={report} />
-                    )}
-                </FeatureGate>
             </div>
 
-      {report.photos && report.photos.length > 0 && (
-        <div className="mt-4">
-          <p className="font-semibold text-gray-400 mb-2">Photos</p>
-          <div className="flex gap-2 overflow-x-auto pb-2">
-            {report.photos.map((photo, idx) => (
-              <img key={idx} src={photo} alt="Hazard" className="h-32 rounded border border-gray-600" />
-            ))}
-          </div>
+            {/* WF3 Section 1: PHOTO SECTION */}
+            {report.photos && report.photos.length > 0 && (
+                <div>
+                    <SectionHeader number={1} title="PHOTO SECTION" />
+                    <div className="flex gap-2 overflow-x-auto pb-2">
+                        {report.photos.map((photo, idx) => (
+                            <img key={idx} src={photo} alt="Hazard" className="h-32 rounded border border-gray-600" />
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* WF3 Section 2: AI CLASSIFICATION */}
+            <div>
+                <SectionHeader number={2} title="AI CLASSIFICATION" />
+                <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-4">
+                        <p className="text-gray-300">
+                            <span className="font-semibold text-gray-400">Hazard:</span> {report.hazard_type}
+                            <FeatureGate feature="enable_ai_attribution_badges">
+                                <AIAttributionBadge field="hazard_type" />
+                            </FeatureGate>
+                        </p>
+                        <p className="text-gray-300">
+                            <span className="font-semibold text-gray-400">Reporter:</span> {report.reporter_type}
+                            <FeatureGate feature="enable_ai_attribution_badges">
+                                <AIAttributionBadge field="reporter_type" />
+                            </FeatureGate>
+                        </p>
+                    </div>
+
+                    <div className="bg-gray-900 p-3 rounded border border-gray-700">
+                        <p className="text-gray-300 italic">&quot;{report.description}&quot;</p>
+                    </div>
+
+                    {/* WF3: Classification timestamp */}
+                    {classificationTime && (
+                        <p className="text-gray-400 text-sm" data-testid="classification-timestamp">
+                            Classified: {classificationTime}
+                        </p>
+                    )}
+
+                    {/* AI Reasoning Panel - shown in moderate and agentic modes */}
+                    <FeatureGate feature="enable_reasoning_panel">
+                        {report.triage_result && (
+                            <div className="mt-4">
+                                <ReasoningPanel
+                                    steps={buildReasoningSteps(report)}
+                                    overallConfidence={report.triage_result.confidence_score}
+                                />
+                                {/* AI Reasoning Summary */}
+                                {report.triage_result.reasoning && (
+                                    <div className="mt-3 p-3 bg-gray-900 rounded border border-gray-700">
+                                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                                            AI Summary
+                                        </p>
+                                        <p className="text-sm text-gray-300">
+                                            {report.triage_result.reasoning}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </FeatureGate>
+
+                    {/* Streaming Extraction View (Agentic mode) */}
+                    <FeatureGate feature="streamingExtraction">
+                        {showStreamingView && extractionState && onCancelStreamingExtraction && onResetStreamingExtraction ? (
+                            <StreamingExtractionView
+                                state={extractionState}
+                                onCancel={onCancelStreamingExtraction}
+                                onReset={onResetStreamingExtraction}
+                            />
+                        ) : onStartStreamingExtraction ? (
+                            <button
+                                type="button"
+                                onClick={() => onStartStreamingExtraction(report.id)}
+                                className="px-4 py-2 text-sm font-medium text-emerald-400 border border-emerald-500/50 rounded-lg hover:bg-emerald-500/10 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                data-testid="start-streaming-extraction"
+                            >
+                                Start AI Extraction
+                            </button>
+                        ) : null}
+                    </FeatureGate>
+
+                    {/* Static Extraction Display (fallback for non-streaming modes) */}
+                    <FeatureGate feature="streamingExtraction" fallback={<ExtractionDisplay report={report} />}>
+                        {/* If streaming is enabled but not active, show static display as fallback */}
+                        {!showStreamingView && extractionState?.status === 'idle' && (
+                            <ExtractionDisplay report={report} />
+                        )}
+                    </FeatureGate>
+                </div>
+            </div>
+
+            {/* External Intelligence (if available) */}
+            {report.external_intelligence && report.external_intelligence.length > 0 && (
+                <ExternalIntelligence sources={report.external_intelligence} />
+            )}
+
+            {/* WF3 Section 3: ASSIGNMENT */}
+            <div>
+                <SectionHeader number={3} title="ASSIGNMENT" />
+                <div className="space-y-3">
+                    {/* WF3: Assignment reasoning */}
+                    {assignmentReasoning && (
+                        <p className="text-gray-400 text-sm italic" data-testid="assignment-reasoning">
+                            {assignmentReasoning}
+                        </p>
+                    )}
+                    <CrewSelector
+                        onSelect={(crewId) => onAssignCrew(report.id, crewId)}
+                    />
+                </div>
+            </div>
+
+            {/* WF3 Section 4: ACTIONS */}
+            <div>
+                <SectionHeader number={4} title="ACTIONS" />
+                <ReportActions
+                    reportId={report.id}
+                    onAssignCrew={onAssignCrew}
+                    onExtract={onExtract}
+                    onMarkResolved={onMarkResolved}
+                />
+            </div>
         </div>
-      )}
-
-      {report.external_intelligence && report.external_intelligence.length > 0 && (
-        <ExternalIntelligence sources={report.external_intelligence} />
-      )}
-
-      <div className="mt-6 border-t border-gray-700 pt-4">
-        <h4 className="text-xl font-semibold mb-3 text-emerald-500">Actions</h4>
-        <ReportActions
-          reportId={report.id}
-          onAssignCrew={onAssignCrew}
-          onExtract={onExtract}
-          onMarkResolved={onMarkResolved}
-        />
-
-        <div className="mt-4">
-          <CrewSelector
-            onSelect={(crewId) => onAssignCrew(report.id, crewId)}
-          />
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
