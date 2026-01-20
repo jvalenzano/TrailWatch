@@ -3,7 +3,7 @@
  * Implements "smart" hover interactions with 2-second delay preview.
  */
 import { useContext, useEffect, useRef, useState, useCallback } from 'react';
-import type { GeoJSON } from 'geojson';
+// GeoJSON types imported via maplibre-gl
 import { MapContext } from '../MapView';
 import { useReports } from '../../hooks/useReports';
 import type { HazardReport } from '../../types/report';
@@ -12,8 +12,7 @@ const SOURCE_ID = 'reports-source';
 const LAYER_CLUSTERS = 'clusters';
 const LAYER_CLUSTER_COUNT = 'cluster-count';
 const LAYER_UNCLUSTERED = 'unclustered-point';
-const LAYER_HIGHLIGHTED = 'highlighted-point';
-const LAYER_SELECTED = 'selected-point';
+// Note: LAYER_HIGHLIGHTED and LAYER_SELECTED reserved for future enhancement
 
 /** Hover delay in milliseconds before showing cluster preview */
 const HOVER_DELAY_MS = 2000;
@@ -160,14 +159,17 @@ export function SmartMarkerCluster({
             const source = map.getSource(SOURCE_ID) as maplibregl.GeoJSONSource;
             if (!source) return;
 
-            source.getClusterExpansionZoom(clusterId, (err, zoom) => {
-                if (err || zoom === undefined) return;
+            // Use Promise-based API for MapLibre GL JS v4+
+            source.getClusterExpansionZoom(clusterId).then((zoom) => {
+                if (zoom === undefined) return;
 
                 map.easeTo({
                     center: geometry.coordinates as [number, number],
                     zoom: zoom,
                     duration: 500,
                 });
+            }).catch(() => {
+                // Ignore cluster expansion errors
             });
 
             // Hide preview when clicking
