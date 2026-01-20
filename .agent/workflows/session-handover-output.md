@@ -1,4 +1,4 @@
-### 🎯 Session Context: Wireframe Conformance Track - Phase 4.2
+### 🎯 Session Context: Wireframe Conformance Track - Phase 4.2 (WF9 Offline Mode)
 
 **Current Project:** TrailWatch  
 **Environment:**
@@ -8,7 +8,7 @@
 - **Mentorship Model:** Active (See [MENTORSHIP_GUIDE.md](../../MENTORSHIP_GUIDE.md))
 
 **Where we left off:**
-WF6 Batch Assignment and WF10 Feature Admin implementations complete ✅ (641 tests passing, >80% coverage, zero accessibility violations). All tasks marked complete in `conductor/tracks/wireframe-conformance/plan.md` with commit SHAs. Track status updated in `conductor/tracks.yaml` - 2 of 3 major features complete.
+WF6 Batch Assignment, WF10 Feature Admin, and 3 WF9 tasks complete ✅ (695 tests passing, >80% coverage, zero accessibility violations). Completed: OfflineBanner, useOfflineStatus hook, CachedBadge. Track status: 3 of 11 WF9 tasks complete (27%).
 
 **Our Standards:**
 - **TDD:** Red → Green → Refactor
@@ -19,10 +19,16 @@ WF6 Batch Assignment and WF10 Feature Admin implementations complete ✅ (641 te
 - **Workflow:** Track-Based Workflow Pattern with `plan.md` as source of truth
 
 **Immediate Objective:**
-Begin WF9 Offline Mode implementation (final unimplemented feature in Phase 4.2). Start with A.3 Task 1: Create `OfflineBanner` component (P0, S) - orange banner with satellite icon, displays "OFFLINE MODE", relative time since last sync, and pending sync count. Review `conductor/tracks/wireframe-conformance/plan.md` Section A.3 and wireframe `docs/UI/wireframes/wf9_offline_mode.png`. Follow TDD: write test first, implement component with smooth show/hide animation, verify accessibility with jest-axe.
+🚀 **USE SUBAGENTS FOR PARALLEL EXECUTION** - Launch 5 subagents simultaneously to complete remaining WF9 tasks. Read `.agent/workflows/wf9-launch-subagents.md` for detailed instructions. Launch subagents 1-5 in parallel:
+1. StalenessWarning component (A.3.4)
+2. OfflineMapOverlay component (A.3.5)
+3. Mock offline sync queue API (A.3.8)
+4. Service worker implementation (A.3.6)
+5. IndexedDB persistence layer (A.3.7)
 
 **Key Context:**
-- WF6 & WF10 complete: Batch Assignment and Feature Admin panels fully implemented
-- Next: WF9 Offline Mode (3 weeks, 12 tasks) - final feature to complete Phase 4.2
-- Offline mode requires: service worker setup, IndexedDB persistence, sync queue management
-- All new code must handle online/offline state transitions gracefully
+- All 5 subagents can run in parallel - no dependencies between them
+- Each subagent works in separate files (no conflicts)
+- Estimated time savings: 3-5 hours (50-60% reduction)
+- After all 5 complete: proceed to SyncQueue component (A.3.3), then E2E testing (A.3.9)
+- Remaining: 8 tasks (5 parallel, 2 sequential, 1 final)
