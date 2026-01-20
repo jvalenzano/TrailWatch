@@ -8,25 +8,25 @@
 - [x] **Create Simulation Hook:** Build `useMockAgent()` that serves this data to the UI, allowing us to toggle "scenarios" (e.g., "Trigger Cluster Event").
 
 ## Phase 2.2: The Agentic Shell (Layout)
-- [ ] **Create `AgenticLayout.tsx`:** Implement the 20/60/20 CSS grid.
-- [ ] **Integrate MapLibre:** Ensure the map renders correctly in the center distinct from the standard dashboard.
-- [ ] **Implement Mode Toggle:** effectively switch between `Traditional` (existing) and `Agentic` (new) layouts without full page reloads.
+- [x] **Create `AgenticLayout.tsx`:** Implement the 20/60/20 CSS grid.
+- [x] **Integrate MapLibre:** Ensure the map renders correctly in the center distinct from the standard dashboard.
+- [x] **Implement Mode Toggle:** effectively switch between `Traditional` (existing) and `Agentic` (new) layouts without full page reloads.
 
 ## Phase 2.3: The "Insight" Components (Left Panel)
-- [ ] **Build `InsightCard`:** The generic container for sidebar alerts.
-- [ ] **Implement Pattern A (Cluster):** A specific card for "Spatial Cluster Detected" (linking to the mock data).
-- [ ] **Implement Pattern D (Duplicate):** A specific card for "Duplicate Suspected".
+- [x] **Build `InsightCard`:** The generic container for sidebar alerts.
+- [x] **Implement Pattern A (Cluster):** A specific card for "Spatial Cluster Detected" (linking to the mock data).
+- [x] **Implement Pattern D (Duplicate):** A specific card for "Duplicate Suspected".
 
 ## Phase 2.4: The "Reasoning" Components (Right Panel)
-- [ ] **Enhanced `ReasoningPanel`:** Upgrade the existing component to support "Step-by-Step" visualization (Vision -> Spatial -> Policy).
-- [ ] **Circuit Breaker UI:** Implement the "High Risk" confirmation modal with checkbox friction.
+- [x] **Enhanced `ReasoningPanel`:** Upgrade the existing component to support "Step-by-Step" visualization (Vision -> Spatial -> Policy).
+- [x] **Circuit Breaker UI:** Implement the "High Risk" confirmation modal with checkbox friction.
 
 ## Phase 2.5: Integration & Wiring
-- [ ] **Wire Map Interactions:** Clicking a Sidebar Insight -> Zooms Map to Bounding Box.
-- [ ] **Wire Pulse Effects:** Selecting an Insight -> Pulses the related map markers.
+- [x] **Wire Map Interactions:** Clicking a Sidebar Insight -> Zooms Map to Bounding Box.
+- [x] **Wire Pulse Effects:** Selecting an Insight -> Pulses the related map markers.
 
 ## Completion Criteria
-- [ ] User can switch to "Agentic Mode".
-- [ ] User sees populated "Cluster Alerts" from the synthetic data.
-- [ ] User can click an alert and see the map zoom + specific reasoning.
-- [ ] No real backend is required to demonstrate the full flow.
+- [x] User can switch to "Agentic Mode".
+- [x] User sees populated "Cluster Alerts" from the synthetic data.
+- [x] User can click an alert and see the map zoom + specific reasoning.
+- [x] No real backend is required to demonstrate the full flow.
