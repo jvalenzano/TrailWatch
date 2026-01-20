@@ -1,0 +1,667 @@
+[
+    {
+        "report_id": "TR-2026-001",
+        "timestamp_submission": "2026-01-19T06:15:00Z",
+        "citizen_data": {
+            "description": "Tree down across trail, hard to pass.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8521,
+                "lng": -121.7601
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.89,
+            "classification_timestamp": "2026-01-19T06:16:00Z",
+            "reasoning_steps": [
+                {
+                    "step": "vision",
+                    "status": "success",
+                    "detail": "Identified tree trunk > 12in diameter"
+                },
+                {
+                    "step": "spatial",
+                    "status": "success",
+                    "detail": "On trail geometry (North Ridge)"
+                },
+                {
+                    "step": "class",
+                    "status": "success",
+                    "detail": "TRACS 245 matched"
+                }
+            ]
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review",
+            "suggested_reason": "Pattern match in Dist 3"
+        },
+        "pattern_detection": {
+            "cluster_id": "CL-STORM-01",
+            "is_cluster_member": true,
+            "cluster_reason": "Storm activity"
+        },
+        "weather_context": {
+            "timestamp": "2026-01-19T06:00:00Z",
+            "conditions": "Stormy",
+            "wind_speed_mph": 35,
+            "relevant_to_hazard": true
+        }
+    },
+    {
+        "report_id": "TR-2026-002",
+        "timestamp_submission": "2026-01-19T06:45:00Z",
+        "citizen_data": {
+            "description": "Another tree blocking the path.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8525,
+                "lng": -121.7605
+            },
+            "reporter_type": "runner"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.92,
+            "classification_timestamp": "2026-01-19T06:46:00Z",
+            "reasoning_steps": [
+                {
+                    "step": "vision",
+                    "status": "success",
+                    "detail": "Fallen log obstruction"
+                },
+                {
+                    "step": "spatial",
+                    "status": "success",
+                    "detail": "North Ridge Trail"
+                }
+            ]
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        },
+        "pattern_detection": {
+            "cluster_id": "CL-STORM-01",
+            "is_cluster_member": true
+        },
+        "weather_context": {
+            "timestamp": "2026-01-19T06:00:00Z",
+            "conditions": "Stormy",
+            "wind_speed_mph": 38,
+            "relevant_to_hazard": true
+        }
+    },
+    {
+        "report_id": "TR-2026-003",
+        "timestamp_submission": "2026-01-19T07:10:00Z",
+        "citizen_data": {
+            "description": "Wind blew this over, huge branch.",
+            "photo_url": "/assets/photos/tree_obstruction_ancient.jpg",
+            "gps_raw": {
+                "lat": 46.8518,
+                "lng": -121.7598
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.85,
+            "classification_timestamp": "2026-01-19T07:11:00Z",
+            "reasoning_steps": [
+                {
+                    "step": "vision",
+                    "status": "success",
+                    "detail": "Large woody debris"
+                }
+            ]
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        },
+        "pattern_detection": {
+            "cluster_id": "CL-STORM-01",
+            "is_cluster_member": true
+        }
+    },
+    {
+        "report_id": "TR-2026-004",
+        "timestamp_submission": "2026-01-19T07:30:00Z",
+        "citizen_data": {
+            "description": "Impassable due to fallen tree.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8522,
+                "lng": -121.7610
+            },
+            "reporter_type": "biker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.95,
+            "classification_timestamp": "2026-01-19T07:31:00Z",
+            "reasoning_steps": [
+                {
+                    "step": "vision",
+                    "status": "success",
+                    "detail": "Trail blockage confirmed"
+                }
+            ]
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        },
+        "pattern_detection": {
+            "cluster_id": "CL-STORM-01",
+            "is_cluster_member": true
+        }
+    },
+    {
+        "report_id": "TR-2026-005",
+        "timestamp_submission": "2026-01-19T09:00:00Z",
+        "citizen_data": {
+            "description": "Mudslide starting to look bad.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8600,
+                "lng": -121.7700
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.80,
+            "classification_timestamp": "2026-01-19T09:01:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned",
+            "suggested_reason": "District 3 territory"
+        }
+    },
+    {
+        "report_id": "TR-2026-006",
+        "timestamp_submission": "2026-01-19T09:15:00Z",
+        "citizen_data": {
+            "description": "Trail washed out.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8610,
+                "lng": -121.7710
+            },
+            "reporter_type": "equestrian"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.85,
+            "classification_timestamp": "2026-01-19T09:16:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-007",
+        "timestamp_submission": "2026-01-19T09:30:00Z",
+        "citizen_data": {
+            "description": "Branch down.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8620,
+                "lng": -121.7720
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.70,
+            "classification_timestamp": "2026-01-19T09:31:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-008",
+        "timestamp_submission": "2026-01-19T09:45:00Z",
+        "citizen_data": {
+            "description": "Big root ball exposed.",
+            "photo_url": "/assets/photos/tree_obstruction_ancient.jpg",
+            "gps_raw": {
+                "lat": 46.8630,
+                "lng": -121.7730
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.88,
+            "classification_timestamp": "2026-01-19T09:46:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-009",
+        "timestamp_submission": "2026-01-19T10:00:00Z",
+        "citizen_data": {
+            "description": "Slippery section.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8640,
+                "lng": -121.7740
+            },
+            "reporter_type": "runner"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.65,
+            "classification_timestamp": "2026-01-19T10:01:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-010",
+        "timestamp_submission": "2026-01-19T10:15:00Z",
+        "citizen_data": {
+            "description": "Sign post leaning.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8650,
+                "lng": -121.7750
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "411",
+            "hazard_class": "infrastructure",
+            "confidence_score": 0.75,
+            "classification_timestamp": "2026-01-19T10:16:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-011",
+        "timestamp_submission": "2026-01-19T10:30:00Z",
+        "citizen_data": {
+            "description": "Debris on trail.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8660,
+                "lng": -121.7760
+            },
+            "reporter_type": "biker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.72,
+            "classification_timestamp": "2026-01-19T10:31:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-012",
+        "timestamp_submission": "2026-01-19T10:45:00Z",
+        "citizen_data": {
+            "description": "Small washout.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8670,
+                "lng": -121.7770
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.78,
+            "classification_timestamp": "2026-01-19T10:46:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-013",
+        "timestamp_submission": "2026-01-19T11:00:00Z",
+        "citizen_data": {
+            "description": "Overgrown brush.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8680,
+                "lng": -121.7780
+            },
+            "reporter_type": "volunteer"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.60,
+            "classification_timestamp": "2026-01-19T11:01:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-014",
+        "timestamp_submission": "2026-01-19T11:15:00Z",
+        "citizen_data": {
+            "description": "Trail marker damaged.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8690,
+                "lng": -121.7790
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "411",
+            "hazard_class": "infrastructure",
+            "confidence_score": 0.82,
+            "classification_timestamp": "2026-01-19T11:16:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-015",
+        "timestamp_submission": "2026-01-19T12:00:00Z",
+        "citizen_data": {
+            "description": "This tree is completely blocking the way.",
+            "photo_url": "/assets/photos/duplicate_source_A.jpg",
+            "gps_raw": {
+                "lat": 46.8800,
+                "lng": -121.7900
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.96,
+            "classification_timestamp": "2026-01-19T12:01:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        }
+    },
+    {
+        "report_id": "TR-2026-016",
+        "timestamp_submission": "2026-01-19T12:05:00Z",
+        "citizen_data": {
+            "description": "Tree blockage.",
+            "photo_url": "/assets/photos/duplicate_source_B.jpg",
+            "gps_raw": {
+                "lat": 46.8801,
+                "lng": -121.7901
+            },
+            "reporter_type": "runner"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.95,
+            "classification_timestamp": "2026-01-19T12:06:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        },
+        "pattern_detection": {
+            "is_duplicate": true,
+            "duplicate_of": "TR-2026-015",
+            "similarity_score": 0.94,
+            "duplicate_reason": "Visual similarity 0.94 and close proximity"
+        }
+    },
+    {
+        "report_id": "TR-2026-017",
+        "timestamp_submission": "2026-01-19T13:00:00Z",
+        "citizen_data": {
+            "description": "BRIDGE IS GONE! DANGEROUS!",
+            "photo_url": "/assets/photos/bridge_collapse_critical.jpg",
+            "gps_raw": {
+                "lat": 46.8900,
+                "lng": -121.8000
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "327",
+            "hazard_class": "structure",
+            "confidence_score": 0.99,
+            "classification_timestamp": "2026-01-19T13:01:00Z",
+            "reasoning_steps": [
+                {
+                    "step": "vision",
+                    "status": "success",
+                    "detail": "Critical structural failure detected"
+                },
+                {
+                    "step": "policy",
+                    "status": "success",
+                    "detail": "Immediate callback triggered"
+                }
+            ]
+        },
+        "assignment": {
+            "district_id": "05",
+            "status": "pending_review",
+            "priority": "urgent"
+        },
+        "safety_alert": true
+    },
+    {
+        "report_id": "TR-2026-018",
+        "timestamp_submission": "2026-01-19T14:00:00Z",
+        "citizen_data": {
+            "description": "Nice view, but trail is muddy.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8700,
+                "lng": -121.7800
+            },
+            "reporter_type": "tourist"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.60,
+            "classification_timestamp": "2026-01-19T14:01:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "resolved"
+        }
+    },
+    {
+        "report_id": "TR-2026-019",
+        "timestamp_submission": "2026-01-19T14:15:00Z",
+        "citizen_data": {
+            "description": "Another fallen branch.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8710,
+                "lng": -121.7810
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.80,
+            "classification_timestamp": "2026-01-19T14:16:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "resolved"
+        }
+    },
+    {
+        "report_id": "TR-2026-020",
+        "timestamp_submission": "2026-01-19T14:30:00Z",
+        "citizen_data": {
+            "description": "Trail needs maintenance.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8720,
+                "lng": -121.7820
+            },
+            "reporter_type": "equestrian"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.70,
+            "classification_timestamp": "2026-01-19T14:31:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        }
+    },
+    {
+        "report_id": "TR-2026-021",
+        "timestamp_submission": "2026-01-19T14:45:00Z",
+        "citizen_data": {
+            "description": "Loose rocks.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8730,
+                "lng": -121.7830
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.65,
+            "classification_timestamp": "2026-01-19T14:46:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        }
+    },
+    {
+        "report_id": "TR-2026-022",
+        "timestamp_submission": "2026-01-19T15:00:00Z",
+        "citizen_data": {
+            "description": "Beaver dam flooding trail.",
+            "photo_url": "/assets/photos/erosion_washout.jpg",
+            "gps_raw": {
+                "lat": 46.8740,
+                "lng": -121.7840
+            },
+            "reporter_type": "tourist"
+        },
+        "ai_analysis": {
+            "tracs_code": "233",
+            "hazard_class": "erosion",
+            "confidence_score": 0.75,
+            "classification_timestamp": "2026-01-19T15:01:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "pending_review"
+        }
+    },
+    {
+        "report_id": "TR-2026-023",
+        "timestamp_submission": "2026-01-19T15:15:00Z",
+        "citizen_data": {
+            "description": "Gate stuck.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8750,
+                "lng": -121.7850
+            },
+            "reporter_type": "volunteer"
+        },
+        "ai_analysis": {
+            "tracs_code": "411",
+            "hazard_class": "infrastructure",
+            "confidence_score": 0.90,
+            "classification_timestamp": "2026-01-19T15:16:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "assigned"
+        }
+    },
+    {
+        "report_id": "TR-2026-024",
+        "timestamp_submission": "2026-01-19T15:30:00Z",
+        "citizen_data": {
+            "description": "Perfect hiking conditions otherwise.",
+            "photo_url": "/assets/photos/tree_obstruction_standard.jpg",
+            "gps_raw": {
+                "lat": 46.8760,
+                "lng": -121.7860
+            },
+            "reporter_type": "hiker"
+        },
+        "ai_analysis": {
+            "tracs_code": "245",
+            "hazard_class": "obstruction",
+            "confidence_score": 0.50,
+            "classification_timestamp": "2026-01-19T15:31:00Z",
+            "reasoning_steps": []
+        },
+        "assignment": {
+            "district_id": "03",
+            "status": "resolved"
+        }
+    }
+]

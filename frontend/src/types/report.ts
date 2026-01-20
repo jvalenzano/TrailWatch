@@ -99,6 +99,23 @@ export interface WeatherContext {
 }
 
 /**
+ * External intelligence sources that corroborate or provide context for the hazard.
+ * Includes social media posts, blog reports, and other public sources.
+ */
+export interface ExternalIntelligence {
+    /** Type of external source (e.g., 'social_media', 'blog', 'forum') */
+    source_type: string;
+    /** Display label for the source */
+    label: string;
+    /** URL to the asset/image */
+    asset_url: string;
+    /** Brief description or excerpt from the source */
+    excerpt?: string;
+    /** Timestamp when the external source was posted */
+    posted_at?: string;
+}
+
+/**
  * Assignment status for district/crew routing.
  */
 export type AssignmentStatus = 'pending_review' | 'assigned' | 'in_progress' | 'resolved';
@@ -143,4 +160,6 @@ export interface HazardReport {
     weather_context?: WeatherContext;
     /** Flag for high-risk hazards requiring immediate attention */
     safety_alert?: boolean;
+    /** External intelligence sources (social media, blogs, etc.) that corroborate this report */
+    external_intelligence?: ExternalIntelligence[];
 }

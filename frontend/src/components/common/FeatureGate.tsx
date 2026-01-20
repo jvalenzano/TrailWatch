@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { useUIModeContextSafe } from '../../contexts/UIModeContext';
+import { useUIModeContextSafe } from '../../hooks/useUIMode';
 import type { UIFeatures } from '../../config/ui-modes';
 
 interface FeatureGateProps {

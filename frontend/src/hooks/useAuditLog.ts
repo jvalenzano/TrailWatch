@@ -8,7 +8,7 @@
 
 import { useCallback, useMemo } from 'react';
 import { auditLog } from '../services/auditLog';
-import { useUIModeContextSafe } from '../contexts/UIModeContext';
+import { useUIModeContextSafe } from './useUIMode';
 import type {
     AuditLogEntry,
     AuditLogInput,

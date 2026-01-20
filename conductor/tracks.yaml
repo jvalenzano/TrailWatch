@@ -1,0 +1,149 @@
+# Tracks Registry
+# Single source of truth for all tracks. AI agents: read this first.
+# 
+# Structure:
+# - active: Currently in progress
+# - planned: Ready to start, not yet begun
+# - complete: Finished, kept for reference
+# - archived: Obsolete or merged, moved to archive
+# - future: Important future tracks, not yet ready to start
+
+active:
+  - id: frontend-dashboard
+    name: "Ranger Dashboard (Frontend)"
+    status: in_progress
+    current_phase: "Phase 3 merged to develop, Phase 4 awaiting approval"
+    current_branch: "feature/dashboard-phase-4-agentic"
+    owner: "Claude Code"
+    path: ./tracks/frontend-dashboard/
+    description: "React-based Ranger Dashboard frontend with three UI modes (Traditional, Moderate, Agentic) for progressive disclosure of AI capabilities."
+    dependencies:
+      - intake-agent
+      - status-dashboard
+    created_at: "2026-01-18T20:00:00Z"
+    updated_at: "2026-01-18T21:36:00Z"
+    
+  - id: status-dashboard
+    name: "Status Dashboard (Backend)"
+    status: in_progress
+    current_phase: "Phase 1 complete (Backend API)"
+    owner: "Claude Code"
+    path: ./tracks/status-dashboard/
+    description: "Backend API development for dashboard: reports endpoint with filtering/sorting, statistics aggregation."
+    dependencies:
+      - intake-agent
+    created_at: "2026-01-18T00:00:00Z"
+    updated_at: "2026-01-18T21:36:00Z"
+
+planned:
+  - id: wireframe-conformance
+    name: "Wireframe Conformance & Feature Completion"
+    status: planned
+    blocked_by: null
+    owner: "Claude Code"
+    path: ./tracks/wireframe-conformance/
+    description: "Address 52 gaps identified in wireframe audit: implement 3 major features (WF6, WF9, WF10) and enhance 7 partially-implemented wireframes to 100% conformance."
+    dependencies:
+      - agentic-mode
+    estimated_duration_weeks: 8
+    estimated_team_size: "4-6 engineers"
+    created_at: "2026-01-20T00:00:00-08:00"
+    updated_at: "2026-01-20T00:00:00-08:00"
+    notes: "Strategic plan complete, awaiting approval. Ready for detailed implementation plan execution."
+    
+  - id: synthetic-data-quality
+    name: "Synthetic Data Quality & Demo Enhancement"
+    status: planned
+    blocked_by: null
+    owner: "Claude Code"
+    path: ./tracks/synthetic-data-quality/
+    description: "Comprehensive data corpus improvements: edge cases, realism, storytelling, and demo preparation."
+    dependencies:
+      - agentic-mode
+    estimated_effort: "2-3 weeks"
+    priority: high
+    created_at: "2026-01-20T03:00:00-08:00"
+    updated_at: "2026-01-20T03:00:00-08:00"
+
+complete:
+  - id: intake-agent
+    name: "Intake Agent"
+    status: complete
+    completed_at: "2026-01-17"
+    checkpoint_sha: "3eb7f41"
+    owner: "Claude Code"
+    path: ./tracks/intake-agent/
+    description: "Build the core functionality for the Intake Agent (Project 1): accepting citizen reports, extracting structured data, and mapping to TRACS categories."
+    created_at: "2026-01-16T12:00:00Z"
+    updated_at: "2026-01-18T19:15:00Z"
+    notes: "38 tests passing. API endpoints, database integration, TRACS classification complete."
+    
+  - id: safeguards
+    name: "Safety & Governance (Phase 3)"
+    status: complete
+    completed_at: "2026-01-19"
+    owner: "Claude Code"
+    path: ./tracks/safeguards/
+    description: "Implementation of safety guardrails: Feature Gates, Audit Logging, and Feedback Loops."
+    dependencies:
+      - phase2-agentic-ui  # Historical dependency (now archived)
+    created_at: "2026-01-19T17:01:47-08:00"
+    updated_at: "2026-01-19T17:01:47-08:00"
+    
+  - id: agentic-mode
+    name: "Agentic Mode UI (Phase 4)"
+    status: complete
+    completed_at: "2026-01-19"
+    owner: "Claude Code"
+    path: ./tracks/agentic-mode/
+    description: "Implementation of Agentic Mode UI: Map-first layout, Spatial Insights, and Marker Clustering."
+    dependencies:
+      - safeguards
+    created_at: "2026-01-19T17:35:00-08:00"
+    updated_at: "2026-01-19T17:35:00-08:00"
+    notes: "Foundation complete. Basic 3-panel layout, spatial insights sidebar, marker clustering. Wireframe conformance track extends this work."
+
+archived:
+  - id: phase2-agentic-ui
+    name: "Agentic UI Foundation (Phase 2)"
+    reason: "Merged into frontend-dashboard track"
+    archived_at: "2026-01-20"
+    path: ./archive/tracks/phase2-agentic-ui/
+    description: "Early agentic UI work that was integrated into the main frontend dashboard track."
+    
+  - id: agent-telemetry-dashboard
+    name: "Agent Telemetry & Governance Dashboard"
+    reason: "Incomplete structure, future track (see future section)"
+    archived_at: "2026-01-20"
+    path: ./archive/tracks/agent-telemetry-dashboard/
+    description: "Observability layer for TrailWatch with OpenTelemetry traces, BigQuery telemetry, and governance dashboards. Track definition exists but structure incomplete."
+
+future:
+  - id: agent-telemetry-dashboard
+    name: "Agent Telemetry & Governance Dashboard"
+    status: future
+    priority: high
+    description: "Production-grade observability layer: OpenTelemetry instrumentation, Cloud Trace export, BigQuery telemetry tables, ranger action correlation, and governance dashboards."
+    dependencies:
+      - frontend-dashboard
+      - intake-agent
+    estimated_duration_weeks: 3
+    notes: "Track definition exists in archive. Important for federal AI governance requirements. Will be resurrected when ready to implement."
+    
+  - id: hazard-classifier
+    name: "Hazard Classifier (Project 3)"
+    status: future
+    priority: medium
+    description: "Advanced hazard classification system (Project 3)."
+    dependencies:
+      - intake-agent
+    notes: "Future project, not yet scoped."
+    
+  - id: closure-notice-generator
+    name: "Closure Notice Generator (Project 4)"
+    status: future
+    priority: medium
+    description: "Automated trail closure notice generation (Project 4)."
+    dependencies:
+      - intake-agent
+    notes: "Future project, not yet scoped."

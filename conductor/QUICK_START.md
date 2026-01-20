@@ -14,7 +14,7 @@
 
 ### 2. Understand the Pattern (15 minutes)
 Look at a completed track to see the pattern:
-- **Example:** `conductor/tracks/intake_agent_20260116/`
+- **Example:** `conductor/tracks/intake-agent/`
 - Notice: `spec.md` (requirements), `plan.md` (tasks with SHAs), checkpoint commits
 
 ### 3. Check Active Track (5 minutes)

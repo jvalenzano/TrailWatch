@@ -3,9 +3,11 @@ import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import {
     UIModeProvider,
+} from './UIModeContext';
+import {
     useUIModeContext,
     useUIModeContextSafe,
-} from './UIModeContext';
+} from '../hooks/useUIMode';
 
 // Test component that consumes the context
 function TestConsumer() {
@@ -260,7 +262,7 @@ describe('UIModeContext', () => {
     describe('useUIModeContext', () => {
         it('throws when used outside provider', () => {
             // Suppress console.error for this test
-            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
             expect(() => {
                 renderWithRouter(<TestConsumer />);

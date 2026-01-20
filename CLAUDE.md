@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 TrailWatch is a citizen crowdsourcing platform for USFS trail maintenance. It combines a React/TypeScript frontend with a FastAPI/PostgreSQL backend, featuring AI-powered trail validation using PostGIS geospatial data.
 
-**Current Status:** Phase 6 (Streaming Extraction) complete on branch `develop`. The frontend has three progressive UI modes: Traditional (list-based), Moderate (AI transparency), and Agentic (map-first with spatial insights and streaming extraction).
+**Current Status:** Phase 3 (Moderate Mode) merged to `develop`. Phase 4 (Agentic Mode UI) implementation complete, awaiting human review. The frontend has three progressive UI modes: Traditional (list-based), Moderate (AI transparency), and Agentic (map-first with spatial insights). Phase 6 (Streaming Extraction) is planned but not yet implemented.
 
 ## Build & Development Commands
 
@@ -57,6 +57,7 @@ src/trailwatch/              # Python FastAPI backend
 └── validation/              # Trail validation service (PostGIS + USFS geodata)
 
 conductor/                   # Conductor workflow management (executed by Claude Code)
+├── tracks.yaml              # SINGLE SOURCE OF TRUTH - Read this first for track status
 ├── index.md                 # Project context hub
 ├── workflow.md              # TDD workflow, phase checkpointing
 └── tracks/                  # Active development tracks with plan.md files
@@ -92,7 +93,8 @@ conductor/                   # Conductor workflow management (executed by Claude
 - Always run tests non-interactively: `CI=true pytest` or `npm test`
 
 ### Workflow
-- The plan.md in each conductor track is the source of truth
+- **First:** Read `conductor/tracks.yaml` - Single source of truth for all track status
+- **Then:** Read the `plan.md` in the specific track directory for task details
 - Mark tasks: `[ ]` pending, `[~]` in-progress, `[x]` complete with commit SHA
 - Phase completion requires: all tests passing, coverage met, git checkpoint with notes
 
@@ -118,13 +120,14 @@ Use `FeatureGate` component for conditional rendering based on UI mode:
 
 ## Related Documentation
 
-## Related Documentation
-
 - `CLAUDE.md` - This file (Claude Code instructions and project overview)
+- `conductor/tracks.yaml` - **SINGLE SOURCE OF TRUTH** - Track registry (read this first!)
 - `conductor/workflow.md` - Detailed Track-Based Workflow Pattern
 - `conductor/QUICK_START.md` - Quick reference for new team members
 - `conductor/GLOSSARY.md` - Terminology definitions
 - `conductor/WORKFLOW_EXAMPLES.md` - Concrete examples of workflow in action
+- `conductor/NEXT.md` - Active track and priority queue
+- `docs/onboarding/AGENT_PROTOCOL.md` - **CRITICAL** - Operational rules for agents
 - `docs/adr/` - Architecture Decision Records
 - `docs/UI/UI_SPECIFICATION.md` - Detailed Agentic UI Spec
 - `docs/concepts/agentic_ui_patterns.md` - Core UI Patterns (Cluster, Bias, Circuit Breaker)

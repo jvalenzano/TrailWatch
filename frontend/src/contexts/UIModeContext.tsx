@@ -1,6 +1,5 @@
 import {
     createContext,
-    useContext,
     useState,
     useCallback,
     useMemo,
@@ -112,25 +111,6 @@ export function UIModeProvider({ children, initialOverrides = {} }: UIModeProvid
     return <UIModeContext.Provider value={value}>{children}</UIModeContext.Provider>;
 }
 
-/**
- * Hook to access UI mode context.
- *
- * @throws Error if used outside of UIModeProvider
- */
-export function useUIModeContext(): UIModeContextValue {
-    const context = useContext(UIModeContext);
-    if (!context) {
-        throw new Error('useUIModeContext must be used within a UIModeProvider');
-    }
-    return context;
-}
 
-/**
- * Hook to safely check if context is available.
- * Returns null if outside provider (useful for fail-safe behavior).
- */
-export function useUIModeContextSafe(): UIModeContextValue | null {
-    return useContext(UIModeContext);
-}
 
 export { UIModeContext };

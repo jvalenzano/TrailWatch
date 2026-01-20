@@ -237,7 +237,7 @@ server: {
 ## Post-UAT Report
 
 After completing visual UAT, document results in:
-`conductor/tracks/frontend_dashboard_20260118/phase6_streaming_UAT.md`
+`conductor/tracks/frontend-dashboard/phase6_streaming_UAT.md`
 
 Update the "Browser UAT Verification" section with:
 - Screenshots captured

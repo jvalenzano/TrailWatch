@@ -68,8 +68,8 @@ When you want Claude Code to begin a new track, provide:
 ```
 Create a new track: Synthetic Data Quality Enhancement
 - See conductor/NEXT.md for priority
-- Reference: conductor/tracks/synthetic_data_quality_20260120/DESIGN_CRITIQUE.md
-- Generate spec.md and plan.md following the pattern in conductor/tracks/intake_agent_20260116/
+- Reference: conductor/tracks/synthetic-data-quality/DESIGN_CRITIQUE.md
+- Generate spec.md and plan.md following the pattern in conductor/tracks/intake-agent/
 ```
 
 ### Task Execution

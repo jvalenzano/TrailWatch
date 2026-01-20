@@ -1,5 +1,27 @@
-import { useUIModeContext } from '../contexts/UIModeContext';
+import { useContext } from 'react';
+import { UIModeContext, type UIModeContextValue } from '../contexts/UIModeContext';
 import type { UIMode, UIModeName, UIFeatures } from '../config/ui-modes';
+
+/**
+ * Hook to access UI mode context.
+ *
+ * @throws Error if used outside of UIModeProvider
+ */
+export function useUIModeContext(): UIModeContextValue {
+    const context = useContext(UIModeContext);
+    if (!context) {
+        throw new Error('useUIModeContext must be used within a UIModeProvider');
+    }
+    return context;
+}
+
+/**
+ * Hook to safely check if context is available.
+ * Returns null if outside provider (useful for fail-safe behavior).
+ */
+export function useUIModeContextSafe(): UIModeContextValue | null {
+    return useContext(UIModeContext);
+}
 
 /**
  * Hook to read and manage the current UI mode.

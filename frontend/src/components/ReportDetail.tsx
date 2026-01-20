@@ -8,6 +8,7 @@ import { AIAttributionBadge } from './extraction/AIAttributionBadge';
 import { FeatureGate } from './common/FeatureGate';
 import { ConfidenceBadge } from './common/ConfidenceBadge';
 import { ReasoningPanel, type ReasoningStep } from './agentic/ReasoningPanel';
+import { ExternalIntelligence } from './ExternalIntelligence';
 
 /**
  * Convert triage_result confidence factors to ReasoningStep format.
@@ -70,6 +71,15 @@ function buildReasoningSteps(report: HazardReport): ReasoningStep[] {
             step: 'Cross-Reference Check',
             status: 'success',
             detail: `${factors.corroborating_reports} similar report(s) corroborate this hazard`,
+        });
+    }
+
+    // External Intelligence step (if there are external sources)
+    if (report.external_intelligence && report.external_intelligence.length > 0) {
+        steps.push({
+            step: 'External Intelligence',
+            status: 'success',
+            detail: `${report.external_intelligence.length} external source(s) corroborate this hazard (social media, blogs, forums)`,
         });
     }
 
@@ -214,6 +224,10 @@ export function ReportDetail({
             ))}
           </div>
         </div>
+      )}
+
+      {report.external_intelligence && report.external_intelligence.length > 0 && (
+        <ExternalIntelligence sources={report.external_intelligence} />
       )}
 
       <div className="mt-6 border-t border-gray-700 pt-4">

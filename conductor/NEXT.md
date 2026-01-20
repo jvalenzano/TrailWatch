@@ -28,13 +28,13 @@
 ## Active Track
 
 🎯 **Ranger Dashboard (Frontend)** — In Progress
-- Track: `frontend_dashboard_20260118`
+- Track: `frontend-dashboard`
 - **Current Branch:** `feature/dashboard-phase-4-agentic`
 - Phase 0-3 complete (scaffolding through Moderate Mode)
 - Phase 3 merged to develop — Pending Human Sign-Off for main
 - Phase 4 branch created — Awaiting human approval to implement
 
-See: `conductor/tracks/phase4-agentic-mode/implementation_plan.md`
+See: `conductor/tracks/agentic-mode/` (Foundation complete - map-first layout, spatial insights, clustering)
 
 **Scope:**
 - React 18+ / TypeScript / Vite / Tailwind CSS / TanStack Query
@@ -47,9 +47,22 @@ See: `conductor/tracks/phase4-agentic-mode/implementation_plan.md`
 | # | Track | Status | Notes |
 |---|-------|--------|-------|
 | 1 | Ranger Dashboard (Frontend) | 🎯 ACTIVE | Phase 3 merged to develop, Phase 4 awaiting approval |
-| 2 | Status Dashboard (Backend) | ⏸️ Phase 2+ | Frontend phases pending |
-| 3 | Hazard Classifier (Project 3) | ⏸️ Waiting | — |
-| 4 | Closure Notice Generator (Project 4) | ⏸️ Waiting | — |
+| 2 | Wireframe Conformance | 📋 STRATEGIC PLANNING | 52 gaps identified, strategic plan ready for review |
+| 3 | Synthetic Data Quality | ⏸️ Planned | Comprehensive data corpus improvements |
+| 4 | Status Dashboard (Backend) | ⏸️ Phase 2+ | Frontend phases pending |
+| 5 | Hazard Classifier (Project 3) | ⏸️ Waiting | — |
+| 6 | Closure Notice Generator (Project 4) | ⏸️ Waiting | — |
+
+## Strategic Planning
+
+**Wireframe Conformance Track** — Ready for Review
+- **Location:** `conductor/tracks/wireframe-conformance/`
+- **Status:** Strategic plan complete, awaiting approval
+- **Key Document:** `STRATEGIC_PLAN.md` — Complete analysis and recommendations
+- **Summary:** 52 gaps identified, 8-week implementation plan, 3 strategic options evaluated
+- **Recommendation:** Extend Phase 4 track with 3 new phases (4.2, 4.3, 4.4)
+
+**Next Action:** Review strategic plan and approve track structure before creating detailed implementation plan.
 
 ## Future Considerations
 

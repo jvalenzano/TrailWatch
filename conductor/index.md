@@ -13,6 +13,7 @@
 - [Code Style Guides](./code_styleguides/)
 
 ## Management
-- [Tracks Registry](./tracks.md)
+- [Tracks Registry (YAML)](./tracks.yaml) - **Single source of truth for AI agents**
+- [Tracks Registry (Markdown)](./tracks.md) - Human-readable reference
 - [Tracks Directory](./tracks/)
 - [Next Track](./NEXT.md) - Active track and priority queue

@@ -499,7 +499,23 @@
         "wind_speed_mph": 45,
         "precipitation_inches": 1.8,
         "relevant_to_hazard": true
-      }
+      },
+      "external_intelligence": [
+        {
+          "source_type": "social_media",
+          "label": "Twitter Post",
+          "asset_url": "/assets/social/social_tweet_storm.png",
+          "excerpt": "Wind is CRAZY at Mirror Lake right now! Trees snapping!",
+          "posted_at": "2026-01-19T06:15:00Z"
+        },
+        {
+          "source_type": "blog",
+          "label": "Hiking Forum Post",
+          "asset_url": "/assets/social/social_blog_header.png",
+          "excerpt": "Trip Report: North Ridge is impassable",
+          "posted_at": "2026-01-19T07:00:00Z"
+        }
+      ]
     },
     {
       "id": "NR-002",
@@ -550,7 +566,16 @@
         "wind_speed_mph": 45,
         "precipitation_inches": 1.8,
         "relevant_to_hazard": true
-      }
+      },
+      "external_intelligence": [
+        {
+          "source_type": "blog",
+          "label": "Hiking Forum Post",
+          "asset_url": "/assets/social/social_blog_header.png",
+          "excerpt": "Trip Report: North Ridge is impassable",
+          "posted_at": "2026-01-19T07:00:00Z"
+        }
+      ]
     },
     {
       "id": "NR-003",

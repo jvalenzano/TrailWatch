@@ -1,0 +1,11 @@
+{
+    "track_id": "agentic-mode",
+    "type": "feature",
+    "status": "complete",
+    "created_at": "2026-01-19T17:35:00-08:00",
+    "updated_at": "2026-01-19T17:35:00-08:00",
+    "description": "Implementation of Agentic Mode UI: Map-first layout, Spatial Insights, and Clustering.",
+    "dependencies": [
+        "safeguards"
+    ]
+}

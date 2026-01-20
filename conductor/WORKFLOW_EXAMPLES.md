@@ -7,7 +7,7 @@
 
 ## Example 1: Completed Track Structure
 
-### Track: Intake Agent (`conductor/tracks/intake_agent_20260116/`)
+### Track: Intake Agent (`conductor/tracks/intake-agent/`)
 
 **Files:**
 - `index.md` - Track overview
@@ -375,7 +375,7 @@ Checkpoint SHA: def5678a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
 ## Active Track
 
 🎯 **Ranger Dashboard (Frontend)** — In Progress
-- Track: `frontend_dashboard_20260118`
+- Track: `frontend-dashboard`
 - **Current Branch:** `feature/dashboard-phase-4-agentic`
 - Phase 0-3 complete
 - Phase 4 awaiting approval
