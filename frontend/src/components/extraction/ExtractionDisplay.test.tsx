@@ -1,19 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ExtractionDisplay } from './ExtractionDisplay';
-import { useUIMode } from '../../hooks/useUIMode';
+import { UIModeProvider } from '../../contexts/UIModeContext';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import { trackEvent } from '../../utils/analytics';
 import type { HazardReport } from '../../types/report';
-import type { UIMode } from '../../config/ui-modes';
+import type { UIFeatures } from '../../config/ui-modes';
 
 expect.extend(toHaveNoViolations);
 
-// Mock the hook and analytics
-vi.mock('../../hooks/useUIMode', () => ({
-    useUIMode: vi.fn(),
-}));
-
+// Mock analytics
 vi.mock('../../utils/analytics', () => ({
     trackEvent: vi.fn(),
     ANALYTICS_EVENTS: {
@@ -21,27 +18,22 @@ vi.mock('../../utils/analytics', () => ({
     },
 }));
 
-// Helper to create a partial mock mode
-function createMockMode(features: Partial<UIMode['features']>) {
-    return {
-        mode: {
-            name: 'moderate' as const,
-            label: 'Moderate',
-            description: 'Test mode',
-            features: {
-                enable_confidence_indicators: false,
-                enable_reasoning_panel: false,
-                enable_ai_attribution_badges: false,
-                mapPrimary: false,
-                spatialInsights: false,
-                batchOperations: false,
-                streamingExtraction: false,
-                ...features,
-            },
-        },
-        modeName: 'moderate' as const,
-        setMode: vi.fn(),
-    };
+// Helper to render with provider
+function renderWithProvider(
+    ui: React.ReactElement,
+    options: {
+        mode?: string;
+        initialOverrides?: Partial<UIFeatures>;
+    } = {}
+) {
+    const { mode = 'traditional', initialOverrides } = options;
+    return render(
+        <MemoryRouter initialEntries={[`/?mode=${mode}`]}>
+            <UIModeProvider initialOverrides={initialOverrides}>
+                {ui}
+            </UIModeProvider>
+        </MemoryRouter>
+    );
 }
 
 const mockReport: HazardReport = {
@@ -79,12 +71,9 @@ describe('ExtractionDisplay', () => {
     });
 
     it('renders confidence and reasoning in moderate mode', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({
-            enable_confidence_indicators: true,
-            enable_reasoning_panel: true,
-        }));
-
-        render(<ExtractionDisplay report={mockReport} />);
+        renderWithProvider(<ExtractionDisplay report={mockReport} />, {
+            mode: 'moderate',
+        });
 
         expect(screen.getByText(/AI Transparency Layer/i)).toBeInTheDocument();
         expect(screen.getByText(/High Confidence/i)).toBeInTheDocument();
@@ -92,24 +81,18 @@ describe('ExtractionDisplay', () => {
     });
 
     it('hides confidence and reasoning in traditional mode', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({
-            enable_confidence_indicators: false,
-            enable_reasoning_panel: false,
-        }));
-
-        render(<ExtractionDisplay report={mockReport} />);
+        renderWithProvider(<ExtractionDisplay report={mockReport} />, {
+            mode: 'traditional',
+        });
 
         expect(screen.queryByText(/High Confidence/i)).not.toBeInTheDocument();
         expect(screen.queryByText(/Why did AI classify this/i)).not.toBeInTheDocument();
     });
 
     it('triggers telemetry on panel expansion (hover)', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({
-            enable_confidence_indicators: true,
-            enable_reasoning_panel: true,
-        }));
-
-        render(<ExtractionDisplay report={mockReport} />);
+        renderWithProvider(<ExtractionDisplay report={mockReport} />, {
+            mode: 'moderate',
+        });
 
         const panel = screen.getByText(/Why did AI classify this/i).closest('div');
         if (panel) fireEvent.mouseEnter(panel);
@@ -121,12 +104,10 @@ describe('ExtractionDisplay', () => {
     });
 
     it('passes accessibility audit', async () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({
-            enable_confidence_indicators: true,
-            enable_reasoning_panel: true,
-        }));
-
-        const { container } = render(<ExtractionDisplay report={mockReport} />);
+        const { container } = renderWithProvider(
+            <ExtractionDisplay report={mockReport} />,
+            { mode: 'moderate' }
+        );
 
         const results = await axe(container);
         expect(results).toHaveNoViolations();

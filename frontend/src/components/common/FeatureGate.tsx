@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { useUIMode } from '../../hooks/useUIMode';
+import { useUIModeContextSafe } from '../../contexts/UIModeContext';
 import type { UIFeatures } from '../../config/ui-modes';
 
 interface FeatureGateProps {
@@ -14,6 +14,9 @@ interface FeatureGateProps {
 /**
  * Conditionally renders children based on current UI mode's feature flags.
  *
+ * Uses `isFeatureEnabled()` from context which respects runtime overrides.
+ * Fails closed (returns fallback) if context is unavailable.
+ *
  * Usage:
  * ```tsx
  * <FeatureGate feature="enable_confidence_indicators">
@@ -22,10 +25,15 @@ interface FeatureGateProps {
  * ```
  */
 export function FeatureGate({ feature, children, fallback = null }: FeatureGateProps) {
-    const { mode } = useUIMode();
+    const context = useUIModeContextSafe();
 
-    // Fail closed if feature is undefined
-    const isEnabled = mode.features[feature] ?? false;
+    // Fail closed if context unavailable
+    if (!context) {
+        console.warn('[FeatureGate] No UIModeContext found, failing closed');
+        return <>{fallback}</>;
+    }
+
+    const isEnabled = context.isFeatureEnabled(feature);
 
     return <>{isEnabled ? children : fallback}</>;
 }

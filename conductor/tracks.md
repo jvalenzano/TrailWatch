@@ -19,3 +19,9 @@ This file tracks all major tracks for the project. Each track has its own detail
 - [~] **Track: Ranger Dashboard (Frontend)** ← ACTIVE
   React frontend with three UI modes (Traditional, Moderate, Agentic). Consumes Status Dashboard backend APIs.
   *Link: [./tracks/frontend_dashboard_20260118/](./tracks/frontend_dashboard_20260118/)*
+
+---
+
+- [ ] **Track: Safety & Governance (Phase 3)**
+  Guardrails, Feature Gates, Audit Logging, and Feedback Loops.
+  *Link: [./tracks/phase3_safeguards/](./tracks/phase3_safeguards/)*
