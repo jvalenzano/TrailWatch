@@ -1,15 +1,50 @@
 /**
  * InsightCard - Generic container for spatial insight cards.
  * Uses composition pattern with specialized children components.
+ * Includes audit logging and feedback integration.
  */
-import type { ReactNode } from 'react';
+import { type ReactNode, useEffect, useRef, useCallback } from 'react';
 import type { SpatialInsight, SpatialInsightType } from '../../types/spatial';
+import { useAuditLog } from '../../hooks/useAuditLog';
+import { useUIMode } from '../../hooks/useUIMode';
+import { FeatureGate } from '../common/FeatureGate';
+import { FeedbackComponent } from '../feedback';
+import type { AuditActionType } from '../../types/audit';
+import type { FeedbackTargetType } from '../../types/feedback';
 
 export interface InsightCardProps {
     insight: SpatialInsight;
     isSelected: boolean;
     onSelect: () => void;
     children?: ReactNode;
+}
+
+/**
+ * Maps insight type to audit action type.
+ */
+function getAuditActionType(insightType: SpatialInsightType): AuditActionType {
+    switch (insightType) {
+        case 'cluster':
+            return 'cluster_detected';
+        case 'duplicate':
+            return 'duplicate_flagged';
+        default:
+            return 'insight_generated';
+    }
+}
+
+/**
+ * Maps insight type to feedback target type.
+ */
+function getFeedbackTargetType(insightType: SpatialInsightType): FeedbackTargetType {
+    switch (insightType) {
+        case 'cluster':
+            return 'cluster';
+        case 'duplicate':
+            return 'duplicate';
+        default:
+            return 'classification';
+    }
 }
 
 const severityBorderColors: Record<SpatialInsight['severity'], string> = {
@@ -48,11 +83,52 @@ export function InsightCard({
     onSelect,
     children,
 }: InsightCardProps) {
+    const { log } = useAuditLog();
+    const { isFeatureEnabled } = useUIMode();
+    const hasLoggedRef = useRef(false);
+
+    // Log insight detection on mount (only once, only if audit logging enabled)
+    useEffect(() => {
+        if (!hasLoggedRef.current && isFeatureEnabled('enable_audit_logging')) {
+            hasLoggedRef.current = true;
+            log({
+                actionType: getAuditActionType(insight.type),
+                source: 'InsightCard',
+                description: `${typeLabels[insight.type]} insight detected: ${insight.title}`,
+                payload: {
+                    insightId: insight.id,
+                    insightType: insight.type,
+                    severity: insight.severity,
+                    reportCount: insight.report_ids.length,
+                },
+                outcome: 'success',
+            });
+        }
+    }, [insight, log, isFeatureEnabled]);
+
+    // Handle selection with audit logging
+    const handleSelect = useCallback(() => {
+        if (isFeatureEnabled('enable_audit_logging')) {
+            log({
+                actionType: 'user_interaction',
+                source: 'InsightCard',
+                description: `User selected ${typeLabels[insight.type]} insight: ${insight.title}`,
+                payload: {
+                    insightId: insight.id,
+                    insightType: insight.type,
+                },
+                outcome: 'success',
+            });
+        }
+        onSelect();
+    }, [insight, log, isFeatureEnabled, onSelect]);
+
     return (
-        <button
-            type="button"
-            onClick={onSelect}
-            className={`
+        <div data-testid={`insight-card-wrapper-${insight.id}`}>
+            <button
+                type="button"
+                onClick={handleSelect}
+                className={`
                 w-full text-left p-4 rounded-lg border-l-4 transition-all duration-200
                 bg-gray-800/50 backdrop-blur-sm
                 ${severityBorderColors[insight.severity]}
@@ -127,5 +203,18 @@ export function InsightCard({
                 </span>
             </div>
         </button>
+
+            {/* Feedback component for AI decision */}
+            <FeatureGate feature="enable_feedback">
+                <div className="mt-2 px-4">
+                    <FeedbackComponent
+                        targetId={insight.id}
+                        targetType={getFeedbackTargetType(insight.type)}
+                        aiOutput={`${typeLabels[insight.type]}: ${insight.title}`}
+                        compact
+                    />
+                </div>
+            </FeatureGate>
+        </div>
     );
 }

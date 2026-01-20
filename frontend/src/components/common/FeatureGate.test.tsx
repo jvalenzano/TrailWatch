@@ -1,35 +1,26 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { FeatureGate } from './FeatureGate';
-import { useUIMode } from '../../hooks/useUIMode';
-import type { UIMode } from '../../config/ui-modes';
+import { UIModeProvider } from '../../contexts/UIModeContext';
+import type { UIFeatures } from '../../config/ui-modes';
 
-// Mock the hook
-vi.mock('../../hooks/useUIMode', () => ({
-    useUIMode: vi.fn(),
-}));
-
-// Helper to create a partial mock mode
-function createMockMode(features: Partial<UIMode['features']>) {
-    return {
-        mode: {
-            name: 'moderate' as const,
-            label: 'Moderate',
-            description: 'Test mode',
-            features: {
-                enable_confidence_indicators: false,
-                enable_reasoning_panel: false,
-                enable_ai_attribution_badges: false,
-                mapPrimary: false,
-                spatialInsights: false,
-                batchOperations: false,
-                streamingExtraction: false,
-                ...features,
-            },
-        },
-        modeName: 'moderate' as const,
-        setMode: vi.fn(),
-    };
+// Helper to render with provider
+function renderWithProvider(
+    ui: React.ReactElement,
+    options: {
+        mode?: string;
+        initialOverrides?: Partial<UIFeatures>;
+    } = {}
+) {
+    const { mode = 'traditional', initialOverrides } = options;
+    return render(
+        <MemoryRouter initialEntries={[`/?mode=${mode}`]}>
+            <UIModeProvider initialOverrides={initialOverrides}>
+                {ui}
+            </UIModeProvider>
+        </MemoryRouter>
+    );
 }
 
 describe('FeatureGate', () => {
@@ -38,24 +29,22 @@ describe('FeatureGate', () => {
     });
 
     it('renders children when feature is enabled', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({ enable_confidence_indicators: true }));
-
-        const { getByText } = render(
+        const { getByText } = renderWithProvider(
             <FeatureGate feature="enable_confidence_indicators">
                 <div>Enabled Content</div>
-            </FeatureGate>
+            </FeatureGate>,
+            { mode: 'agentic' } // agentic mode has confidence enabled
         );
 
         expect(getByText('Enabled Content')).toBeInTheDocument();
     });
 
     it('renders fallback when feature is disabled', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({ enable_confidence_indicators: false }));
-
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText } = renderWithProvider(
             <FeatureGate feature="enable_confidence_indicators" fallback={<div>Fallback Content</div>}>
                 <div>Enabled Content</div>
-            </FeatureGate>
+            </FeatureGate>,
+            { mode: 'traditional' } // traditional mode has confidence disabled
         );
 
         expect(queryByText('Enabled Content')).not.toBeInTheDocument();
@@ -63,36 +52,48 @@ describe('FeatureGate', () => {
     });
 
     it('renders nothing when feature is disabled and no fallback provided', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({ enable_confidence_indicators: false }));
-
-        const { container } = render(
+        const { container } = renderWithProvider(
             <FeatureGate feature="enable_confidence_indicators">
                 <div>Enabled Content</div>
-            </FeatureGate>
+            </FeatureGate>,
+            { mode: 'traditional' }
         );
 
-        expect(container).toBeEmptyDOMElement();
+        expect(container.textContent).toBe('');
     });
 
-    it('handles undefined features by failing closed', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({}));
-
-        const { container } = render(
+    it('respects feature overrides', () => {
+        // Traditional mode has confidence disabled, but we override it to true
+        const { getByText } = renderWithProvider(
             <FeatureGate feature="enable_confidence_indicators">
-                <div>Test</div>
-            </FeatureGate>
+                <div>Enabled via Override</div>
+            </FeatureGate>,
+            {
+                mode: 'traditional',
+                initialOverrides: { enable_confidence_indicators: true },
+            }
         );
 
-        expect(container).toBeEmptyDOMElement();
+        expect(getByText('Enabled via Override')).toBeInTheDocument();
+    });
+
+    it('override can disable feature that mode enables', () => {
+        // Agentic mode has confidence enabled, but we override it to false
+        const { container } = renderWithProvider(
+            <FeatureGate feature="enable_confidence_indicators">
+                <div>Should Not Render</div>
+            </FeatureGate>,
+            {
+                mode: 'agentic',
+                initialOverrides: { enable_confidence_indicators: false },
+            }
+        );
+
+        expect(container.textContent).toBe('');
     });
 
     it('renders children for multiple enabled features', () => {
-        vi.mocked(useUIMode).mockReturnValue(createMockMode({
-            enable_confidence_indicators: true,
-            enable_reasoning_panel: true,
-        }));
-
-        const { getByText } = render(
+        const { getByText } = renderWithProvider(
             <>
                 <FeatureGate feature="enable_confidence_indicators">
                     <div>Confidence</div>
@@ -100,10 +101,50 @@ describe('FeatureGate', () => {
                 <FeatureGate feature="enable_reasoning_panel">
                     <div>Reasoning</div>
                 </FeatureGate>
-            </>
+            </>,
+            { mode: 'agentic' }
         );
 
         expect(getByText('Confidence')).toBeInTheDocument();
         expect(getByText('Reasoning')).toBeInTheDocument();
+    });
+
+    it('fails closed when no provider is present', () => {
+        // Suppress console.warn for this test
+        const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+        const { container } = render(
+            <MemoryRouter>
+                <FeatureGate feature="enable_confidence_indicators">
+                    <div>Should Not Render</div>
+                </FeatureGate>
+            </MemoryRouter>
+        );
+
+        expect(container.textContent).toBe('');
+        expect(consoleSpy).toHaveBeenCalledWith(
+            '[FeatureGate] No UIModeContext found, failing closed'
+        );
+
+        consoleSpy.mockRestore();
+    });
+
+    it('renders fallback when no provider and fallback is provided', () => {
+        // Suppress console.warn for this test
+        const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+        const { getByText } = render(
+            <MemoryRouter>
+                <FeatureGate
+                    feature="enable_confidence_indicators"
+                    fallback={<div>Fallback</div>}
+                >
+                    <div>Should Not Render</div>
+                </FeatureGate>
+            </MemoryRouter>
+        );
+
+        expect(getByText('Fallback')).toBeInTheDocument();
+        consoleSpy.mockRestore();
     });
 });

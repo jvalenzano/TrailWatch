@@ -24,6 +24,12 @@ export interface UIFeatures {
     batchOperations: boolean;
     /** Enable streaming extraction view */
     streamingExtraction: boolean;
+    /** Enable user feedback on AI decisions */
+    enable_feedback: boolean;
+    /** Enable audit logging of AI actions */
+    enable_audit_logging: boolean;
+    /** Enable audit log viewer panel */
+    enable_audit_viewer: boolean;
 }
 
 export interface UIMode {
@@ -59,6 +65,9 @@ export const UI_MODES: Record<UIModeName, UIMode> = {
             spatialInsights: false,
             batchOperations: false,
             streamingExtraction: false,
+            enable_feedback: false,
+            enable_audit_logging: false,
+            enable_audit_viewer: false,
         },
     },
     moderate: {
@@ -73,6 +82,9 @@ export const UI_MODES: Record<UIModeName, UIMode> = {
             spatialInsights: false,
             batchOperations: false,
             streamingExtraction: false,
+            enable_feedback: true,
+            enable_audit_logging: true,
+            enable_audit_viewer: true,
         },
         _metadata: PHASE_3_METADATA,
     },
@@ -88,6 +100,9 @@ export const UI_MODES: Record<UIModeName, UIMode> = {
             spatialInsights: true,
             batchOperations: true,
             streamingExtraction: true,
+            enable_feedback: true,
+            enable_audit_logging: true,
+            enable_audit_viewer: true,
         },
         _metadata: PHASE_3_METADATA,
     },

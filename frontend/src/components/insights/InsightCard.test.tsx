@@ -1,7 +1,18 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { InsightCard } from './InsightCard';
+import { UIModeProvider } from '../../contexts/UIModeContext';
 import type { SpatialInsight } from '../../types/spatial';
+
+// Helper to render with providers
+function renderWithProviders(ui: React.ReactElement) {
+    return render(
+        <MemoryRouter initialEntries={['/?mode=moderate']}>
+            <UIModeProvider>{ui}</UIModeProvider>
+        </MemoryRouter>
+    );
+}
 
 const mockInsight: SpatialInsight = {
     id: 'insight-1',
@@ -15,7 +26,7 @@ const mockInsight: SpatialInsight = {
 
 describe('InsightCard', () => {
     it('renders insight title and description', () => {
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
@@ -30,7 +41,7 @@ describe('InsightCard', () => {
     });
 
     it('renders type icon and label', () => {
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
@@ -43,7 +54,7 @@ describe('InsightCard', () => {
     });
 
     it('renders severity badge', () => {
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
@@ -55,7 +66,7 @@ describe('InsightCard', () => {
     });
 
     it('renders report count', () => {
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
@@ -72,7 +83,7 @@ describe('InsightCard', () => {
             report_ids: ['r1'],
         };
 
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={singleReportInsight}
                 isSelected={false}
@@ -85,7 +96,7 @@ describe('InsightCard', () => {
 
     it('calls onSelect when clicked', () => {
         const onSelect = vi.fn();
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
@@ -93,12 +104,12 @@ describe('InsightCard', () => {
             />
         );
 
-        fireEvent.click(screen.getByRole('button'));
+        fireEvent.click(screen.getByTestId('insight-card-insight-1'));
         expect(onSelect).toHaveBeenCalledTimes(1);
     });
 
     it('sets aria-pressed based on isSelected', () => {
-        const { rerender } = render(
+        const { rerender } = renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
@@ -106,21 +117,25 @@ describe('InsightCard', () => {
             />
         );
 
-        expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false');
+        expect(screen.getByTestId('insight-card-insight-1')).toHaveAttribute('aria-pressed', 'false');
 
         rerender(
-            <InsightCard
-                insight={mockInsight}
-                isSelected={true}
-                onSelect={vi.fn()}
-            />
+            <MemoryRouter initialEntries={['/?mode=moderate']}>
+                <UIModeProvider>
+                    <InsightCard
+                        insight={mockInsight}
+                        isSelected={true}
+                        onSelect={vi.fn()}
+                    />
+                </UIModeProvider>
+            </MemoryRouter>
         );
 
-        expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
+        expect(screen.getByTestId('insight-card-insight-1')).toHaveAttribute('aria-pressed', 'true');
     });
 
     it('renders children when provided', () => {
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
@@ -138,7 +153,7 @@ describe('InsightCard', () => {
         const severities: Array<SpatialInsight['severity']> = ['low', 'medium', 'high'];
 
         severities.forEach((severity) => {
-            const { container } = render(
+            const { container } = renderWithProviders(
                 <InsightCard
                     insight={{ ...mockInsight, severity }}
                     isSelected={false}
@@ -162,7 +177,7 @@ describe('InsightCard', () => {
         ];
 
         types.forEach((type) => {
-            const { unmount } = render(
+            const { unmount } = renderWithProviders(
                 <InsightCard
                     insight={{ ...mockInsight, type }}
                     isSelected={false}
@@ -178,7 +193,7 @@ describe('InsightCard', () => {
     });
 
     it('has correct data-testid', () => {
-        render(
+        renderWithProviders(
             <InsightCard
                 insight={mockInsight}
                 isSelected={false}
