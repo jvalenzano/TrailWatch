@@ -1,111 +1,21 @@
 import type { SpatialInsight } from '../types/spatial';
+import {
+    InsightCard,
+    ClusterInsight,
+    DuplicateInsight,
+    BiasInsight,
+    GenericInsight,
+    isClusterInsight,
+    isDuplicateInsight,
+    isBiasInsight,
+    isGenericInsight,
+} from './insights';
 
 interface SpatialInsightsSidebarProps {
     insights: SpatialInsight[];
     selectedInsightId: string | null;
     onSelectInsight: (insightId: string) => void;
     isLoading?: boolean;
-}
-
-const severityStyles: Record<SpatialInsight['severity'], string> = {
-    low: 'bg-green-500/20 text-green-400 border-green-500/30',
-    medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    high: 'bg-red-500/20 text-red-400 border-red-500/30',
-};
-
-const typeIcons: Record<SpatialInsight['type'], string> = {
-    cluster: '\uD83D\uDCCD', // pin
-    hotspot: '\uD83D\uDD25', // fire
-    trend: '\uD83D\uDCC8', // chart
-    anomaly: '\u26A0\uFE0F', // warning
-    duplicate: '\uD83D\uDCC4', // document
-    consistency_check: '\u2696\uFE0F', // balance scale
-};
-
-const typeLabels: Record<SpatialInsight['type'], string> = {
-    cluster: 'Cluster',
-    hotspot: 'Hotspot',
-    trend: 'Trend',
-    anomaly: 'Anomaly',
-    duplicate: 'Duplicate',
-    consistency_check: 'Consistency',
-};
-
-interface InsightCardProps {
-    insight: SpatialInsight;
-    isSelected: boolean;
-    onSelect: () => void;
-}
-
-function InsightCard({ insight, isSelected, onSelect }: InsightCardProps) {
-    return (
-        <button
-            type="button"
-            onClick={onSelect}
-            className={`
-                w-full text-left p-4 rounded-lg border transition-all duration-200
-                ${isSelected
-                    ? 'border-emerald-500 bg-emerald-500/10 ring-1 ring-emerald-500/50'
-                    : 'border-gray-700 bg-gray-800/50 hover:border-gray-500 hover:bg-gray-800'
-                }
-            `}
-            aria-pressed={isSelected}
-            data-testid={`insight-card-${insight.id}`}
-        >
-            {/* Header row with type icon and severity badge */}
-            <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                    <span
-                        className="text-lg"
-                        role="img"
-                        aria-label={typeLabels[insight.type]}
-                    >
-                        {typeIcons[insight.type]}
-                    </span>
-                    <span className="text-xs text-gray-400 uppercase tracking-wider">
-                        {typeLabels[insight.type]}
-                    </span>
-                </div>
-                <span
-                    className={`
-                        px-2 py-0.5 text-xs font-medium rounded border
-                        ${severityStyles[insight.severity]}
-                    `}
-                >
-                    {insight.severity}
-                </span>
-            </div>
-
-            {/* Title */}
-            <h3 className="text-sm font-semibold text-white mb-1">
-                {insight.title}
-            </h3>
-
-            {/* Description */}
-            <p className="text-xs text-gray-400 mb-2 line-clamp-2">
-                {insight.description}
-            </p>
-
-            {/* Report count */}
-            <div className="flex items-center gap-1 text-xs text-gray-500">
-                <svg
-                    className="w-3 h-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                </svg>
-                <span>{insight.report_ids.length} report{insight.report_ids.length !== 1 ? 's' : ''}</span>
-            </div>
-        </button>
-    );
 }
 
 function LoadingSkeleton() {
@@ -126,6 +36,39 @@ function LoadingSkeleton() {
             ))}
         </div>
     );
+}
+
+/**
+ * Renders the appropriate specialized insight component based on insight type.
+ */
+function InsightContent({ insight }: { insight: SpatialInsight }) {
+    if (isClusterInsight(insight)) {
+        return (
+            <ClusterInsight
+                metadata={insight.metadata}
+                reportCount={insight.report_ids.length}
+            />
+        );
+    }
+
+    if (isDuplicateInsight(insight)) {
+        return <DuplicateInsight metadata={insight.metadata} />;
+    }
+
+    if (isBiasInsight(insight)) {
+        return <BiasInsight metadata={insight.metadata} />;
+    }
+
+    if (isGenericInsight(insight)) {
+        return (
+            <GenericInsight
+                type={insight.type}
+                metadata={insight.metadata as Record<string, unknown> | undefined}
+            />
+        );
+    }
+
+    return null;
 }
 
 export function SpatialInsightsSidebar({
@@ -178,7 +121,9 @@ export function SpatialInsightsSidebar({
                         insight={insight}
                         isSelected={selectedInsightId === insight.id}
                         onSelect={() => onSelectInsight(insight.id)}
-                    />
+                    >
+                        <InsightContent insight={insight} />
+                    </InsightCard>
                 ))}
             </div>
         </div>
