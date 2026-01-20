@@ -6,3 +6,6 @@
 
 export { FeatureStatusBadge } from './FeatureStatusBadge';
 export type { FeatureStatusBadgeProps } from './FeatureStatusBadge';
+
+export { FeatureCard } from './FeatureCard';
+export type { FeatureCardProps } from './FeatureCard';
