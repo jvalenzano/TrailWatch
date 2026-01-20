@@ -4,8 +4,10 @@ import { AgenticMarkerCluster } from '../components/AgenticMarkerCluster';
 import { SpatialInsightsSidebar } from '../components/SpatialInsightsSidebar';
 import { ReportList } from '../components/ReportList';
 import { ReportDetail } from '../components/ReportDetail';
+import { HighRiskConfirmation, isHighRiskReport } from '../components/reasoning';
 import { useMockAgent } from '../hooks/useMockAgent';
 import { useStreamingExtraction } from '../hooks/useStreamingExtraction';
+import { calculateInsightBounds, expandBounds } from '../utils/mapUtils';
 import type { MapViewport } from '../types/spatial';
 
 interface AgenticDashboardProps {
@@ -54,22 +56,42 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
     const [highlightedReportIds, setHighlightedReportIds] = useState<string[]>([]);
     const [flyToViewport, setFlyToViewport] = useState<MapViewport | null>(null);
 
-    const selectedReport = allReports.find((r) => r.id === selectedReportId);
+    // High-risk confirmation state
+    const [showHighRiskConfirm, setShowHighRiskConfirm] = useState(false);
+    const [highRiskConfirmLoading, setHighRiskConfirmLoading] = useState(false);
 
-    // Handle insight selection
+    const selectedReport = allReports.find((r) => r.id === selectedReportId);
+    const selectedReportIsHighRisk = selectedReport ? isHighRiskReport(selectedReport) : false;
+
+    // Handle insight selection - calculates bounding box from insight reports
     const handleInsightSelect = useCallback(
         (insightId: string) => {
             setSelectedInsightId(insightId);
             const insight = insights.find((i) => i.id === insightId);
             if (insight) {
                 setHighlightedReportIds(insight.report_ids);
-                setFlyToViewport({
-                    center: insight.location.coordinates,
-                    zoom: 13,
-                });
+
+                // Calculate bounding box from insight's report locations
+                const bounds = calculateInsightBounds(insight, allReports);
+                if (bounds) {
+                    // Expand bounds by 20% for visual padding
+                    const expandedBounds = expandBounds(bounds, 0.2);
+                    setFlyToViewport({
+                        center: insight.location.coordinates,
+                        zoom: 13, // Fallback zoom if bounds fail
+                        bounds: expandedBounds,
+                        boundsPadding: 60,
+                    });
+                } else {
+                    // Fallback to center point if no bounds calculated
+                    setFlyToViewport({
+                        center: insight.location.coordinates,
+                        zoom: 13,
+                    });
+                }
             }
         },
-        [insights]
+        [insights, allReports]
     );
 
     // Handle report selection from map
@@ -103,6 +125,32 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
     const handleMarkResolved = (reportId: string) => {
         console.log('Marking as resolved', reportId);
     };
+
+    // High-risk confirmation handlers
+    const handleHighRiskAction = useCallback(() => {
+        if (selectedReportIsHighRisk && selectedReport) {
+            setShowHighRiskConfirm(true);
+        }
+    }, [selectedReportIsHighRisk, selectedReport]);
+
+    const handleHighRiskConfirm = useCallback(() => {
+        if (!selectedReport) return;
+
+        setHighRiskConfirmLoading(true);
+
+        // Simulate status update with a small delay
+        setTimeout(() => {
+            console.log('HIGH RISK ACTION CONFIRMED:', selectedReport.id);
+            console.log('Status updated to: CLOSURE_INITIATED');
+            setHighRiskConfirmLoading(false);
+            setShowHighRiskConfirm(false);
+            // In a real implementation, this would trigger an API call
+        }, 1500);
+    }, [selectedReport]);
+
+    const handleHighRiskCancel = useCallback(() => {
+        setShowHighRiskConfirm(false);
+    }, []);
 
     // Clear highlights when clicking on map background
     const handleViewportChange = useCallback(() => {
@@ -252,6 +300,33 @@ export function AgenticDashboard({ onSwitchToTraditional }: AgenticDashboardProp
                                         onCancelStreamingExtraction={cancelExtraction}
                                         onResetStreamingExtraction={resetExtraction}
                                     />
+
+                                    {/* High-risk action button */}
+                                    {selectedReportIsHighRisk && !showHighRiskConfirm && (
+                                        <div className="p-4 border-t border-red-500/30 bg-red-500/10">
+                                            <button
+                                                type="button"
+                                                onClick={handleHighRiskAction}
+                                                className="w-full px-4 py-2 text-sm font-medium text-red-400 border border-red-500/50 rounded-lg hover:bg-red-500/20 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                                data-testid="high-risk-action-btn"
+                                            >
+                                                Initiate Trail Closure
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    {/* High-risk confirmation modal */}
+                                    {showHighRiskConfirm && (
+                                        <div className="p-4 border-t border-gray-700/50">
+                                            <HighRiskConfirmation
+                                                report={selectedReport}
+                                                onConfirm={handleHighRiskConfirm}
+                                                onCancel={handleHighRiskCancel}
+                                                actionLabel="Confirm Trail Closure"
+                                                isLoading={highRiskConfirmLoading}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>

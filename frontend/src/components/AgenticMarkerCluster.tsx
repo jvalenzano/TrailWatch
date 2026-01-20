@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import type { HazardReport } from '../types/report';
-import { usePersistentMap } from './common/AgenticLayout';
+import { usePersistentMap } from '../hooks/usePersistentMap';
 import type { GeoJSONSourceSpecification } from 'maplibre-gl';
 
 interface AgenticMarkerClusterProps {
@@ -14,6 +14,7 @@ const CLUSTER_LAYER_ID = 'agentic-clusters';
 const CLUSTER_COUNT_LAYER_ID = 'agentic-cluster-count';
 const UNCLUSTERED_LAYER_ID = 'agentic-unclustered-point';
 const HIGHLIGHTED_LAYER_ID = 'agentic-highlighted-point';
+const HIGHLIGHTED_HALO_LAYER_ID = 'agentic-highlighted-halo';
 const SAFETY_ALERT_LAYER_ID = 'agentic-safety-alert';
 
 /**
@@ -139,6 +140,25 @@ export function AgenticMarkerCluster({
             },
         });
 
+        // Highlighted halo - pulsing background effect for highlighted markers
+        map.addLayer({
+            id: HIGHLIGHTED_HALO_LAYER_ID,
+            type: 'circle',
+            source: SOURCE_ID,
+            filter: [
+                'all',
+                ['!', ['has', 'point_count']],
+                ['==', ['get', 'isHighlighted'], true],
+                ['!=', ['get', 'isSafetyAlert'], true],
+            ],
+            paint: {
+                'circle-color': '#10b981', // emerald
+                'circle-radius': 24,
+                'circle-opacity': 0.3,
+                'circle-stroke-width': 0,
+            },
+        });
+
         // Highlighted points - emerald color, larger size
         map.addLayer({
             id: HIGHLIGHTED_LAYER_ID,
@@ -246,6 +266,7 @@ export function AgenticMarkerCluster({
                 const layersToRemove = [
                     SAFETY_ALERT_LAYER_ID,
                     HIGHLIGHTED_LAYER_ID,
+                    HIGHLIGHTED_HALO_LAYER_ID,
                     UNCLUSTERED_LAYER_ID,
                     CLUSTER_COUNT_LAYER_ID,
                     CLUSTER_LAYER_ID,
@@ -275,6 +296,41 @@ export function AgenticMarkerCluster({
             source.setData(reportsToGeoJSON());
         }
     }, [map, isMapReady, highlightedReportIds, reportsToGeoJSON]);
+
+    // Pulse animation for highlighted markers
+    useEffect(() => {
+        if (!map || !isMapReady || highlightedReportIds.length === 0) return;
+
+        let animationFrame: number;
+        let startTime: number | null = null;
+        const duration = 1500; // 1.5 second pulse cycle
+        const minRadius = 18;
+        const maxRadius = 28;
+
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = (elapsed % duration) / duration;
+
+            // Ease in-out sine wave for smooth pulsing
+            const easedProgress = (Math.sin(progress * Math.PI * 2 - Math.PI / 2) + 1) / 2;
+            const radius = minRadius + (maxRadius - minRadius) * easedProgress;
+            const opacity = 0.2 + 0.2 * (1 - easedProgress);
+
+            if (map.getLayer(HIGHLIGHTED_HALO_LAYER_ID)) {
+                map.setPaintProperty(HIGHLIGHTED_HALO_LAYER_ID, 'circle-radius', radius);
+                map.setPaintProperty(HIGHLIGHTED_HALO_LAYER_ID, 'circle-opacity', opacity);
+            }
+
+            animationFrame = requestAnimationFrame(animate);
+        };
+
+        animationFrame = requestAnimationFrame(animate);
+
+        return () => {
+            cancelAnimationFrame(animationFrame);
+        };
+    }, [map, isMapReady, highlightedReportIds.length]);
 
     return null; // This component only adds layers to the map
 }

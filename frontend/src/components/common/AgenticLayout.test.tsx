@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { AgenticLayout, usePersistentMap } from './AgenticLayout';
+import { AgenticLayout } from './AgenticLayout';
+import { usePersistentMap } from '../../hooks/usePersistentMap';
 
 // Mock maplibre-gl since it requires WebGL
 vi.mock('maplibre-gl', () => ({

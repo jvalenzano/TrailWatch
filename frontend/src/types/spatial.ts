@@ -24,6 +24,10 @@ export interface MapViewport {
     zoom: number;
     bearing?: number;
     pitch?: number;
+    /** Optional bounds to fit instead of center/zoom */
+    bounds?: BoundingBox;
+    /** Padding when fitting bounds (in pixels) */
+    boundsPadding?: number;
 }
 
 /**

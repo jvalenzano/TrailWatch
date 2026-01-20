@@ -1,27 +1,9 @@
-import React, { useState, useCallback, createContext, useContext, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import type { MapViewport } from '../../types/spatial';
-
-// ============================================================================
-// Persistent Map Context - Prevents map from unmounting during panel switches
-// ============================================================================
-
-interface PersistentMapContextValue {
-    map: maplibregl.Map | null;
-    mapContainer: React.RefObject<HTMLDivElement | null>;
-    isMapReady: boolean;
-}
-
-const PersistentMapContext = createContext<PersistentMapContextValue>({
-    map: null,
-    mapContainer: { current: null },
-    isMapReady: false,
-});
-
-export function usePersistentMap() {
-    return useContext(PersistentMapContext);
-}
+import { boundsToLngLatBounds } from '../../utils/mapUtils';
+import { PersistentMapContext, usePersistentMap } from '../../hooks/usePersistentMap';
 
 // ============================================================================
 // Panel Types
@@ -160,19 +142,28 @@ export function AgenticLayout({
         };
     }, [isMapReady, onViewportChange, handleViewportChange]);
 
-    // Handle programmatic flyTo
+    // Handle programmatic flyTo or fitBounds
     useEffect(() => {
         const map = mapRef.current;
         if (!map || !flyToViewport) return;
 
-        map.flyTo({
-            center: flyToViewport.center,
-            zoom: flyToViewport.zoom,
-            bearing: flyToViewport.bearing ?? 0,
-            pitch: flyToViewport.pitch ?? 0,
-            duration: 1500,
-            essential: true,
-        });
+        // If bounds are provided, use fitBounds instead of flyTo
+        if (flyToViewport.bounds) {
+            map.fitBounds(boundsToLngLatBounds(flyToViewport.bounds), {
+                padding: flyToViewport.boundsPadding ?? 50,
+                duration: 1500,
+                essential: true,
+            });
+        } else {
+            map.flyTo({
+                center: flyToViewport.center,
+                zoom: flyToViewport.zoom,
+                bearing: flyToViewport.bearing ?? 0,
+                pitch: flyToViewport.pitch ?? 0,
+                duration: 1500,
+                essential: true,
+            });
+        }
     }, [flyToViewport]);
 
     // Resize map when panels toggle
