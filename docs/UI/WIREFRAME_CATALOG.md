@@ -7,9 +7,9 @@ This catalog indexes the 10 core wireframes defining the TrailWatch Agentic UI.
 ## Phase 1: Core Dashboard & Baseline
 | Wireframe | Description | File |
 | :--- | :--- | :--- |
-| **WF1: Spatial Baseline** | Standard dashboard state showing 3-panel layout, colored markers, and pattern insights list (no widgets). | ![WF1](wireframes/wf1_dashboard_baseline_v2.png) |
-| **WF2: Cluster Alert** | Major "Pattern A" alert showing agentic cluster detection with red pulsing radius and context-aware assignment panel. | ![WF2](wireframes/wf2_dashboard_alert_v2.png) |
-| **WF3: Report Detail** | High-confidence report view with realistic photo, AI classification (0.89), and reasoned assignment suggestion. | ![WF3](wireframes/wf3_report_detail_high_conf_v2.png) |
+| **WF1: Spatial Baseline** | Standard dashboard state showing 3-panel layout, colored markers, and pattern insights list (no widgets). | ![WF1](wireframes/wf1_dashboard_baseline.png) |
+| **WF2: Cluster Alert** | Major "Pattern A" alert showing agentic cluster detection with red pulsing radius and context-aware assignment panel. | ![WF2](wireframes/wf2_dashboard_alert.png) |
+| **WF3: Report Detail** | High-confidence report view with realistic photo, AI classification (0.89), and reasoned assignment suggestion. | ![WF3](wireframes/wf3_report_detail_high_conf.png) |
 
 ## Phase 2: Deep Dives (Trust & Workflow)
 | Wireframe | Description | File |
